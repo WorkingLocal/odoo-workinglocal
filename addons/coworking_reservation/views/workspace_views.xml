@@ -28,22 +28,14 @@
         <field name="model">coworking.workspace</field>
         <field name="arch" type="xml">
             <form string="Werkplek">
-                <header>
-                    <button name="%(action_coworking_reservation)d"
-                            string="Reservaties bekijken"
-                            type="action"
-                            context="{'default_workspace_id': active_id, 'search_default_workspace_id': active_id}"
-                            class="btn-secondary"/>
-                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="%(action_coworking_reservation)d"
-                                type="action"
-                                class="oe_stat_button"
-                                icon="fa-calendar"
-                                context="{'default_workspace_id': active_id, 'search_default_workspace_id': active_id}">
-                            <field name="reservation_count" widget="statinfo" string="Reservaties"/>
-                        </button>
+                        <div class="o_stat_info o_field_widget" style="cursor:default">
+                            <span class="o_stat_value">
+                                <field name="reservation_count"/>
+                            </span>
+                            <span class="o_stat_text">Reservaties</span>
+                        </div>
                     </div>
                     <field name="image" widget="image" class="oe_avatar"/>
                     <div class="oe_title">
