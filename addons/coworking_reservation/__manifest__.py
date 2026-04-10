@@ -18,8 +18,8 @@
     'data': [
         'security/ir.model.access.csv',
         'data/workspace_data.xml',
-        'views/workspace_views.xml',
         'views/reservation_views.xml',
+        'views/workspace_views.xml',
         'views/membership_views.xml',
         'views/website_templates.xml',
         'views/portal_templates.xml',
