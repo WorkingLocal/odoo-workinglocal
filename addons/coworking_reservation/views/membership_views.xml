@@ -85,7 +85,6 @@
                 <filter string="Proefperiode" name="trial" domain="[('state','=','trial')]"/>
                 <filter string="Actief" name="active" domain="[('state','=','active')]"/>
                 <filter string="Verlopen" name="expired" domain="[('state','=','expired')]"/>
-                <filter string="In proefperiode" name="in_trial" domain="[('is_in_trial','=',True)]"/>
             </search>
         </field>
     </record>
