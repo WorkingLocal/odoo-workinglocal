@@ -115,10 +115,6 @@
                 <filter string="Afgerond" name="done" domain="[('state','=','done')]"/>
                 <filter string="Geannuleerd" name="cancelled" domain="[('state','=','cancelled')]"/>
                 <separator/>
-                <filter string="Vandaag" name="today"
-                        domain="[('start_datetime','&gt;=', datetime.datetime.now().replace(hour=0,minute=0,second=0).strftime('%Y-%m-%d %H:%M:%S')),
-                                 ('start_datetime','&lt;=', datetime.datetime.now().replace(hour=23,minute=59,second=59).strftime('%Y-%m-%d %H:%M:%S'))]"/>
-                <separator/>
                 <group expand="0" string="Groepeer op">
                     <filter string="Werkplek" name="group_workspace" context="{'group_by': 'workspace_id'}"/>
                     <filter string="Klant" name="group_partner" context="{'group_by': 'partner_id'}"/>
