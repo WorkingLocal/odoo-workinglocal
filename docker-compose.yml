@@ -1,6 +1,6 @@
 services:
   odoo:
-    image: odoo:17
+    image: odoo:19
     restart: unless-stopped
     depends_on:
       - odoo-db
@@ -8,8 +8,6 @@ services:
       - "8069:8069"
     volumes:
       - odoo-data:/var/lib/odoo
-      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
-      - ./addons:/mnt/extra-addons
     environment:
       - HOST=odoo-db
       - USER=${ODOO_DB_USER}
