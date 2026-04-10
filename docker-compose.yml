@@ -1,0 +1,30 @@
+services:
+  odoo:
+    image: odoo:17
+    restart: unless-stopped
+    depends_on:
+      - odoo-db
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+      - ./addons:/mnt/extra-addons
+    environment:
+      - HOST=odoo-db
+      - USER=${ODOO_DB_USER}
+      - PASSWORD=${ODOO_DB_PASSWORD}
+
+  odoo-db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=${ODOO_DB_USER}
+      - POSTGRES_PASSWORD=${ODOO_DB_PASSWORD}
+    volumes:
+      - odoo-db:/var/lib/postgresql/data
+
+volumes:
+  odoo-data:
+  odoo-db:

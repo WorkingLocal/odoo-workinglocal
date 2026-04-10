@@ -1,0 +1,41 @@
+/* Working Local — Coworking frontend stijlen */
+
+.workspace-card {
+    border-radius: 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.workspace-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.workspace-type-badge {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contribution-option {
+    cursor: pointer;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    transition: all 0.15s ease;
+}
+
+.contribution-option:hover,
+.contribution-option.selected {
+    border-color: var(--bs-primary);
+    background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.availability-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.availability-indicator.available { background-color: #28a745; }
+.availability-indicator.occupied  { background-color: #dc3545; }
+.availability-indicator.partial   { background-color: #ffc107; }

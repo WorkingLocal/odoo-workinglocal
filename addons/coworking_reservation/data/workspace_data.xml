@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequence voor reservatiereferenties -->
+    <record id="seq_coworking_reservation" model="ir.sequence">
+        <field name="name">Coworking Reservatie</field>
+        <field name="code">coworking.reservation</field>
+        <field name="prefix">WL/RES/%(year)s/</field>
+        <field name="padding">4</field>
+    </record>
+
+    <!-- Standaard voorzieningen -->
+    <record id="amenity_wifi" model="coworking.amenity">
+        <field name="name">WiFi</field>
+        <field name="icon">bi-wifi</field>
+    </record>
+    <record id="amenity_monitor" model="coworking.amenity">
+        <field name="name">Extra monitor</field>
+        <field name="icon">bi-display</field>
+    </record>
+    <record id="amenity_whiteboard" model="coworking.amenity">
+        <field name="name">Whiteboard</field>
+        <field name="icon">bi-easel</field>
+    </record>
+    <record id="amenity_projector" model="coworking.amenity">
+        <field name="name">Projector</field>
+        <field name="icon">bi-projector</field>
+    </record>
+    <record id="amenity_interactive" model="coworking.amenity">
+        <field name="name">Interactief scherm</field>
+        <field name="icon">bi-display-fill</field>
+    </record>
+    <record id="amenity_video_conf" model="coworking.amenity">
+        <field name="name">Videoconferentie</field>
+        <field name="icon">bi-camera-video</field>
+    </record>
+    <record id="amenity_locker" model="coworking.amenity">
+        <field name="name">Locker</field>
+        <field name="icon">bi-lock</field>
+    </record>
+    <record id="amenity_standing_desk" model="coworking.amenity">
+        <field name="name">Zit-sta bureau</field>
+        <field name="icon">bi-arrow-up-down</field>
+    </record>
+
+    <!-- Demo werkplekken -->
+    <record id="workspace_hot_desk" model="coworking.workspace">
+        <field name="name">Hot Desk Zone</field>
+        <field name="workspace_type">hot_desk</field>
+        <field name="capacity">12</field>
+        <field name="sequence">10</field>
+        <field name="contribution_enabled">True</field>
+        <field name="contribution_suggestions">5,10,15</field>
+        <field name="show_on_signage">True</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_wifi')), (4, ref('amenity_monitor'))]"/>
+    </record>
+
+    <record id="workspace_fixed_desk" model="coworking.workspace">
+        <field name="name">Vaste Plek</field>
+        <field name="workspace_type">fixed_desk</field>
+        <field name="capacity">1</field>
+        <field name="sequence">20</field>
+        <field name="monthly_rate">150</field>
+        <field name="show_on_signage">False</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_wifi')), (4, ref('amenity_locker')), (4, ref('amenity_standing_desk'))]"/>
+    </record>
+
+    <record id="workspace_meeting_room" model="coworking.workspace">
+        <field name="name">Vergaderzaal</field>
+        <field name="workspace_type">meeting_room</field>
+        <field name="capacity">8</field>
+        <field name="sequence">30</field>
+        <field name="hourly_rate">20</field>
+        <field name="show_on_signage">True</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_whiteboard')), (4, ref('amenity_projector')), (4, ref('amenity_video_conf'))]"/>
+    </record>
+
+    <record id="workspace_focus_zone" model="coworking.workspace">
+        <field name="name">Focus Zone</field>
+        <field name="workspace_type">focus_zone</field>
+        <field name="capacity">6</field>
+        <field name="sequence">40</field>
+        <field name="contribution_enabled">True</field>
+        <field name="contribution_suggestions">5,10,15</field>
+        <field name="show_on_signage">True</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_wifi'))]"/>
+    </record>
+
+    <record id="workspace_event" model="coworking.workspace">
+        <field name="name">Evenementenruimte</field>
+        <field name="workspace_type">event</field>
+        <field name="capacity">50</field>
+        <field name="sequence">50</field>
+        <field name="hourly_rate">75</field>
+        <field name="show_on_signage">True</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_projector')), (4, ref('amenity_whiteboard'))]"/>
+    </record>
+
+    <record id="workspace_hybrid_meeting" model="coworking.workspace">
+        <field name="name">Hybride Meetingroom</field>
+        <field name="workspace_type">hybrid_meeting</field>
+        <field name="capacity">10</field>
+        <field name="sequence">60</field>
+        <field name="hourly_rate">30</field>
+        <field name="has_interactive_display">True</field>
+        <field name="show_on_signage">True</field>
+        <field name="amenity_ids" eval="[(4, ref('amenity_interactive')), (4, ref('amenity_video_conf')), (4, ref('amenity_whiteboard'))]"/>
+    </record>
+</odoo>

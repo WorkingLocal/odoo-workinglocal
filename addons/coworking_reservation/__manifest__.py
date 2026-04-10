@@ -1,0 +1,36 @@
+{
+    'name': 'Working Local — Coworking Reservaties',
+    'version': '17.0.1.0.0',
+    'category': 'Services/Coworking',
+    'summary': 'Werkplekbeheer, online reservaties en vrije bijdrage facturatie',
+    'author': 'Working Local',
+    'website': 'https://www.workinglocal.be',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'mail',
+        'portal',
+        'website',
+        'account',
+        'sale',
+        'resource',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/workspace_data.xml',
+        'views/workspace_views.xml',
+        'views/reservation_views.xml',
+        'views/membership_views.xml',
+        'views/website_templates.xml',
+        'views/portal_templates.xml',
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            'coworking_reservation/static/src/css/coworking.css',
+            'coworking_reservation/static/src/js/booking.js',
+        ],
+    },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}
