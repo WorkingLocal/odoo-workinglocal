@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── LIST VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_coworking_reservation_list" model="ir.ui.view">
+        <field name="name">coworking.reservation.list</field>
+        <field name="model">coworking.reservation</field>
+        <field name="arch" type="xml">
+            <list string="Reservaties"
+                  decoration-success="state == 'confirmed'"
+                  decoration-muted="state in ('cancelled', 'done')"
+                  decoration-warning="state == 'draft'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="workspace_id"/>
+                <field name="workspace_type" optional="show"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="duration_hours" string="Duur (u)" optional="show"/>
+                <field name="attendees" optional="show"/>
+                <field name="billing_type"/>
+                <field name="contribution_amount" optional="show"/>
+                <field name="invoice_state" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"
+                       decoration-warning="state == 'draft'"
+                       decoration-danger="state == 'cancelled'"
+                       decoration-info="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── FORM VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_coworking_reservation_form" model="ir.ui.view">
+        <field name="name">coworking.reservation.form</field>
+        <field name="model">coworking.reservation</field>
+        <field name="arch" type="xml">
+            <form string="Reservatie">
+                <header>
+                    <button name="action_confirm" string="Bevestigen" type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_done" string="Afronden" type="object"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" string="Annuleren" type="object"
+                            invisible="state in ('done', 'cancelled')"/>
+                    <button name="action_create_invoice" string="Factuur aanmaken" type="object"
+                            class="btn-secondary"
+                            invisible="state != 'confirmed' or invoice_id != False or billing_type == 'free_trial'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Reservatie">
+                            <field name="partner_id"/>
+                            <field name="workspace_id"/>
+                            <field name="workspace_type" readonly="1"/>
+                            <field name="attendees"/>
+                        </group>
+                        <group string="Tijdstip">
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="duration_hours" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Facturatie">
+                        <field name="currency_id" invisible="1"/>
+                        <field name="billing_type"/>
+                        <field name="contribution_amount"
+                               invisible="billing_type not in ('contribution', 'fixed_hourly', 'fixed_daily', 'fixed_monthly')"/>
+                        <field name="invoice_id" readonly="1"/>
+                        <field name="invoice_state" readonly="1" invisible="not invoice_id"/>
+                    </group>
+                    <group string="Notities">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── CALENDAR VIEW ─────────────────────────────────────────────── -->
+    <record id="view_coworking_reservation_calendar" model="ir.ui.view">
+        <field name="name">coworking.reservation.calendar</field>
+        <field name="model">coworking.reservation</field>
+        <field name="arch" type="xml">
+            <calendar string="Reservaties"
+                      date_start="start_datetime"
+                      date_stop="end_datetime"
+                      color="workspace_id"
+                      mode="week">
+                <field name="partner_id"/>
+                <field name="workspace_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ── SEARCH VIEW ───────────────────────────────────────────────── -->
+    <record id="view_coworking_reservation_search" model="ir.ui.view">
+        <field name="name">coworking.reservation.search</field>
+        <field name="model">coworking.reservation</field>
+        <field name="arch" type="xml">
+            <search string="Reservaties zoeken">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="workspace_id"/>
+                <filter string="Concept" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Bevestigd" name="confirmed" domain="[('state','=','confirmed')]"/>
+                <filter string="Afgerond" name="done" domain="[('state','=','done')]"/>
+                <filter string="Geannuleerd" name="cancelled" domain="[('state','=','cancelled')]"/>
+                <separator/>
+                <filter string="Vandaag" name="today"
+                        domain="[('start_datetime','&gt;=', datetime.datetime.now().replace(hour=0,minute=0,second=0).strftime('%Y-%m-%d %H:%M:%S')),
+                                 ('start_datetime','&lt;=', datetime.datetime.now().replace(hour=23,minute=59,second=59).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+                <separator/>
+                <group expand="0" string="Groepeer op">
+                    <filter string="Werkplek" name="group_workspace" context="{'group_by': 'workspace_id'}"/>
+                    <filter string="Klant" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Type" name="group_type" context="{'group_by': 'workspace_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── ACTION ────────────────────────────────────────────────────── -->
+    <record id="action_coworking_reservation" model="ir.actions.act_window">
+        <field name="name">Reservaties</field>
+        <field name="res_model">coworking.reservation</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="search_view_id" ref="view_coworking_reservation_search"/>
+        <field name="context">{'search_default_confirmed': 1}</field>
+    </record>
+
+    <!-- ── MENU ──────────────────────────────────────────────────────── -->
+    <menuitem id="menu_coworking_reservations"
+              name="Reservaties"
+              parent="menu_coworking_root"
+              action="action_coworking_reservation"
+              sequence="20"/>
+
+</odoo>

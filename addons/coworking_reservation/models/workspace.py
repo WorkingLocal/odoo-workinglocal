@@ -31,7 +31,7 @@ class CoworkingWorkspace(models.Model):
 
     # Locatie
     floor = fields.Char(string='Verdieping / Zone')
-    amenities = fields.Many2many(
+    amenity_ids = fields.Many2many(
         'coworking.amenity',
         string='Voorzieningen',
     )

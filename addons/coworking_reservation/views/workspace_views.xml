@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── LIST VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_coworking_workspace_list" model="ir.ui.view">
+        <field name="name">coworking.workspace.list</field>
+        <field name="model">coworking.workspace</field>
+        <field name="arch" type="xml">
+            <list string="Werkplekken" decoration-muted="not is_active">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="workspace_type"/>
+                <field name="capacity"/>
+                <field name="hourly_rate" optional="show"/>
+                <field name="daily_rate" optional="show"/>
+                <field name="monthly_rate" optional="show"/>
+                <field name="contribution_enabled"/>
+                <field name="show_on_signage"/>
+                <field name="reservation_count" string="Reservaties"/>
+                <field name="is_active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── FORM VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_coworking_workspace_form" model="ir.ui.view">
+        <field name="name">coworking.workspace.form</field>
+        <field name="model">coworking.workspace</field>
+        <field name="arch" type="xml">
+            <form string="Werkplek">
+                <header>
+                    <button name="%(action_coworking_reservation)d"
+                            string="Reservaties bekijken"
+                            type="action"
+                            context="{'default_workspace_id': active_id, 'search_default_workspace_id': active_id}"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_coworking_reservation)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                                context="{'default_workspace_id': active_id, 'search_default_workspace_id': active_id}">
+                            <field name="reservation_count" widget="statinfo" string="Reservaties"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Naam werkplek"/></h1>
+                        <h2><field name="workspace_type" readonly="0"/></h2>
+                    </div>
+                    <group>
+                        <group string="Algemeen">
+                            <field name="sequence"/>
+                            <field name="capacity"/>
+                            <field name="floor"/>
+                            <field name="is_active"/>
+                            <field name="amenity_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Tarieven">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="hourly_rate"/>
+                            <field name="daily_rate"/>
+                            <field name="monthly_rate"/>
+                        </group>
+                    </group>
+                    <group string="Vrije bijdrage">
+                        <field name="contribution_enabled"/>
+                        <field name="contribution_suggestions" invisible="not contribution_enabled"/>
+                        <field name="contribution_min" invisible="not contribution_enabled"/>
+                    </group>
+                    <group string="Xibo / Digitale schermen">
+                        <field name="show_on_signage"/>
+                        <field name="signage_label" invisible="not show_on_signage"/>
+                        <field name="has_interactive_display" invisible="workspace_type != 'hybrid_meeting'"/>
+                        <field name="display_brand" invisible="workspace_type != 'hybrid_meeting' or not has_interactive_display"/>
+                    </group>
+                    <notebook>
+                        <page string="Omschrijving">
+                            <field name="description" widget="html"/>
+                        </page>
+                        <page string="Reservaties">
+                            <field name="reservation_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="start_datetime"/>
+                                    <field name="end_datetime"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── SEARCH VIEW ───────────────────────────────────────────────── -->
+    <record id="view_coworking_workspace_search" model="ir.ui.view">
+        <field name="name">coworking.workspace.search</field>
+        <field name="model">coworking.workspace</field>
+        <field name="arch" type="xml">
+            <search string="Werkplekken zoeken">
+                <field name="name"/>
+                <field name="workspace_type"/>
+                <filter string="Actief" name="active" domain="[('is_active','=',True)]"/>
+                <filter string="Op schermen" name="signage" domain="[('show_on_signage','=',True)]"/>
+                <filter string="Vrije bijdrage" name="contribution" domain="[('contribution_enabled','=',True)]"/>
+                <separator/>
+                <group expand="0" string="Groepeer op">
+                    <filter string="Type" name="group_type" context="{'group_by': 'workspace_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ── ACTION ────────────────────────────────────────────────────── -->
+    <record id="action_coworking_workspace" model="ir.actions.act_window">
+        <field name="name">Werkplekken</field>
+        <field name="res_model">coworking.workspace</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_coworking_workspace_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <!-- ── AMENITY LIST VIEW ─────────────────────────────────────────── -->
+    <record id="view_coworking_amenity_list" model="ir.ui.view">
+        <field name="name">coworking.amenity.list</field>
+        <field name="model">coworking.amenity</field>
+        <field name="arch" type="xml">
+            <list string="Voorzieningen" editable="bottom">
+                <field name="name"/>
+                <field name="icon"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_coworking_amenity" model="ir.actions.act_window">
+        <field name="name">Voorzieningen</field>
+        <field name="res_model">coworking.amenity</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- ── MENU ──────────────────────────────────────────────────────── -->
+    <menuitem id="menu_coworking_root"
+              name="Working Local"
+              sequence="50"
+              web_icon="coworking_reservation,static/src/img/icon.png"/>
+
+    <menuitem id="menu_coworking_workspaces"
+              name="Werkplekken"
+              parent="menu_coworking_root"
+              action="action_coworking_workspace"
+              sequence="10"/>
+
+    <menuitem id="menu_coworking_config"
+              name="Configuratie"
+              parent="menu_coworking_root"
+              sequence="90"/>
+
+    <menuitem id="menu_coworking_amenities"
+              name="Voorzieningen"
+              parent="menu_coworking_config"
+              action="action_coworking_amenity"
+              sequence="10"/>
+
+</odoo>

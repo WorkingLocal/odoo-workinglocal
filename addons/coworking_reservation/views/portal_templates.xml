@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── PORTAL HOME: teller toevoegen ─────────────────────────────── -->
+    <template id="portal_my_home_reservation" name="Portal: Reservaties teller"
+              inherit_id="portal.portal_my_home"
+              customize_show="True">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="reservation_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Mijn reservaties</t>
+                <t t-set="url">/mijn/reservaties</t>
+                <t t-set="count" t-value="reservation_count"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ── RESERVATIELIJST (/mijn/reservaties) ───────────────────────── -->
+    <template id="portal_reservations" name="Mijn reservaties">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Mijn reservaties</t>
+            </t>
+            <t t-if="not reservations">
+                <div class="alert alert-info mt-3">
+                    Je hebt nog geen reservaties.
+                    <a href="/werkplekken" class="alert-link">Bekijk onze werkplekken</a>.
+                </div>
+            </t>
+            <t t-if="reservations">
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Referentie</th>
+                                <th>Werkplek</th>
+                                <th>Van</th>
+                                <th>Tot</th>
+                                <th>Status</th>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="reservations" t-as="res">
+                                <tr>
+                                    <td>
+                                        <a t-attf-href="/mijn/reservaties/#{res.id}"
+                                           t-esc="res.name"/>
+                                    </td>
+                                    <td t-esc="res.workspace_id.name"/>
+                                    <td t-esc="res.start_datetime" t-options='{"widget": "datetime"}'/>
+                                    <td t-esc="res.end_datetime" t-options='{"widget": "datetime"}'/>
+                                    <td>
+                                        <span t-attf-class="badge #{
+                                            'bg-warning text-dark' if res.state == 'draft' else
+                                            'bg-success' if res.state == 'confirmed' else
+                                            'bg-secondary' if res.state == 'done' else
+                                            'bg-danger'}"
+                                              t-esc="dict(draft='Concept', confirmed='Bevestigd',
+                                                         done='Afgerond', cancelled='Geannuleerd').get(res.state, res.state)"/>
+                                    </td>
+                                    <td>
+                                        <a t-attf-href="/mijn/reservaties/#{res.id}"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Bekijk
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ── RESERVATIE DETAIL (/mijn/reservaties/<id>) ─────────────────── -->
+    <template id="portal_reservation_detail" name="Reservatie detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" groups="base.group_public">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url"
+                       t-value="'/odoo/coworking/reservations/%s' % reservation.id"/>
+                </t>
+            </t>
+
+            <div class="row mt-3">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                Reservatie <span t-esc="reservation.name"/>
+                            </h5>
+                            <span t-attf-class="badge #{
+                                'bg-warning text-dark' if reservation.state == 'draft' else
+                                'bg-success' if reservation.state == 'confirmed' else
+                                'bg-secondary' if reservation.state == 'done' else
+                                'bg-danger'}"
+                                  t-esc="dict(draft='Concept', confirmed='Bevestigd',
+                                             done='Afgerond', cancelled='Geannuleerd').get(reservation.state, reservation.state)"/>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-4">Werkplek</dt>
+                                <dd class="col-sm-8" t-esc="reservation.workspace_id.name"/>
+
+                                <dt class="col-sm-4">Van</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="reservation.start_datetime"
+                                       t-options='{"widget": "datetime"}'/>
+                                </dd>
+
+                                <dt class="col-sm-4">Tot</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="reservation.end_datetime"
+                                       t-options='{"widget": "datetime"}'/>
+                                </dd>
+
+                                <dt class="col-sm-4">Duur</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="'%.1f' % reservation.duration_hours"/> uur
+                                </dd>
+
+                                <dt class="col-sm-4">Personen</dt>
+                                <dd class="col-sm-8" t-esc="reservation.attendees"/>
+
+                                <dt class="col-sm-4">Facturatie</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="dict(
+                                        free_trial='Gratis proefperiode',
+                                        contribution='Vrije bijdrage',
+                                        fixed_hourly='Uurtarief',
+                                        fixed_daily='Dagtarief',
+                                        fixed_monthly='Maandtarief'
+                                    ).get(reservation.billing_type, reservation.billing_type)"/>
+                                    <t t-if="reservation.contribution_amount">
+                                        — <strong t-esc="'€%.2f' % reservation.contribution_amount"/>
+                                    </t>
+                                </dd>
+
+                                <t t-if="reservation.invoice_id">
+                                    <dt class="col-sm-4">Factuur</dt>
+                                    <dd class="col-sm-8">
+                                        <a t-attf-href="/my/invoices/#{reservation.invoice_id.id}">
+                                            <t t-esc="reservation.invoice_id.name"/>
+                                        </a>
+                                        <span t-if="reservation.invoice_state"
+                                              class="ms-2 badge bg-info text-dark"
+                                              t-esc="reservation.invoice_state"/>
+                                    </dd>
+                                </t>
+                            </dl>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/mijn/reservaties" class="btn btn-sm btn-outline-secondary">
+                                ← Terug naar overzicht
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

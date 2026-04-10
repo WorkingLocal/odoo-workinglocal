@@ -8,6 +8,8 @@ services:
       - "8069:8069"
     volumes:
       - odoo-data:/var/lib/odoo
+      - odoo-addons:/mnt/extra-addons
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
     environment:
       - HOST=odoo-db
       - USER=${ODOO_DB_USER}
@@ -23,6 +25,19 @@ services:
     volumes:
       - odoo-db:/var/lib/postgresql/data
 
+  odoo-addons:
+    image: alpine/git
+    restart: "no"
+    volumes:
+      - odoo-addons:/addons
+    entrypoint: >
+      sh -c "rm -rf /addons/* &&
+             git clone --depth 1
+             https://github.com/WorkingLocal/odoo-workinglocal.git /tmp/repo &&
+             cp -r /tmp/repo/addons/* /addons/ &&
+             echo 'Addons gesynchroniseerd'"
+
 volumes:
   odoo-data:
   odoo-db:
+  odoo-addons:

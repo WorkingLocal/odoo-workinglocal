@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── WERKPLEKKEN OVERZICHT (/werkplekken) ───────────────────────── -->
+    <template id="website_workspaces" name="Werkplekken overzicht">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h1 class="fw-bold">Onze werkplekken</h1>
+                        <p class="text-muted">Kies de werkplek die bij jou past en reserveer direct online.</p>
+                    </div>
+                </div>
+                <div class="row g-4">
+                    <t t-foreach="workspaces" t-as="ws">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card workspace-card h-100 shadow-sm">
+                                <t t-if="ws.image">
+                                    <img t-attf-src="/web/image/coworking.workspace/#{ws.id}/image"
+                                         class="card-img-top"
+                                         style="height:180px; object-fit:cover;"
+                                         t-att-alt="ws.name"/>
+                                </t>
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h5 class="card-title mb-0" t-esc="ws.name"/>
+                                        <span class="badge bg-secondary workspace-type-badge"
+                                              t-esc="ws.workspace_type"/>
+                                    </div>
+                                    <p class="card-text text-muted small flex-grow-1"
+                                       t-if="ws.description">
+                                        <t t-out="ws.description"/>
+                                    </p>
+                                    <ul class="list-unstyled small mb-3">
+                                        <li>
+                                            <i class="bi bi-people me-1"/>
+                                            Capaciteit: <strong t-esc="ws.capacity"/> personen
+                                        </li>
+                                        <t t-if="ws.floor">
+                                            <li>
+                                                <i class="bi bi-geo-alt me-1"/>
+                                                <t t-esc="ws.floor"/>
+                                            </li>
+                                        </t>
+                                        <t t-if="ws.amenity_ids">
+                                            <li class="mt-1">
+                                                <t t-foreach="ws.amenity_ids" t-as="amenity">
+                                                    <i t-attf-class="bi #{amenity.icon} me-2"
+                                                       t-att-title="amenity.name"/>
+                                                </t>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                    <!-- Tarief info -->
+                                    <div class="mb-3 small">
+                                        <t t-if="ws.contribution_enabled">
+                                            <span class="text-success fw-semibold">
+                                                <i class="bi bi-heart me-1"/>Vrije bijdrage
+                                            </span>
+                                        </t>
+                                        <t t-elif="ws.hourly_rate">
+                                            <span>Vanaf <strong t-esc="'€%.0f' % ws.hourly_rate"/>/uur</span>
+                                        </t>
+                                        <t t-elif="ws.monthly_rate">
+                                            <span>Vanaf <strong t-esc="'€%.0f' % ws.monthly_rate"/>/maand</span>
+                                        </t>
+                                    </div>
+                                    <a t-attf-href="/werkplekken/#{ws.id}/reserveer"
+                                       class="btn btn-primary mt-auto">
+                                        Reserveer
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not workspaces">
+                        <div class="col-12 text-center py-5 text-muted">
+                            <i class="bi bi-building fs-1 d-block mb-3"/>
+                            Er zijn momenteel geen werkplekken beschikbaar.
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ── RESERVATIEFORMULIER (/werkplekken/<id>/reserveer) ──────────── -->
+    <template id="website_booking_form" name="Werkplek reserveren">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <nav aria-label="breadcrumb" class="mb-3">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/werkplekken">Werkplekken</a>
+                                </li>
+                                <li class="breadcrumb-item active" t-esc="workspace.name"/>
+                            </ol>
+                        </nav>
+                        <h1 class="fw-bold mb-1" t-esc="workspace.name"/>
+                        <p class="text-muted mb-4">
+                            <span class="badge bg-secondary me-2" t-esc="workspace.workspace_type"/>
+                            <i class="bi bi-people me-1"/>
+                            <t t-esc="workspace.capacity"/> personen
+                        </p>
+
+                        <form action="/werkplekken/reserveer/bevestig" method="post">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="workspace_id" t-att-value="workspace.id"/>
+
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold">Van</label>
+                                            <input type="datetime-local" id="start_datetime"
+                                                   name="start_datetime"
+                                                   class="form-control" required="required"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold">Tot</label>
+                                            <input type="datetime-local" id="end_datetime"
+                                                   name="end_datetime"
+                                                   class="form-control" required="required"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 small text-muted" id="duration_display"/>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Aantal personen</label>
+                                        <input type="number" name="attendees"
+                                               class="form-control"
+                                               min="1" t-att-max="workspace.capacity"
+                                               value="1" required="required"/>
+                                    </div>
+
+                                    <!-- Facturatie -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold">Facturatie</label>
+                                        <t t-if="workspace.contribution_enabled">
+                                            <input type="hidden" name="billing_type" value="contribution"/>
+                                            <p class="text-muted small mb-2">
+                                                Kies een bijdrage of geef een eigen bedrag in:
+                                            </p>
+                                            <div class="d-flex flex-wrap gap-2 mb-2">
+                                                <t t-foreach="suggestions" t-as="amount">
+                                                    <div class="contribution-option"
+                                                         t-att-data-amount="amount.strip()">
+                                                        €<t t-esc="amount.strip()"/>
+                                                    </div>
+                                                </t>
+                                                <div class="contribution-option" data-amount="custom">
+                                                    Eigen bedrag
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-text">€</span>
+                                                <input type="number" id="contribution_amount"
+                                                       name="contribution_amount"
+                                                       class="form-control"
+                                                       placeholder="0.00"
+                                                       step="0.01"
+                                                       t-att-min="workspace.contribution_min"/>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <select name="billing_type" class="form-select">
+                                                <t t-if="workspace.hourly_rate">
+                                                    <option value="fixed_hourly">
+                                                        Uurtarief (€<t t-esc="'%.0f' % workspace.hourly_rate"/>/u)
+                                                    </option>
+                                                </t>
+                                                <t t-if="workspace.daily_rate">
+                                                    <option value="fixed_daily">
+                                                        Dagtarief (€<t t-esc="'%.0f' % workspace.daily_rate"/>)
+                                                    </option>
+                                                </t>
+                                                <t t-if="workspace.monthly_rate">
+                                                    <option value="fixed_monthly">
+                                                        Maandtarief (€<t t-esc="'%.0f' % workspace.monthly_rate"/>)
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </t>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Reservatie bevestigen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
