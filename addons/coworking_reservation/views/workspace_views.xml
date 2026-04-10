@@ -101,10 +101,6 @@
                 <filter string="Actief" name="active" domain="[('is_active','=',True)]"/>
                 <filter string="Op schermen" name="signage" domain="[('show_on_signage','=',True)]"/>
                 <filter string="Vrije bijdrage" name="contribution" domain="[('contribution_enabled','=',True)]"/>
-                <separator/>
-                <group expand="0" string="Groepeer op">
-                    <filter string="Type" name="group_type" context="{'group_by': 'workspace_type'}"/>
-                </group>
             </search>
         </field>
     </record>

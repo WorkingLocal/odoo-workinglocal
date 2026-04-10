@@ -86,10 +86,6 @@
                 <filter string="Actief" name="active" domain="[('state','=','active')]"/>
                 <filter string="Verlopen" name="expired" domain="[('state','=','expired')]"/>
                 <filter string="In proefperiode" name="in_trial" domain="[('is_in_trial','=',True)]"/>
-                <separator/>
-                <group expand="0" string="Groepeer op">
-                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
-                </group>
             </search>
         </field>
     </record>
