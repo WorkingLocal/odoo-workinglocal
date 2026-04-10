@@ -23,6 +23,7 @@
         'views/membership_views.xml',
         'views/website_templates.xml',
         'views/portal_templates.xml',
+        'views/menu.xml',
     ],
     'assets': {
         'web.assets_frontend': [

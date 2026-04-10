@@ -110,11 +110,5 @@
         <field name="context">{'search_default_confirmed': 1}</field>
     </record>
 
-    <!-- ── MENU ──────────────────────────────────────────────────────── -->
-    <menuitem id="menu_coworking_reservations"
-              name="Reservaties"
-              parent="menu_coworking_root"
-              action="action_coworking_reservation"
-              sequence="20"/>
 
 </odoo>

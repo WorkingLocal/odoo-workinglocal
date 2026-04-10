@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hoofdmenu — laadt als laatste zodat alle actions al bestaan -->
+    <menuitem id="menu_coworking_root"
+              name="Working Local"
+              sequence="50"/>
+
+    <menuitem id="menu_coworking_workspaces"
+              name="Werkplekken"
+              parent="menu_coworking_root"
+              action="action_coworking_workspace"
+              sequence="10"/>
+
+    <menuitem id="menu_coworking_reservations"
+              name="Reservaties"
+              parent="menu_coworking_root"
+              action="action_coworking_reservation"
+              sequence="20"/>
+
+    <menuitem id="menu_coworking_memberships"
+              name="Lidmaatschappen"
+              parent="menu_coworking_root"
+              action="action_coworking_membership"
+              sequence="30"/>
+
+    <menuitem id="menu_coworking_config"
+              name="Configuratie"
+              parent="menu_coworking_root"
+              sequence="90"/>
+
+    <menuitem id="menu_coworking_amenities"
+              name="Voorzieningen"
+              parent="menu_coworking_config"
+              action="action_coworking_amenity"
+              sequence="10"/>
+
+</odoo>
