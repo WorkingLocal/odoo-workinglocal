@@ -76,3 +76,32 @@ a:not(.btn) {
     color: #1A2E5A !important;
     font-weight: 600;
 }
+
+// ── Productafbeeldingen: volledig tonen, niet bijsnijden ──────────────────────
+// Backend: product form + lijstweergave
+.o_field_image img,
+.o_kanban_image img,
+.o_list_view .o_field_image img {
+    object-fit: contain !important;
+    background-color: #fff;
+}
+
+// E-commerce frontend: productpagina galerij
+.o_carousel_product .carousel-item img,
+.o_carousel_product img,
+.product_detail_img,
+.o_wsale_filmstrip img,
+.o_wsale_filmstrip_img,
+.product_detail .product_detail_main img,
+img.product_detail_img {
+    object-fit: contain !important;
+    background-color: #fff;
+}
+
+// Productkaarten in de webshop (lijstpagina)
+.o_wsale_product_grid_item img,
+.oe_product img,
+.oe_product_image img {
+    object-fit: contain !important;
+    background-color: #fff;
+}
