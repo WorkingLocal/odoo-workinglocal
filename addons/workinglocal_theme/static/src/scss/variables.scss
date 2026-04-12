@@ -5,3 +5,11 @@ $o-community-color:     #1A2E5A;
 $o-brand-odoo:          #1A2E5A;
 $o-brand-primary:       #1A2E5A;
 $o-brand-secondary:     #F5B800;
+
+// Navbar tekst wit, actieve items geel
+$o-navbar-entry-color:          rgba(255, 255, 255, 0.85);
+$o-navbar-entry-color--hover:   #F5B800;
+$o-navbar-entry-color--active:  #F5B800;
+$o-navbar-entry-bg--hover:      rgba(245, 184, 0, 0.12);
+$o-navbar-entry-bg--active:     rgba(245, 184, 0, 0.18);
+$o-navbar-brand-color:          #F5B800;
