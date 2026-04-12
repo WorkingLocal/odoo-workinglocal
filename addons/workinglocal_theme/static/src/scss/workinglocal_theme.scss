@@ -1,0 +1,77 @@
+// Working Local — Odoo backend huisstijl
+// Marineblauw: #1A2E5A | Geel: #F5B800
+
+// Navigatiebalk bovenaan
+.o_main_navbar {
+    background-color: #1A2E5A !important;
+    border-bottom: 3px solid #F5B800 !important;
+
+    // Logo in navbar
+    .o_menu_brand {
+        color: #F5B800 !important;
+        font-weight: 700;
+    }
+
+    // Navigatie-items
+    .o_nav_entry, .o_menu_sections > * > a, .o_menu_sections .o_dropdown {
+        color: #b2cce8 !important;
+
+        &:hover, &:focus {
+            color: #F5B800 !important;
+            background-color: rgba(245, 184, 0, 0.1) !important;
+        }
+    }
+
+    // Actief menu-item
+    .o_menu_sections .o_nav_entry.active,
+    .o_menu_sections .o_dropdown.open > .o_dropdown_toggler {
+        color: #F5B800 !important;
+        border-bottom: 2px solid #F5B800 !important;
+    }
+
+    // Iconen (zoek, instellingen, gebruiker)
+    .o_icon_button, .o_user_menu .dropdown-toggle {
+        color: #b2cce8 !important;
+        &:hover { color: #F5B800 !important; }
+    }
+}
+
+// App-switcher (home menu)
+.o_home_menu {
+    .o_app:hover .o_app_name {
+        color: #1A2E5A !important;
+    }
+}
+
+// Primaire knoppen
+.btn-primary {
+    background-color: #1A2E5A !important;
+    border-color: #1A2E5A !important;
+    color: #fff !important;
+
+    &:hover, &:focus {
+        background-color: #F5B800 !important;
+        border-color: #F5B800 !important;
+        color: #1A2E5A !important;
+    }
+}
+
+// Links
+a {
+    color: #1A2E5A;
+    &:hover { color: #c49300; }
+}
+
+// Zijbalk (control panel actieve items)
+.o_action_manager .o_list_view .o_selected_row td,
+.o_kanban_view .o_kanban_record.o_kanban_record_selected {
+    border-left: 3px solid #F5B800 !important;
+}
+
+// Breadcrumb
+.o_breadcrumb .active {
+    color: #1A2E5A !important;
+}
+
+// Favorieten en badges
+.o_priority .fa-star { color: #F5B800 !important; }
