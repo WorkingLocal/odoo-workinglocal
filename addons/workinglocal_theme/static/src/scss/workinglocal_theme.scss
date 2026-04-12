@@ -78,30 +78,39 @@ a:not(.btn) {
 }
 
 // ── Productafbeeldingen: volledig tonen, niet bijsnijden ──────────────────────
+// Overschrijft Odoo's %o-wsale-shop-thumb (object-fit: cover) op alle niveaus
+
+// Shop thumbnail grid
+.oe_website_sale .oe_product_image img,
+.oe_website_sale .oe_product_image_link img,
+.oe_product .oe_product_image img,
+.o_cart_product_image img,
+.o_sale_product_configurator_img img {
+    object-fit: contain !important;
+    object-position: center !important;
+    background-color: #f8f8f8 !important;
+}
+
+// Productdetailpagina galerij
+.product_detail_img,
+.o_product_detail_img_wrapper .product_detail_img,
+.o_wsale_product_page_grid_column img {
+    object-fit: contain !important;
+    background-color: #f8f8f8 !important;
+}
+
+// Witte overlay verwijderen
+.oe_product_image_link::after,
+.oe_product_image::after,
+.o_product_detail_img_wrapper::after {
+    display: none !important;
+    background: none !important;
+}
+
 // Backend: product form + lijstweergave
 .o_field_image img,
 .o_kanban_image img,
 .o_list_view .o_field_image img {
     object-fit: contain !important;
-    background-color: #fff;
-}
-
-// E-commerce frontend: productpagina galerij
-.o_carousel_product .carousel-item img,
-.o_carousel_product img,
-.product_detail_img,
-.o_wsale_filmstrip img,
-.o_wsale_filmstrip_img,
-.product_detail .product_detail_main img,
-img.product_detail_img {
-    object-fit: contain !important;
-    background-color: #fff;
-}
-
-// Productkaarten in de webshop (lijstpagina)
-.o_wsale_product_grid_item img,
-.oe_product img,
-.oe_product_image img {
-    object-fit: contain !important;
-    background-color: #fff;
+    background-color: #f8f8f8;
 }
