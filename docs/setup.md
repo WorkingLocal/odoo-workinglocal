@@ -86,7 +86,27 @@ De volledige productcatalogus (66 producten, 7 categoriegroepen, 4 attributen) w
 - Odoo online bereikbaar op `https://odoo.workinglocal.be`
 - eCommerce module geactiveerd (voor `product.image`)
 
-### Stap 1 — Categorieën en attributen
+### Stap 1 t/m 5 — Volledig importscript
+
+Alles in één script: categorieën, attributen, producten, omschrijvingen (gescrapet van pv-consulting.com), aankoopprijzen (incl. → excl. 21% BTW) en afbeeldingen.
+
+```bash
+# Script staat in de repo: scripts/odoo_import_full.py
+# Kopieer naar VPS en voer uit:
+scp scripts/odoo_import_full.py root@23.94.220.181:/tmp/
+ssh root@23.94.220.181 "python3 /tmp/odoo_import_full.py"
+```
+
+Het script is **idempotent**: producten die al bestaan (op `default_code`) worden overgeslagen. Alleen nieuw toegevoegde producten worden aangemaakt met afbeeldingen en omschrijvingen.
+
+**Nieuw product toevoegen:**
+1. Voeg een `make_product(...)` aanroep toe onderaan de juiste sectie
+2. Geef de `slug` mee van de pv-consulting productpagina
+3. Script haalt automatisch naam, omschrijvingen, aankoopprijs en foto's op
+
+---
+
+### Stap 1 — Categorieën en attributen (legacy, vervangen door bovenstaand script)
 
 ```bash
 # Script staat in: /tmp/odoo_categories.py (of zie sectie 6 in CLAUDE.md)
