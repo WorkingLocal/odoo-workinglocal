@@ -475,10 +475,12 @@ make_product('LAP-04',
     'Laptop Normal 2-in-1 14" — Lenovo X1 Yoga Gen 6, i7, 16GB, 1TB, 4K touch 360°, Win11 Pro',
     'Laptops', 699,
     slug='lenovo-thinkpad-x1-yoga-gen-6-14--2-in-1-laptop-tablet.html')
-make_product('LAP-05',
+lap05 = make_product('LAP-05',
     'Laptop High End 14" — Dell Precision 5480, i7-13700H, 16GB, 512GB, RTX A1000 6GB, nieuw',
     'Laptops', 1499,
     slug='dell-precision-5480-i7-16gb-gpu-rtx-a1000-6gb---nieuw-in-doos.html')
+# pv-consulting toont geen prijs voor LAP-05 — handmatig opgegeven: €1499 incl. 21% BTW
+write('product.template', [lap05], {'standard_price': round(1499 / BTW, 2)})
 
 # ── 9. Desktops & mini-pc's ──────────────────────────────────────────────────
 print("\n=== 9. Desktops & mini-pc's ===")
