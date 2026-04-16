@@ -7,9 +7,10 @@ Eén script per leverancier. Alle scripts delen `odoo_client.py` voor de Odoo XM
 ```
 scripts/suppliers/
 ├── odoo_client.py      ← gedeelde client (importeer dit in elk leveranciersscript)
-├── pv_consulting.py    ← PV Consulting (pv-consulting.com) — webscraping
-├── leverancier_2.py    ← toekomstig — API-gebaseerd
-└── leverancier_3.py    ← toekomstig — API-gebaseerd
+├── pv_consulting.py    ← PV Consulting (pv-consulting.com) — initiële import, webscraping
+├── wimood.py           ← Wimood — initiële import (eenmalig, 380 producten aangemaakt)
+├── wimood_sync.py      ← Wimood — nachtelijkse sync: prijzen, voorraad, nieuwe producten
+└── leverancier_3.py    ← toekomstig
 ```
 
 ## Gebruik
@@ -17,7 +18,13 @@ scripts/suppliers/
 ```bash
 # Kopieer naar VPS en voer uit:
 scp scripts/suppliers/*.py root@23.94.220.181:/tmp/
+
+# Initiële import (eenmalig):
 ssh root@23.94.220.181 "cd /tmp && python3 pv_consulting.py"
+ssh root@23.94.220.181 "cd /tmp && python3 wimood.py"
+
+# Nachtelijkse sync (normaal via cron — zie n8n-workinglocal/README.md):
+ssh root@23.94.220.181 "ODOO_PASSWORD=$(cat /root/.odoo_password) python3 /tmp/wimood_sync.py"
 ```
 
 Elk script vraagt bij opstart om het Odoo-wachtwoord.
@@ -39,6 +46,41 @@ make_product('MON-27-NEW',
     '27"', 199,
     slug='nieuw-model-slug.html')
 ```
+
+## Wimood — UniFi productlijn
+
+Wimood levert producten via een XML-API. Authenticatie via `api_key` + `klantnummer` als queryparameter.
+
+```
+URL: https://wimoodshop.nl/api/index.php?api_key=...&klantnummer=11556
+```
+
+De XML bevat alle producten van Wimood. `wimood.py` filtert alleen:
+- `brand = 'Ubiquiti'`
+- `'UniFi'` aanwezig in de productnaam
+
+Hiermee worden AirMAX, EdgeRouter, EdgeSwitch en andere Ubiquiti-lijnen automatisch uitgesloten.
+
+**Prijsvelden (beide excl. BTW — B2B):**
+
+| XML-veld | Odoo-veld        | Betekenis                   |
+|----------|------------------|-----------------------------|
+| `prijs`  | `standard_price` | Wimood inkoopprijs           |
+| `msrp`   | `list_price`     | Aanbevolen verkoopprijs      |
+
+**Categorieën** aangemaakt onder `Netwerk & WiFi`:
+Access Points, Switches, Gateways, Beveiliging, Controllers, Accessoires
+
+**Custom veld** `x_wimood_stock` op `product.template`:
+Slaat de actuele Wimood-voorraad op. Aangemaakt automatisch bij eerste sync-run.
+
+**Nachtelijkse sync** via `wimood_sync.py`:
+- Werkt prijzen en `x_wimood_stock` bij voor alle 380 producten
+- Maakt nieuwe producten aan die in de XML verschijnen
+- POSt JSON-samenvatting naar n8n webhook (`/wimood-sync`)
+- n8n verstuurt e-mailmelding als drempels overschreden worden
+
+Zie **n8n-workinglocal/README.md** voor volledige setup-instructies (cron + n8n workflow importeren).
 
 ## Nieuw leveranciersscript aanmaken
 

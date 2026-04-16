@@ -714,24 +714,49 @@ odoo --stop-after-init -d [db] --backup /tmp/odoo-backup-$(date +%Y%m%d-%H%M).zi
 
 ---
 
-## 10. Openstaande producten
+## 10. Leveranciersscripts
+
+Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
+
+### PV Consulting — pv-consulting.com
+- Script: `scripts/suppliers/pv_consulting.py`
+- Methode: webscraping (curl, HTML-regex)
+- SKU-reeks: `MON-22-*`, `MON-27-*`, `MON-34-*`, `DESK-*`, `CHAIR-*`, `LAP-*`, `WS-*`, `KBM-*`, `SRV-*`
+- Prijzen: scraped van pagina **incl.** 21% BTW → `round(prijs / 1.21, 2)` voor `standard_price`
+
+### Wimood — wimoodshop.nl
+- Script: `scripts/suppliers/wimood.py`
+- Methode: XML-API (`https://wimoodshop.nl/api/index.php?api_key=...&klantnummer=11556`)
+- Filter: `brand='Ubiquiti'` én `'UniFi'` in productnaam (sluit AirMAX/EdgeRouter/etc. uit)
+- SKU: Wimood `product_code` rechtstreeks als `default_code` (bv. `U6-Pro`, `USW-16-POE`)
+- Prijzen in XML zijn **excl.** BTW: `prijs` → `standard_price`, `msrp` → `list_price`
+- Categorieën: `Netwerk & WiFi` → Access Points / Switches / Gateways / Beveiliging / Controllers / Accessoires
+- Afbeeldingen: SVG WiFi-placeholder (geen afbeeldings-URL in Wimood XML)
+
+### Nieuw leveranciersscript
+1. Maak `leverancier_naam.py` in `scripts/suppliers/`
+2. Importeer bovenaan: `from odoo_client import OdooClient, svg_placeholder, b64`
+3. Voeg de SKU-reeks toe in dit overzicht (sectie 10)
+
+---
+
+## 11. Openstaande producten
 
 | # | Product | Ontbreekt |
 |---|---------|-----------|
 | 1 | Bureaustoel variant 1 & 2 | Link + prijs |
 | 2 | Gewone stoel | Link + prijs |
-| 3 | HP 22" beeldscherm | Link + prijs |
-| 4 | HP draadloze desktops (2 varianten) | Link + prijs |
-| 5 | Hybride meeting-set | Omschrijving + prijs |
-| 6 | OBS-Studio multicam setup | Omschrijving + prijs |
-| 7 | Informatiezuil 43" Dell op statief | Link + prijs |
-| 8 | Interactief whiteboard 75" Philips op statief | Link + prijs |
-| 9 | Touchscreen Kiosk 32" portrait | Prijs koop + verhuur |
-| 10 | Volledig uitgeruste circulaire werkplek (bundel) | Samenstelling + prijs |
+| 3 | HP draadloze desktops (2 varianten) | Link + prijs |
+| 4 | Hybride meeting-set | Omschrijving + prijs |
+| 5 | OBS-Studio multicam setup | Omschrijving + prijs |
+| 6 | Informatiezuil 43" Dell op statief | Link + prijs |
+| 7 | Interactief whiteboard 75" Philips op statief | Link + prijs |
+| 8 | Touchscreen Kiosk 32" portrait | Prijs koop + verhuur |
+| 9 | Volledig uitgeruste circulaire werkplek (bundel) | Samenstelling + prijs |
 
 ---
 
-## 11. Referenties
+## 12. Referenties
 
 | | |
 |---|---|
