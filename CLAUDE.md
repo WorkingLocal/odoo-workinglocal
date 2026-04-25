@@ -55,9 +55,9 @@ docker exec -it [odoo-container] bash
 import xmlrpc.client
 
 url      = 'https://odoo.workinglocal.be'
-db       = '[database-naam]'
-username = '[admin-email]'
-password = '[wachtwoord]'
+db       = 'workinglocal'   # enige database, lege 'odoo' db verwijderd 2026-04-25
+username = 'info@workinglocal.be'
+password = '[zie Vaultwarden: Odoo CE - odoo.workinglocal.be]'
 
 common = xmlrpc.client.ServerProxy(f'{url}/xmlrpc/2/common')
 uid    = common.authenticate(db, username, password, {})
@@ -688,7 +688,34 @@ Volledig volumepad opzoeken: `docker inspect odoo-[id] --format '{{json .Mounts}
 
 ---
 
-## 9. Veiligheidsgrenzen
+## 9. Config deployment
+
+De Coolify server-side docker-compose bevat **geen** bind mount voor `odoo.conf`.
+Na elke config wijziging handmatig deployen:
+
+```bash
+scp config/odoo.conf root@23.94.220.181:/data/coolify/services/wmsa9jotez65ynj0xsb748rq/config/odoo.conf
+ssh root@23.94.220.181 'docker cp /data/coolify/services/wmsa9jotez65ynj0xsb748rq/config/odoo.conf odoo-wmsa9jotez65ynj0xsb748rq:/etc/odoo/odoo.conf && docker restart odoo-wmsa9jotez65ynj0xsb748rq'
+```
+
+Master password (database manager): `bptz-dskh-cec4` — staat in `odoo.conf` als `admin_passwd`.
+Database: enkel `workinglocal` (lege `odoo` db verwijderd 2026-04-25).
+
+---
+
+## 10. Klantendossiers (CRM)
+
+Scripts staan in `scripts/`. Gebruik `OdooClient` uit `scripts/suppliers/odoo_client.py`.
+
+| Klant | Odoo id | Script |
+|-------|---------|--------|
+| Paul & Katrien Van Loveren (Vakantiehuis Muziekbos) | 7 | `klant_muziekbos.py` |
+| Steven Ide & Ilse Tack (Waregem) | 9 | `klant_ide_steven.py` |
+| Werkplaats Walter BV (Anderlecht) | 10 | `klant_werkplaats_walter.py` |
+
+---
+
+## 12. Veiligheidsgrenzen
 
 ### Nooit zonder bevestiging:
 - workinglocal.be (productie) aanraken
@@ -714,7 +741,7 @@ odoo --stop-after-init -d [db] --backup /tmp/odoo-backup-$(date +%Y%m%d-%H%M).zi
 
 ---
 
-## 10. Leveranciersscripts
+## 13. Leveranciersscripts
 
 Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
 
@@ -740,7 +767,7 @@ Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
 
 ---
 
-## 11. Openstaande producten
+## 14. Openstaande producten
 
 | # | Product | Ontbreekt |
 |---|---------|-----------|
@@ -756,7 +783,7 @@ Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
 
 ---
 
-## 12. Referenties
+## 15. Referenties
 
 | | |
 |---|---|
