@@ -738,12 +738,17 @@ Scripts staan in `scripts/`. Gebruik `OdooClient` uit `scripts/suppliers/odoo_cl
 
 ### Projecten (opvolging via klantenportaal)
 
-| id | Project | Klant | Taken |
-|----|---|---|---|
-| 1 | Vakantiehuis Muziekbos - Wifi uitbreiding | id=7 | 3 |
-| 2 | Ide - Tack - Netwerk oplevering | id=9 | 6 |
-| 3 | Werkplaats Walter - Netwerk & ICT | id=10 | 12 |
-| 4 | Manu BV - Project | id=17 | 1 (placeholder) |
+| id | Project | Klant | Taken | Handleiding taak-id |
+|----|---|---|---|---|
+| 1 | Vakantiehuis Muziekbos - Wifi uitbreiding | id=7 | 4 | 24 |
+| 2 | Ide - Tack - Netwerk oplevering | id=9 | 7 | 25 |
+| 3 | Werkplaats Walter - Netwerk & ICT | id=10 | 13 | 26 |
+| 4 | Manu BV - Project | id=17 | 1 (placeholder) | — |
+
+Handleidingen aangemaakt via `scripts/klant_handleidingen.py` (2026-04-27):
+- Taak 24: "Handleiding: TP-Link Deco wifi" — project 1 (Muziekbos)
+- Taak 25: "Handleiding: Parental Control" — project 2 (Ide-Tack)
+- Taak 26: "Documentatie: Netwerk & Unifi installatie" — project 3 (Werkplaats Walter)
 
 Klanten volgen op via: **https://odoo.workinglocal.be/my**
 **Nog geen uitnodigingsmails verstuurd** — email staat bewust uitgeschakeld.
