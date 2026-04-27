@@ -701,6 +701,10 @@ ssh root@23.94.220.181 'docker cp /data/coolify/services/wmsa9jotez65ynj0xsb748r
 Master password (database manager): `bptz-dskh-cec4` — staat in `odoo.conf` als `admin_passwd`.
 Database: enkel `workinglocal` (lege `odoo` db verwijderd 2026-04-25).
 
+**E-mail: BEWUST UITGESCHAKELD.**
+Geen `ir.mail_server` geconfigureerd. `odoo.conf` wijst naar localhost (geen SMTP).
+Odoo kan geen mails versturen naar klanten. Activeer pas na expliciete beslissing via Instellingen > Technisch > Uitgaande mailserver.
+
 ---
 
 ## 10. Klantendossiers (CRM)
