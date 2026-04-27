@@ -707,15 +707,50 @@ Odoo kan geen mails versturen naar klanten. Activeer pas na expliciete beslissin
 
 ---
 
-## 10. Klantendossiers (CRM)
+## 10. Klantendossiers (CRM + Project + Portaal)
 
 Scripts staan in `scripts/`. Gebruik `OdooClient` uit `scripts/suppliers/odoo_client.py`.
 
-| Klant | Odoo id | Script |
-|-------|---------|--------|
-| Paul & Katrien Van Loveren (Vakantiehuis Muziekbos) | 7 | `klant_muziekbos.py` |
-| Steven Ide & Ilse Tack (Waregem) | 9 | `klant_ide_steven.py` |
-| Werkplaats Walter BV (Anderlecht) | 10 | `klant_werkplaats_walter.py` |
+### Klantenfiches
+
+| id | Klantenfiche | Type | Script |
+|----|---|---|---|
+| 7 | Vakantiehuis Muziekbos | Bedrijf | `klant_muziekbos.py` |
+| 9 | Ide - Tack | Bedrijf | `klant_ide_steven.py` |
+| 10 | Werkplaats Walter | Bedrijf | `klant_werkplaats_walter.py` |
+| 17 | Manu BV | Bedrijf | `klant_contactpersonen.py` |
+
+### Contactpersonen
+
+| id | Naam | Ouder | Tel | Email | Portaal uid |
+|----|---|---|---|---|---|
+| 11 | Paul Van Loveren | Vakantiehuis Muziekbos | 0473 70 25 46 | info@vakantiehuis-muziekbos.be | 5 |
+| 12 | Katrien Van Loveren | Vakantiehuis Muziekbos | — | info@vakantiehuis-muziekbos.be | 6 |
+| 13 | Ilse Tack | Ide - Tack | — | tackilse@hotmail.com | 7 |
+| 14 | Teun Verbruggen | Werkplaats Walter | 0476 43 15 63 | teun@werkplaatswalter.be | 8 |
+| 15 | Steven Ide | Ide - Tack | 0479 79 36 77 | Stivie02@hotmail.com | 9 |
+| 16 | Lien Van Steendam | Werkplaats Walter | 0471 56 20 29 | lien@werkplaatswalter.be | 10 |
+| 18 | Manu Mattelin | Manu BV | 0478/702305 | manu.mattelin@telenet.be | 11 |
+| 19 | Isabelle Volckaert | Manu BV | — | — | — |
+
+> Katrien Van Loveren (id=12) deelt email met Paul. Aanpassen als eigen adres bekend.
+> Nog ontbrekend: tel Katrien, Ilse Tack, Isabelle Volckaert + email Isabelle.
+
+### Projecten (opvolging via klantenportaal)
+
+| id | Project | Klant | Taken |
+|----|---|---|---|
+| 1 | Vakantiehuis Muziekbos - Wifi uitbreiding | id=7 | 3 |
+| 2 | Ide - Tack - Netwerk oplevering | id=9 | 6 |
+| 3 | Werkplaats Walter - Netwerk & ICT | id=10 | 12 |
+| 4 | Manu BV - Project | id=17 | 1 (placeholder) |
+
+Klanten volgen op via: **https://odoo.workinglocal.be/my**
+**Nog geen uitnodigingsmails verstuurd** — email staat bewust uitgeschakeld.
+
+### Odoo 19 CE veldvalkuilen
+- `res.partner`: geen `mobile` veld → gebruik `phone`
+- `res.users` aanmaken: gebruik `group_ids` niet `groups_id`
 
 ---
 
