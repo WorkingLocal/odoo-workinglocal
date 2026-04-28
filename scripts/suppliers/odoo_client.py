@@ -157,6 +157,8 @@ def scrape_pv_page(slug):
         try:
             price_incl = float(m.group(1).replace(',', '.'))
             result['standard_price'] = round(price_incl / PV_BTW, 2)
+            # PV-prijs incl. BTW = onze verkoopprijs excl. BTW (21% markup op cost)
+            result['list_price_auto'] = price_incl
         except ValueError:
             pass
 

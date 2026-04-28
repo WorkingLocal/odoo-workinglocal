@@ -791,9 +791,11 @@ Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
 
 ### PV Consulting — pv-consulting.com
 - Script: `scripts/suppliers/pv_consulting.py`
-- Methode: webscraping (curl, HTML-regex)
-- SKU-reeks: `MON-22-*`, `MON-27-*`, `MON-34-*`, `DESK-*`, `CHAIR-*`, `LAP-*`, `WS-*`, `KBM-*`, `SRV-*`
+- Leverancier: `res.partner` "PV Consulting" (supplier_rank=1, BE)
+- Methode: webscraping (curl, HTML-regex) + automatische `seller_ids` koppeling
+- SKU-reeks: `MON-22-*`, `MON-27-*`, `MON-32-*`, `MON-34-*`, `MON-43-*`, `DESK-*`, `LAP-*`, `PC-*`, `SRV-*`, `ARM-*`, `DOCK-*`, `CONF-*`, `FURN-*`, `NET-*`, `SIGN-*`, `RENT-*`
 - Prijzen: scraped van pagina **incl.** 21% BTW → `round(prijs / 1.21, 2)` voor `standard_price`
+- Patch-sectie: voegt PV Consulting als leverancier toe aan reeds bestaande producten (idempotent)
 
 ### Wimood — wimoodshop.nl
 - Script: `scripts/suppliers/wimood.py`
@@ -803,6 +805,19 @@ Scripts staan in `scripts/suppliers/`. Gedeelde module: `odoo_client.py`.
 - Prijzen in XML zijn **excl.** BTW: `prijs` → `standard_price`, `msrp` → `list_price`
 - Categorieën: `Netwerk & WiFi` → Access Points / Switches / Gateways / Beveiliging / Controllers / Accessoires
 - Afbeeldingen: SVG WiFi-placeholder (geen afbeeldings-URL in Wimood XML)
+
+### DSIT — patchkabel.be
+- Geen script: producten worden manueel aangemaakt per item
+- Leverancier: `res.partner` "DSIT" (id=21, supplier_rank=1, BE)
+- Website: https://www.patchkabel.be
+- SKU-reeks: product code rechtstreeks van patchkabel.be (bv. `DC-6A1-005`)
+- Prijsregel: aankoopprijs = website excl. BTW; verkoopprijs manueel instellen
+- Categorie: Netwerkhardware → Switches / Accessoires netwerk
+- Alle kabels en netwerking buiten Ubiquiti komen van DSIT
+
+### Prijsregel leveranciers (algemeen)
+- Handmatig ingestelde `list_price` in het script is altijd leading
+- Enkel bij `list_price=0`: PV-website prijs incl. BTW = onze verkoopprijs excl. BTW (21% markup op cost)
 
 ### Nieuw leveranciersscript
 1. Maak `leverancier_naam.py` in `scripts/suppliers/`

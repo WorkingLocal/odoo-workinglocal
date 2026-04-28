@@ -9,6 +9,7 @@ Gebruik:
 
 Werking:
     - Idempotent: producten die al bestaan (op default_code) worden overgeslagen
+    - Patch: voegt PV Consulting als leverancier toe aan reeds bestaande producten
     - Scrapet automatisch van pv-consulting.com:
         * Offerteomschrijving (u-product-desc)
         * Ecommerce-omschrijving (u-product-full-desc)
@@ -26,7 +27,6 @@ import sys
 import os
 import time
 
-# Zorg dat odoo_client.py vindbaar is (zelfde map)
 sys.path.insert(0, os.path.dirname(__file__))
 from odoo_client import (
     OdooClient, scrape_pv_page, upload_images,
@@ -35,6 +35,29 @@ from odoo_client import (
 
 # ── Verbinding ────────────────────────────────────────────────────────────────
 odoo = OdooClient()
+
+
+# ── Leverancier ───────────────────────────────────────────────────────────────
+def get_or_create_pv_partner(odoo):
+    res = odoo.search_read('res.partner', [('name', '=', 'PV Consulting')], ['id'])
+    if res:
+        return res[0]['id']
+    be = odoo.search_read('res.country', [('code', '=', 'BE')], ['id'])
+    partner_id = odoo.create('res.partner', {
+        'name':          'PV Consulting',
+        'is_company':    True,
+        'supplier_rank': 1,
+        'website':       'https://pv-consulting.com',
+        'country_id':    be[0]['id'] if be else False,
+    })
+    print(f"  ✓ Leverancier aangemaakt: PV Consulting (id={partner_id})")
+    return partner_id
+
+
+print("\n=== 0. Leverancier ===")
+pv_id = get_or_create_pv_partner(odoo)
+print(f"  PV Consulting id={pv_id}")
+
 
 # ── 1. Categorieën ───────────────────────────────────────────────────────────
 print("\n=== 1. Categorieën ===")
@@ -47,14 +70,16 @@ parents = {
     'Accessoires':         odoo.get_or_create_cat('Accessoires'),
     'Meubelen':            odoo.get_or_create_cat('Meubelen'),
     'Diensten':            odoo.get_or_create_cat('Diensten'),
+    'Netwerkhardware':     odoo.get_or_create_cat('Netwerkhardware'),
 }
 children_map = {
     'Circulaire werkplek': ["Bureau's", 'Tafels', 'Stoelen'],
-    'Beeldschermen':       ['22"', '27"', '32"', '34" Ultrawide'],
+    'Beeldschermen':       ['22"', '27"', '32"', '34" Ultrawide', '43"'],
     'IT-hardware':         ['Laptops', "Desktops & mini-pc's", 'Servers & werkstations'],
     'Accessoires':         ['Monitorarmen', 'Docking stations', 'Draadloze desktops', 'Conference sets'],
     'Meubelen':            ['Kasten', 'Zitmeubelen'],
     'Diensten':            ['Wifi', 'Focussessies', 'AV & Studio', 'Logistiek'],
+    'Netwerkhardware':     ['Switches', 'Accessoires netwerk'],
 }
 cat_ids = dict(parents)
 for parent_name, child_names in children_map.items():
@@ -66,14 +91,16 @@ print(f"✓ {len(cat_ids)} categorieën klaar")
 # ── 2. Attributen ────────────────────────────────────────────────────────────
 print("\n=== 2. Attributen ===")
 odoo.get_or_create_attribute('Merk',
-    ['Dell','HP','Lenovo','LG','Samsung','Philips','NEC','SMART','Huawei','Polycom'])
+    ['Dell','HP','Lenovo','LG','Samsung','Philips','NEC','SMART','Huawei','Polycom',
+     'Yealink','Barco','D-Link','TP-Link','ASUS','Google','AMD','Nvidia','WD'])
 odoo.get_or_create_attribute('Schermdiagonaal',
     ['22"','23"','27"','32"','34"','42"','43"','55"','75"'])
 odoo.get_or_create_attribute('Resolutie',
-    ['Full HD (1080p)','QHD (1440p)','4K UHD','WQHD Ultrawide (3440×1440)'])
+    ['Full HD (1080p)','QHD (1440p)','4K UHD','WQHD Ultrawide (3440×1440)','WSXGA+ (1680×1050)'])
 odoo.get_or_create_attribute('Staat',
     ['Refurbished','Nieuw in doos','Nieuw ongebruikt'])
 print("✓ Attributen klaar")
+
 
 # ── Product helper ────────────────────────────────────────────────────────────
 def make_product(ref, name, cat_key, list_price, ptype='consu',
@@ -85,13 +112,13 @@ def make_product(ref, name, cat_key, list_price, ptype='consu',
     Parameters:
         ref           — SKU / default_code (unieke sleutel)
         name          — Working Local productnaam
-        cat_key       — sleutel in cat_ids (bv. '27"', 'Laptops', 'Wifi')
+        cat_key       — sleutel in cat_ids
         list_price    — verkoopprijs excl. BTW
-        ptype         — 'consu' (fysiek product) of 'service'
-        description   — fallback offerteomschrijving (overschreven door pv-scrape)
-        slug          — pv-consulting.com pagina-slug; scrapet naam/omschrijving/prijs/foto's
-        placeholder   — SVG icon voor producten zonder foto: 'wifi','focus','av','logistiek','verhuur'
-        standard_price — handmatige aankoopprijs excl. BTW (overschrijft scrape-prijs)
+        ptype         — 'consu' of 'service'
+        description   — fallback offerteomschrijving
+        slug          — pv-consulting.com pagina-slug
+        placeholder   — SVG icon: 'wifi','focus','av','logistiek','verhuur'
+        standard_price — handmatige aankoopprijs excl. BTW
     """
     vals = {
         'name':         name,
@@ -110,7 +137,6 @@ def make_product(ref, name, cat_key, list_price, ptype='consu',
         print(f"  ~ Bestaat al: {ref} — {existing[0]['name'][:50]}")
         return existing[0]['id']
 
-    # Scrape pv-consulting indien slug opgegeven
     pv = scrape_pv_page(slug) if slug else {}
 
     if pv.get('description_sale'):
@@ -120,15 +146,25 @@ def make_product(ref, name, cat_key, list_price, ptype='consu',
     if pv.get('standard_price'):
         vals['standard_price'] = pv['standard_price']
 
-    # Handmatige aankoopprijs heeft voorrang op gescrapete prijs
     if standard_price is not None:
         vals['standard_price'] = standard_price
 
+    # Verkoopprijs: hardcoded waarde is leading; enkel bij list_price=0 de PV-regel toepassen
+    if list_price == 0 and pv.get('list_price_auto'):
+        vals['list_price'] = pv['list_price_auto']
+
     vals['default_code'] = ref
+
+    # Koppel PV Consulting als leverancier
+    vals['seller_ids'] = [(0, 0, {
+        'partner_id': pv_id,
+        'price':      vals.get('standard_price', 0),
+        'min_qty':    1,
+    })]
+
     tmpl_id = odoo.create('product.template', vals)
     print(f"  ✓ {ref}: {name[:60]}")
 
-    # Afbeeldingen
     if pv.get('images'):
         upload_images(odoo, tmpl_id, pv['images'])
     elif placeholder:
@@ -203,6 +239,12 @@ make_product('MON-22-01',
 make_product('MON-22-02',
     'Beeldscherm 23" Full HD — HP EliteDisplay E232, zonder voet',
     '22"', 39, slug='hp-elitedisplay-e232---hd.html')
+make_product('MON-22-03',
+    'Beeldscherm 22" WSXGA+ — Dell P2217, HDMI/DP/VGA, roterende voet',
+    '22"', 44, slug='dell-22--p2217-wsxga.html')
+make_product('MON-22-04',
+    'Beeldscherm 22" Full HD — Dell P2217H, HDMI/DP/VGA, roterende voet',
+    '22"', 45, slug='dell-22--p2217h-hd.html')
 
 # ── 6. Beeldschermen 27" ─────────────────────────────────────────────────────
 print('\n=== 6. Beeldschermen 27" ===')
@@ -233,12 +275,24 @@ make_product('MON-27-08',
 make_product('MON-27-SET',
     'Set 2× Beeldscherm 27" QHD — Dell U2717D op Ergotron-voet',
     '27"', 249, slug='set-dell-27--u2717d-qhd.html')
+make_product('MON-27-09',
+    'Beeldscherm 27" QHD — Dell C2722DE, USB-C docking, videovergadering, op voet',
+    '27"', 189, slug='dell-c2722de-27--qhd-video-conferencing-monitor.html')
+make_product('MON-27-10',
+    'Beeldscherm 27" QHD — Samsung S27A600UU, 75Hz, USB-C, zonder voet',
+    '27"', 99, slug='samsung-s27a600uu-27--qhd-monitor-75hz.html')
+make_product('MON-27-11',
+    'Beeldscherm 27" QHD — Dell P2720DC, USB-C PD, op voet',
+    '27"', 139, slug='dell-27--p2720dc-qhd.html')
 
 # ── 6. Beeldschermen 32" ─────────────────────────────────────────────────────
 print('\n=== 6. Beeldschermen 32" ===')
 make_product('MON-32-01',
     'Beeldscherm 32" 4K — Lenovo P32p-20, USB-C 90W + Ethernet, IPS, zonder voet',
     '32"', 249, slug='lenovo-thinkvision-p32p-20-4k-ips-panel.html')
+make_product('MON-32-02',
+    'Beeldscherm 32" QHD — HP Pavilion Gaming, HDR, 165Hz, HDMI/DP',
+    '32"', 99, slug='hp-pavillion-gaming-32--hdr-display-qhd.html')
 
 # ── 6. Beeldschermen 34" Ultrawide ───────────────────────────────────────────
 print('\n=== 6. Beeldschermen 34" Ultrawide ===')
@@ -251,6 +305,12 @@ make_product('MON-34-02',
 make_product('MON-34-03',
     'Curved Ultrabreed 34" WQHD — Dell P3424WE, USB-C 90W + Ethernet, nieuw ongebruikt',
     '34" Ultrawide', 439, slug='dell-34--p3424we-curved-wqhd-monitor---nieuw.html')
+
+# ── 6. Beeldschermen 43" ─────────────────────────────────────────────────────
+print('\n=== 6. Beeldschermen 43" ===')
+make_product('MON-43-01',
+    'Beeldscherm 43" 4K — Dell P4317Q, IPS, 4× HDMI + DP + USB, refurbished',
+    '43"', 289, slug='dell-p4317q-43--4k-ips-panel.html')
 
 # ── 7. Informatieschermen ────────────────────────────────────────────────────
 print("\n=== 7. Informatieschermen ===")
@@ -293,7 +353,16 @@ make_product('LAP-05',
     'Laptop High End 14" — Dell Precision 5480, i7-13700H, 16GB, 512GB, RTX A1000 6GB, nieuw',
     'Laptops', 1499,
     slug='dell-precision-5480-i7-16gb-gpu-rtx-a1000-6gb---nieuw-in-doos.html',
-    standard_price=round(1499 / PV_BTW, 2))  # pv-consulting toont geen prijs online
+    standard_price=round(1499 / PV_BTW, 2))
+make_product('LAP-06',
+    'Laptop Premium 14" — Lenovo ThinkPad X1 Carbon Gen 9, 4K OLED, i7, 16GB, 512GB, Win11 Pro',
+    'Laptops', 549, slug='lenovo-thinkpad-x1-carbon-gen9-laptop-4k.html')
+make_product('LAP-07',
+    'Laptop Premium 14" — Lenovo ThinkPad X1 Carbon Gen 7, 4K HDR, i7, 16GB, 512GB, Win11 Pro',
+    'Laptops', 299, slug='lenovo-thinkpad-x1-carbon-gen7-laptop-4k.html')
+make_product('LAP-08',
+    'Laptop Business 14" — Dell Latitude 7400, i7, 16GB, touchscreen, Win11 Pro',
+    'Laptops', 299, slug='dell-latitude-7400-14--i7-16gb-touch-screen.html')
 
 # ── 9. Desktops & mini-pc's ──────────────────────────────────────────────────
 print("\n=== 9. Desktops & mini-pc's ===")
@@ -306,6 +375,9 @@ make_product('PC-02',
 make_product('PC-03',
     'Miniserver Linux — Dell OptiPlex 3050 SFF, i5-6500, 16GB, 256GB NVMe, Linux',
     "Desktops & mini-pc's", 249, slug='dell-optiplex-3050-sff---server.html')
+make_product('PC-04',
+    'ChromeBox — Dell OptiPlex 3050 SFF, i5-6500, 8GB, 256GB NVMe, Chrome OS Flex',
+    "Desktops & mini-pc's", 129, slug='dell-optiplex-3050-sff---chromebox.html')
 
 # ── 10. Servers & werkstations ───────────────────────────────────────────────
 print("\n=== 10. Servers & werkstations ===")
@@ -321,6 +393,42 @@ make_product('SRV-03',
 make_product('SRV-04',
     'Dual-CPU Werkstation/Server — Lenovo P720, 2× Xeon Gold 6134 (16c/32t), 64GB, 1TB NVMe, P1000, Win11 Pro WS',
     'Servers & werkstations', 899, slug='lenovo-p720---dual-cpu---gold.html')
+make_product('SRV-05',
+    'GameStation — Lenovo P520, Xeon W, 32GB, 500GB NVMe, NVIDIA GTX 1070 Ti 8GB, Win11 Pro',
+    'Servers & werkstations', 749, slug='lenovo-p520---gamestation.html')
+make_product('SRV-06',
+    'GameStation TI — Lenovo P520, Xeon W, 64GB, 1TB NVMe, NVIDIA GTX 1070 Ti 8GB, Win11 Pro',
+    'Servers & werkstations', 969, slug='lenovo-p520---gamestation-ti.html')
+make_product('SRV-07',
+    'Werkstation Basic — Lenovo P720, Xeon W, 32GB, 500GB NVMe, NVIDIA P1000, Win11 Pro',
+    'Servers & werkstations', 359, slug='lenovo-p720---basic.html')
+make_product('SRV-08',
+    'Werkstation Pro — Lenovo P720, Xeon W, 32GB, 1TB NVMe, NVIDIA P1000, Win11 Pro',
+    'Servers & werkstations', 499, slug='lenovo-p720---pro.html')
+make_product('SRV-09',
+    'Server/Virtualisatiehost — Lenovo P720, Xeon W, 32GB, geen OS/opslag, NVIDIA P1000',
+    'Servers & werkstations', 369, slug='lenovo-p720---server.html')
+make_product('SRV-10',
+    'Dual-CPU Werkstation/Server — Lenovo P720, 2× Xeon Silver (16c/32t), 64GB, 1TB NVMe, P1000, Win11 Pro WS',
+    'Servers & werkstations', 699, slug='lenovo-p720---dual-cpu---silver.html')
+make_product('SRV-11',
+    'Werkstation Basic — Lenovo P920, 2× Xeon Gold, 64GB, 1TB NVMe, NVIDIA P2000, Win11 Pro WS',
+    'Servers & werkstations', 1149, slug='lenovo-p920---basic.html')
+make_product('SRV-12',
+    'Werkstation Pro — Lenovo P920, 2× Xeon Gold, 128GB, 2TB NVMe, NVIDIA P2000, Win11 Pro WS',
+    'Servers & werkstations', 1799, slug='lenovo-p920---pro.html')
+make_product('SRV-13',
+    'Server/Virtualisatiehost — Lenovo P920, 2× Xeon Gold, 64GB, geen OS/opslag',
+    'Servers & werkstations', 849, slug='lenovo-p920---server.html')
+make_product('SRV-14',
+    'AI Werkstation — Lenovo P620, Threadripper PRO, 64GB, 1TB NVMe, NVIDIA RTX A4000, Win11 Pro WS',
+    'Servers & werkstations', 869, slug='lenovo-p620---threadripper-pro.html')
+make_product('SRV-15',
+    'AI Werkstation AMD GPU — Lenovo P620, Threadripper PRO, 64GB, 1TB NVMe, AMD Radeon PRO, Win11 Pro WS',
+    'Servers & werkstations', 1399, slug='lenovo-p620---threadripper-pro---amd-gpu.html')
+make_product('SRV-16',
+    'AI Werkstation Top — Lenovo P620, Threadripper PRO, 128GB, 2TB NVMe, NVIDIA RTX A6000, Win11 Pro WS',
+    'Servers & werkstations', 1899, slug='lenovo-p620---threadripper-pro---ai.html')
 
 # ── 11. Monitorarmen ─────────────────────────────────────────────────────────
 print("\n=== 11. Monitorarmen ===")
@@ -357,6 +465,9 @@ make_product('DOCK-03',
 make_product('DOCK-04',
     'HP Universele USB-C Multipoort Hub — nieuw, 7 poorten, DP/HDMI/Ethernet/USB',
     'Docking stations', 59, slug='hp-universal-usb-c-multiport-hub---nieuw-in-doos.html')
+make_product('DOCK-05',
+    'Lenovo ThinkPad Ultra Docking Station — nieuw, 2× DP + HDMI + USB-C, 90W',
+    'Docking stations', 49, slug='nieuw---lenovo-thinkpad-ultra-docking-station.html')
 
 # ── 13. Conference sets ──────────────────────────────────────────────────────
 print("\n=== 13. Conference sets ===")
@@ -372,6 +483,24 @@ make_product('CONF-03',
 make_product('CONF-04',
     'IP-Telefoon 2-lijn SIP — Huawei eSpace 7810, nieuw, PoE, encryptie',
     'Conference sets', 89, slug='huawei-espace-7810-ip-phone-nieuw.html')
+make_product('CONF-05',
+    'Vergaderbar — Lenovo Google Meet Audio Bar GIV10L, USB-C, microfoon + luidspreker',
+    'Conference sets', 69, slug='lenovo-google-meet-audio-bar-giv10l.html')
+make_product('CONF-06',
+    'Vergadercamera — Lenovo Google Meet Smart Camera GHF10L, 4K, USB-C',
+    'Conference sets', 49, slug='lenovo-google-meet-smart-camera-ghf10l.html')
+make_product('CONF-07',
+    'Speakermicrofoon — Lenovo Google Meet Speaker Microphone GTO10A, USB-C, 360°',
+    'Conference sets', 59, slug='lenovo-google-meet-speaker-microphone-gto10a.html')
+make_product('CONF-08',
+    'Conferentietelefoon — Yealink CP960, touch, WiFi + Bluetooth, Teams-gecertificeerd, nieuw',
+    'Conference sets', 179, slug='nieuw---conference-phone-yealink-optima-cp960.html')
+make_product('CONF-09',
+    'Conferentietelefoon — Polycom SoundStation IP 7000, PoE, HD Voice, nieuw',
+    'Conference sets', 149, slug='nieuw---conference-phone-polycom-soundstation-ip-7000.html')
+make_product('CONF-10',
+    'Draadloze presentatieswitch — Barco Clickshare CS-100, plug-and-play, HDMI',
+    'Conference sets', 99, slug='barco-clickshare-cs-100.html')
 
 # ── 14. Meubelen ─────────────────────────────────────────────────────────────
 print("\n=== 14. Meubelen ===")
@@ -384,6 +513,92 @@ make_product('FURN-02',
 make_product('FURN-03',
     'Refurbished Zitbank 2-persoons — groen, 128×80×98 cm, hoge zit',
     'Zitmeubelen', 199, slug='zitbank-groen.html')
+
+# ── 15. Netwerkhardware ───────────────────────────────────────────────────────
+print("\n=== 15. Netwerkhardware ===")
+make_product('NET-01',
+    'Managed Switch 52-port — D-Link DGS-1210-52, 48× GbE + 4× SFP, rack, nieuw',
+    'Switches', 299, slug='dgs-12-10-52-52-port-gigabit-smart-managed-switch.html')
+make_product('NET-02',
+    'Managed Switch 48-port PoE+ — HPE Aruba CX 6000, 48× GbE PoE+ + 4× SFP, nieuw',
+    'Switches', 1499, slug='hpe-aruba-networking-cx-6000-48g-switch.html')
+make_product('NET-03',
+    'Desktop Switch 5-port — TP-Link TL-SG105, GbE, plug-and-play, nieuw',
+    'Switches', 14, slug='tp-link-tl-sg105---5-port-switch.html')
+make_product('NET-04',
+    'Managed Switch 48-port PoE+ — Huawei, GbE, rack, nieuw',
+    'Switches', 399, slug='nieuw-huawei-48poort-switch-poe.html')
+
+# ── PATCH: PV Consulting als leverancier op reeds bestaande producten ─────────
+print("\n=== PATCH: Leverancier koppelen aan bestaande producten ===")
+
+all_pv_refs = [
+    # Diensten
+    'SRV-WIFI-01','SRV-WIFI-02','SRV-WIFI-03','SRV-WIFI-04','SRV-WIFI-05',
+    'SRV-FOCUS-01','SRV-FOCUS-02','SRV-FOCUS-03',
+    'SRV-AV-01','SRV-AV-02','SRV-AV-03',
+    'SRV-LOG-01',
+    # Bureau's & tafels
+    'DESK-01','DESK-02','DESK-03','DESK-04',
+    'TABLE-01','TABLE-02',
+    # Monitoren
+    'MON-22-01','MON-22-02','MON-22-03','MON-22-04',
+    'MON-27-01','MON-27-02','MON-27-03','MON-27-04','MON-27-05',
+    'MON-27-06','MON-27-07','MON-27-08','MON-27-SET',
+    'MON-27-09','MON-27-10','MON-27-11',
+    'MON-32-01','MON-32-02',
+    'MON-34-01','MON-34-02','MON-34-03',
+    'MON-43-01',
+    # Informatieschermen
+    'SIGN-01','SIGN-02','SIGN-03','SIGN-04',
+    'RENT-01','RENT-02',
+    # Laptops
+    'LAP-01','LAP-02','LAP-03','LAP-04','LAP-05','LAP-06','LAP-07','LAP-08',
+    # Desktops
+    'PC-01','PC-02','PC-03','PC-04',
+    # Servers & werkstations
+    'SRV-01','SRV-02','SRV-03','SRV-04','SRV-05','SRV-06',
+    'SRV-07','SRV-08','SRV-09','SRV-10',
+    'SRV-11','SRV-12','SRV-13',
+    'SRV-14','SRV-15','SRV-16',
+    # Monitorarmen
+    'ARM-01','ARM-02','ARM-03','ARM-04','ARM-05',
+    # Docking
+    'DOCK-01','DOCK-02','DOCK-03','DOCK-04','DOCK-05',
+    # Conference
+    'CONF-01','CONF-02','CONF-03','CONF-04',
+    'CONF-05','CONF-06','CONF-07','CONF-08','CONF-09','CONF-10',
+    # Meubelen
+    'FURN-01','FURN-02','FURN-03',
+    # Netwerk
+    'NET-01','NET-02','NET-03','NET-04',
+]
+
+patched = skipped_patch = missing = 0
+for ref in all_pv_refs:
+    existing = odoo.search_read('product.template',
+        [('default_code', '=', ref)], ['id'])
+    if not existing:
+        missing += 1
+        continue
+    tmpl_id = existing[0]['id']
+    already = odoo.search_read('product.supplierinfo', [
+        ('product_tmpl_id', '=', tmpl_id),
+        ('partner_id', '=', pv_id),
+    ], ['id'])
+    if already:
+        skipped_patch += 1
+    else:
+        odoo.create('product.supplierinfo', {
+            'partner_id':      pv_id,
+            'product_tmpl_id': tmpl_id,
+            'min_qty':         1,
+            'price':           0,
+        })
+        print(f"  ✓ {ref}")
+        patched += 1
+
+print(f"  → {patched} gekoppeld, {skipped_patch} al gekoppeld, {missing} niet gevonden")
 
 # ── Klaar ─────────────────────────────────────────────────────────────────────
 print("\n=== IMPORT VOLTOOID ===")
