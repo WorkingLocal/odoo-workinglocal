@@ -1,5 +1,8 @@
+import logging
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 _MONTHS_NL = {
     1: 'januari', 2: 'februari', 3: 'maart', 4: 'april',
@@ -122,6 +125,32 @@ class RentalContract(models.Model):
             'res_id': invoice.id,
             'view_mode': 'form',
         }
+
+    # ── Cron: automatische maandelijkse facturatie ────────────────────────────
+
+    @api.model
+    def _cron_generate_invoices(self):
+        today = fields.Date.today()
+        contracts = self.search([
+            ('state', '=', 'active'),
+            ('invoice_day', '=', today.day),
+            ('date_start', '<=', today),
+        ])
+        created = 0
+        for contract in contracts:
+            if contract.date_end and contract.date_end < today:
+                continue
+            month_start = today.replace(day=1)
+            existing = self.env['account.move'].search([
+                ('rental_contract_id', '=', contract.id),
+                ('invoice_date', '>=', month_start),
+                ('move_type', '=', 'out_invoice'),
+                ('state', '!=', 'cancel'),
+            ], limit=1)
+            if not existing:
+                contract.action_generate_invoice()
+                created += 1
+        _logger.info('Huurcontracten maandcron: %d facturen aangemaakt', created)
 
     def action_view_invoices(self):
         self.ensure_one()

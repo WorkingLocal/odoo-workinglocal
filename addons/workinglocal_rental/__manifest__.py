@@ -10,6 +10,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/rental_sequence.xml',
+        'data/rental_cron.xml',
         'views/rental_contract_views.xml',
         'views/coworking_workspace_views.xml',
         'views/menu.xml',
