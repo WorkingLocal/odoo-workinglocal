@@ -767,7 +767,7 @@ Klanten volgen op via: **https://odoo.workinglocal.be/my**
 |---|---|---|
 | `coworking_reservation` | 19.0.2.0.0 | Werkplekbeheer, reservaties, pakketten, dagdelen, signage |
 | `workinglocal_rental` | 19.0.1.0.0 | Huurcontracten ateliers/appartementen, maandelijkse facturatie |
-| `workinglocal_interventions` | 19.0.1.0.0 | Interventieregistratie, checklists, PDF-rapport |
+| `workinglocal_interventions` | 19.0.1.0.0 | Interventieregistratie, checklists, PDF-rapport — **enkel VPS/intern, NIET op klantservers** |
 
 ### coworking_reservation — sleutelfunctionaliteit
 
@@ -829,11 +829,11 @@ ssh root@23.94.220.181 'docker restart odoo-wmsa9jotez65ynj0xsb748rq'
 ### Addon deployen (on-premise klantserver)
 
 ```bash
-# Via update script (auto-detecteert containers en volumes)
-ssh wp-walter 'bash /opt/workinglocal/scripts/update-addons.sh'
+# Via Tailscale IP (altijd, nooit lokaal IP)
+ssh wp-walter@100.125.16.34 'sudo bash /opt/workinglocal/scripts/update-addons.sh'
 
 # Specifieke modules
-ssh wp-walter 'bash /opt/workinglocal/scripts/update-addons.sh --modules "coworking_reservation"'
+ssh wp-walter@100.125.16.34 'sudo bash /opt/workinglocal/scripts/update-addons.sh --modules "coworking_reservation,workinglocal_rental"'
 ```
 
 ### Odoo 19 CE valkuilen
