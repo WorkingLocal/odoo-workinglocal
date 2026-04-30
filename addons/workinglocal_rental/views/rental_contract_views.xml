@@ -105,12 +105,11 @@
                 <filter string="Actief" name="active" domain="[('state','=','active')]"/>
                 <filter string="Concept" name="draft" domain="[('state','=','draft')]"/>
                 <filter string="Beëindigd" name="ended" domain="[('state','=','ended')]"/>
-                <group expand="0" string="Groeperen op">
-                    <filter string="Huurder" name="group_partner"
-                            context="{'group_by': 'partner_id'}"/>
-                    <filter string="Status" name="group_state"
-                            context="{'group_by': 'state'}"/>
-                </group>
+                <separator/>
+                <filter string="Groepeer op huurder" name="group_partner"
+                        context="{'group_by': 'partner_id'}"/>
+                <filter string="Groepeer op status" name="group_state"
+                        context="{'group_by': 'state'}"/>
             </search>
         </field>
     </record>
