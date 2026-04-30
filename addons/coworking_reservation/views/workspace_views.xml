@@ -10,6 +10,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="workspace_type"/>
+                <field name="booking_granularity"/>
                 <field name="capacity"/>
                 <field name="hourly_rate" optional="show"/>
                 <field name="daily_rate" optional="show"/>
@@ -57,6 +58,43 @@
                             <field name="monthly_rate"/>
                         </group>
                     </group>
+
+                    <!-- Boekingseenheid & dagdelen -->
+                    <group string="Boekingseenheid">
+                        <group>
+                            <field name="booking_granularity"/>
+                        </group>
+                    </group>
+                    <group invisible="booking_granularity != 'slot'">
+                        <group string="Voormiddag (VM)">
+                            <field name="slot_vm_start" widget="float_time"/>
+                            <field name="slot_vm_end" widget="float_time"/>
+                        </group>
+                        <group string="Namiddag (NM)">
+                            <field name="slot_nm_start" widget="float_time"/>
+                            <field name="slot_nm_end" widget="float_time"/>
+                        </group>
+                        <group string="Avond (AV)">
+                            <field name="slot_av_start" widget="float_time"/>
+                            <field name="slot_av_end" widget="float_time"/>
+                        </group>
+                    </group>
+
+                    <!-- Beschikbare weekdagen -->
+                    <group string="Beschikbare dagen">
+                        <div class="o_wrap_field col-12">
+                            <div class="d-flex gap-3 flex-wrap">
+                                <field name="avail_mon" widget="boolean_toggle"/><label for="avail_mon" string="Ma"/>
+                                <field name="avail_tue" widget="boolean_toggle"/><label for="avail_tue" string="Di"/>
+                                <field name="avail_wed" widget="boolean_toggle"/><label for="avail_wed" string="Wo"/>
+                                <field name="avail_thu" widget="boolean_toggle"/><label for="avail_thu" string="Do"/>
+                                <field name="avail_fri" widget="boolean_toggle"/><label for="avail_fri" string="Vr"/>
+                                <field name="avail_sat" widget="boolean_toggle"/><label for="avail_sat" string="Za"/>
+                                <field name="avail_sun" widget="boolean_toggle"/><label for="avail_sun" string="Zo"/>
+                            </div>
+                        </div>
+                    </group>
+
                     <group string="Vrije bijdrage">
                         <field name="contribution_enabled"/>
                         <field name="contribution_suggestions" invisible="not contribution_enabled"/>
@@ -77,6 +115,8 @@
                                 <list>
                                     <field name="name"/>
                                     <field name="partner_id"/>
+                                    <field name="booking_type"/>
+                                    <field name="slot" optional="show"/>
                                     <field name="start_datetime"/>
                                     <field name="end_datetime"/>
                                     <field name="state"/>
@@ -101,6 +141,7 @@
                 <filter string="Actief" name="active" domain="[('is_active','=',True)]"/>
                 <filter string="Op schermen" name="signage" domain="[('show_on_signage','=',True)]"/>
                 <filter string="Vrije bijdrage" name="contribution" domain="[('contribution_enabled','=',True)]"/>
+                <filter string="Dagdelen" name="slot" domain="[('booking_granularity','=','slot')]"/>
             </search>
         </field>
     </record>

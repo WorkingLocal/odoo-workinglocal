@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── BESCHIKBAARHEIDSKALENDER (/beschikbaarheid) ────────────────── -->
+    <template id="website_availability" name="Beschikbaarheid">
+        <t t-call="website.layout">
+            <div class="container-fluid py-4 px-4">
+
+                <!-- Header + week navigatie -->
+                <div class="row align-items-center mb-4">
+                    <div class="col">
+                        <h1 class="fw-bold mb-0">Beschikbaarheid</h1>
+                        <p class="text-muted mb-0">
+                            Week van
+                            <strong t-esc="week_start.strftime('%d/%m/%Y')"/> t/m
+                            <strong t-esc="week_end.strftime('%d/%m/%Y')"/>
+                        </p>
+                    </div>
+                    <div class="col-auto d-flex gap-2">
+                        <a t-attf-href="/beschikbaarheid?week=#{week_offset - 1}"
+                           class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-chevron-left"/> Vorige
+                        </a>
+                        <a href="/beschikbaarheid?week=0"
+                           class="btn btn-outline-secondary btn-sm">
+                            Vandaag
+                        </a>
+                        <a t-attf-href="/beschikbaarheid?week=#{week_offset + 1}"
+                           class="btn btn-outline-secondary btn-sm">
+                            Volgende <i class="bi bi-chevron-right"/>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Legenda -->
+                <div class="d-flex gap-3 mb-3 small">
+                    <span><span class="badge bg-success me-1">&#160;</span> Beschikbaar</span>
+                    <span><span class="badge bg-danger me-1">&#160;</span> Gereserveerd</span>
+                    <span><span class="badge bg-secondary me-1">&#160;</span> Niet beschikbaar</span>
+                </div>
+
+                <!-- Tabel -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm availability-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="min-width:140px">Ruimte</th>
+                                <t t-foreach="days" t-as="day">
+                                    <th class="text-center" style="min-width:90px">
+                                        <div t-esc="day['label']"/>
+                                        <small class="text-muted" t-esc="day['date_str']"/>
+                                    </th>
+                                </t>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="rows" t-as="row">
+                                <tr>
+                                    <td class="fw-semibold small">
+                                        <t t-esc="row['workspace'].name"/>
+                                        <br/>
+                                        <small class="text-muted" t-esc="dict(ws_type_labels).get(row['workspace'].workspace_type, '')"/>
+                                    </td>
+                                    <t t-foreach="row['cells']" t-as="cell">
+                                        <td class="text-center p-1">
+                                            <!-- Dagdelen -->
+                                            <t t-if="row['workspace'].booking_granularity == 'slot'">
+                                                <t t-foreach="cell['slots']" t-as="sl">
+                                                    <div t-attf-class="slot-cell rounded mb-1 py-1 px-1 small
+                                                         #{ 'bg-secondary text-white' if not sl['avail_day'] else
+                                                            'bg-danger text-white' if sl['taken'] else
+                                                            'bg-success text-white' }">
+                                                        <t t-esc="sl['label']"/>
+                                                        <t t-if="sl['taken'] and sl['partner']">
+                                                            <br/><small t-esc="sl['partner']"/>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            <!-- Volledige dag -->
+                                            <t t-else="">
+                                                <div t-attf-class="slot-cell rounded py-2 small
+                                                     #{ 'bg-secondary text-white' if not cell['avail_day'] else
+                                                        'bg-danger text-white' if cell['taken'] else
+                                                        'bg-success text-white' }">
+                                                    <t t-if="cell['taken']">
+                                                        <i class="bi bi-x-circle"/>
+                                                        <t t-if="cell['partner']">
+                                                            <br/><small t-esc="cell['partner']"/>
+                                                        </t>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <i class="bi bi-check-circle"/>
+                                                    </t>
+                                                </div>
+                                            </t>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </t>
+                            <t t-if="not rows">
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        Geen ruimten geconfigureerd.
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pakketten overzicht -->
+                <t t-if="packages">
+                    <h4 class="mt-5 mb-3">Pakketten</h4>
+                    <div class="row g-3">
+                        <t t-foreach="packages" t-as="pkg">
+                            <div class="col-md-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="card-title fw-bold" t-esc="pkg.name"/>
+                                        <p class="small text-muted mb-1">
+                                            <i class="bi bi-buildings me-1"/>
+                                            <t t-esc="', '.join(pkg.workspace_ids.mapped('name'))"/>
+                                        </p>
+                                        <t t-if="pkg.price">
+                                            <p class="fw-semibold mb-0">
+                                                <t t-esc="'€%.2f' % pkg.price"/>
+                                            </p>
+                                        </t>
+                                        <t t-if="pkg.description">
+                                            <p class="small text-muted mt-1 mb-0" t-esc="pkg.description"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

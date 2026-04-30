@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- ── CALENDAR VIEW ────────────────────────────────────────────── -->
+    <record id="view_coworking_reservation_calendar" model="ir.ui.view">
+        <field name="name">coworking.reservation.calendar</field>
+        <field name="model">coworking.reservation</field>
+        <field name="arch" type="xml">
+            <calendar string="Reservaties"
+                      date_start="start_datetime"
+                      date_stop="end_datetime"
+                      color="workspace_id"
+                      mode="week"
+                      quick_create="0">
+                <field name="partner_id"/>
+                <field name="workspace_id"/>
+                <field name="package_id"/>
+                <field name="booking_type"/>
+                <field name="slot"/>
+            </calendar>
+        </field>
+    </record>
+
     <!-- ── LIST VIEW ─────────────────────────────────────────────────── -->
     <record id="view_coworking_reservation_list" model="ir.ui.view">
         <field name="name">coworking.reservation.list</field>
@@ -13,12 +33,17 @@
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="workspace_id"/>
-                <field name="workspace_type" optional="show"/>
+                <field name="package_id" optional="show"/>
+                <field name="booking_type" widget="badge"
+                       decoration-info="booking_type == 'intern'"
+                       decoration-warning="booking_type == 'geblokkeerd'"/>
+                <field name="slot" optional="show"/>
+                <field name="workspace_type" optional="hide"/>
                 <field name="start_datetime"/>
                 <field name="end_datetime"/>
                 <field name="duration_hours" string="Duur (u)" optional="show"/>
                 <field name="attendees" optional="show"/>
-                <field name="billing_type"/>
+                <field name="billing_type" optional="show"/>
                 <field name="contribution_amount" optional="show"/>
                 <field name="invoice_state" optional="show"/>
                 <field name="state" widget="badge"
@@ -57,11 +82,14 @@
                     <group>
                         <group string="Reservatie">
                             <field name="partner_id"/>
+                            <field name="booking_type"/>
+                            <field name="package_id"/>
                             <field name="workspace_id"/>
-                            <field name="workspace_type" readonly="1"/>
+                            <field name="workspace_type" readonly="1" invisible="not workspace_id"/>
                             <field name="attendees"/>
                         </group>
                         <group string="Tijdstip">
+                            <field name="slot" invisible="not workspace_id or workspace_id.booking_granularity != 'slot'"/>
                             <field name="start_datetime"/>
                             <field name="end_datetime"/>
                             <field name="duration_hours" readonly="1"/>
@@ -71,7 +99,7 @@
                         <field name="currency_id" invisible="1"/>
                         <field name="billing_type"/>
                         <field name="contribution_amount"
-                               invisible="billing_type not in ('contribution', 'fixed_hourly', 'fixed_daily', 'fixed_monthly')"/>
+                               invisible="billing_type not in ('contribution', 'fixed_hourly', 'fixed_daily', 'fixed_monthly', 'package')"/>
                         <field name="invoice_id" readonly="1"/>
                         <field name="invoice_state" readonly="1" invisible="not invoice_id"/>
                     </group>
@@ -93,10 +121,25 @@
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="workspace_id"/>
-                <filter string="Concept" name="draft" domain="[('state','=','draft')]"/>
+                <field name="package_id"/>
+                <filter string="Aanvraag" name="draft" domain="[('state','=','draft')]"/>
                 <filter string="Bevestigd" name="confirmed" domain="[('state','=','confirmed')]"/>
                 <filter string="Afgerond" name="done" domain="[('state','=','done')]"/>
                 <filter string="Geannuleerd" name="cancelled" domain="[('state','=','cancelled')]"/>
+                <separator/>
+                <filter string="Extern" name="extern" domain="[('booking_type','=','extern')]"/>
+                <filter string="Intern" name="intern" domain="[('booking_type','=','intern')]"/>
+                <filter string="Geblokkeerd" name="blocked" domain="[('booking_type','=','geblokkeerd')]"/>
+                <separator/>
+                <filter string="Vandaag" name="today"
+                        domain="[('start_datetime','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('start_datetime','&lt;', datetime.datetime.combine(context_today(), datetime.time(0,0,0)) + datetime.timedelta(days=1))]"/>
+                <filter string="Deze week" name="this_week"
+                        domain="[('start_datetime','&gt;=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Groepeer per werkplek" name="group_workspace"
+                        context="{'group_by': 'workspace_id'}"/>
+                <filter string="Groepeer per dag" name="group_day"
+                        context="{'group_by': 'start_datetime:day'}"/>
             </search>
         </field>
     </record>
@@ -105,7 +148,7 @@
     <record id="action_coworking_reservation" model="ir.actions.act_window">
         <field name="name">Reservaties</field>
         <field name="res_model">coworking.reservation</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">calendar,list,form</field>
         <field name="search_view_id" ref="view_coworking_reservation_search"/>
         <field name="context">{'search_default_confirmed': 1}</field>
     </record>

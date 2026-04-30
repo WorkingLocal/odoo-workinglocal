@@ -7,6 +7,10 @@ WORKSPACE_TYPES = [
     ('focus_zone', 'Focus Zone'),
     ('event', 'Eventdeelname'),
     ('hybrid_meeting', 'Hybride Meetingroom'),
+    ('muziekzaal', 'Muziekzaal'),
+    ('productiestudio', 'Productiestudio'),
+    ('foyer', 'Foyer'),
+    ('muziekstudio', 'Muziekstudio'),
 ]
 
 
@@ -62,6 +66,28 @@ class CoworkingWorkspace(models.Model):
         default=0,
     )
 
+    # Boekingseenheid en dagdelen
+    booking_granularity = fields.Selection([
+        ('day', 'Volledige dag'),
+        ('slot', 'Dagdelen (VM / NM / AV)'),
+    ], string='Boekingseenheid', default='day')
+
+    slot_vm_start = fields.Float(string='VM start (u)', default=8.0, digits=(4, 2))
+    slot_vm_end = fields.Float(string='VM einde (u)', default=13.0, digits=(4, 2))
+    slot_nm_start = fields.Float(string='NM start (u)', default=13.0, digits=(4, 2))
+    slot_nm_end = fields.Float(string='NM einde (u)', default=18.0, digits=(4, 2))
+    slot_av_start = fields.Float(string='AV start (u)', default=18.0, digits=(4, 2))
+    slot_av_end = fields.Float(string='AV einde (u)', default=23.0, digits=(4, 2))
+
+    # Beschikbare weekdagen
+    avail_mon = fields.Boolean(string='Maandag', default=True)
+    avail_tue = fields.Boolean(string='Dinsdag', default=True)
+    avail_wed = fields.Boolean(string='Woensdag', default=True)
+    avail_thu = fields.Boolean(string='Donderdag', default=True)
+    avail_fri = fields.Boolean(string='Vrijdag', default=True)
+    avail_sat = fields.Boolean(string='Zaterdag', default=False)
+    avail_sun = fields.Boolean(string='Zondag', default=False)
+
     # Xibo display instellingen
     show_on_signage = fields.Boolean(
         string='Tonen op schermen (Xibo)',
@@ -90,6 +116,27 @@ class CoworkingWorkspace(models.Model):
     def _compute_reservation_count(self):
         for rec in self:
             rec.reservation_count = len(rec.reservation_ids)
+
+    def is_available_on_weekday(self, weekday_num):
+        """weekday_num: 0=Monday ... 6=Sunday"""
+        day_map = {
+            0: self.avail_mon, 1: self.avail_tue, 2: self.avail_wed,
+            3: self.avail_thu, 4: self.avail_fri,
+            5: self.avail_sat, 6: self.avail_sun,
+        }
+        return day_map.get(weekday_num, False)
+
+    def get_slot_times(self, slot):
+        """Returns (start_hour_float, end_hour_float) for a given slot key."""
+        if slot == 'vm':
+            return self.slot_vm_start, self.slot_vm_end
+        if slot == 'nm':
+            return self.slot_nm_start, self.slot_nm_end
+        if slot == 'av':
+            return self.slot_av_start, self.slot_av_end
+        if slot == 'dag':
+            return self.slot_vm_start, self.slot_av_end
+        return 0.0, 24.0
 
     def get_availability_for_xibo(self):
         """Geeft bezettingsstatus terug voor Xibo JSON endpoint."""

@@ -18,6 +18,12 @@
               action="action_coworking_reservation"
               sequence="20"/>
 
+    <menuitem id="menu_coworking_packages"
+              name="Pakketten"
+              parent="menu_coworking_root"
+              action="action_coworking_package"
+              sequence="25"/>
+
     <menuitem id="menu_coworking_memberships"
               name="Lidmaatschappen"
               parent="menu_coworking_root"
