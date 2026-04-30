@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Fullscreen signage pagina voor Xibo CMS.
+        Gebruik in Xibo: Webpage widget → URL /signage/reservaties
+        Optionele API key: ?key=... (instellen via Instellingen > Technisch > Systeemparameters > coworking.xibo_api_key)
+        Auto-refresh: elke 60 seconden (via JavaScript)
+    -->
+    <template id="signage_reservaties" name="Signage: Reservaties vandaag">
+        <html lang="nl">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+                <title>Reservaties</title>
+                <style>
+                    /* ── Reset &amp; base ──────────────────────────────── */
+                    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+                    html, body {
+                        width: 100%; height: 100%;
+                        background: #0f1623;
+                        color: #e8eaf0;
+                        font-family: 'Segoe UI', Arial, sans-serif;
+                        font-size: 16px;
+                        overflow: hidden;
+                    }
+
+                    /* ── Layout ───────────────────────────────────────── */
+                    .signage-wrap {
+                        display: flex;
+                        flex-direction: column;
+                        height: 100vh;
+                        padding: 0;
+                    }
+
+                    /* ── Header ───────────────────────────────────────── */
+                    .sig-header {
+                        background: #1A2E5A;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 0.6rem 2rem;
+                        flex-shrink: 0;
+                        border-bottom: 3px solid #F5B800;
+                    }
+                    .sig-header .brand {
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        color: #ffffff;
+                        letter-spacing: 0.5px;
+                    }
+                    .sig-header .brand span {
+                        color: #F5B800;
+                    }
+                    .sig-header .datetime {
+                        text-align: right;
+                        font-size: 1.1rem;
+                        color: #c8d4e8;
+                    }
+                    .sig-header .clock {
+                        font-size: 2rem;
+                        font-weight: 700;
+                        color: #ffffff;
+                        font-variant-numeric: tabular-nums;
+                        letter-spacing: 2px;
+                    }
+
+                    /* ── Room cards grid ──────────────────────────────── */
+                    .sig-rooms {
+                        display: flex;
+                        flex: 1 1 auto;
+                        gap: 1.2rem;
+                        padding: 1.2rem 1.5rem 0.8rem;
+                        overflow: hidden;
+                    }
+                    .room-card {
+                        flex: 1;
+                        background: #1a2235;
+                        border-radius: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        overflow: hidden;
+                        border: 2px solid #2a3650;
+                        transition: border-color 0.3s;
+                    }
+                    .room-card.bezet { border-color: #e53e3e; }
+                    .room-card.vrij  { border-color: #38a169; }
+                    .room-card.geblokkeerd { border-color: #718096; }
+
+                    .room-card-header {
+                        padding: 0.9rem 1rem 0.6rem;
+                        background: #212d44;
+                    }
+                    .room-name {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #ffffff;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .room-type {
+                        font-size: 0.75rem;
+                        color: #8a9bb8;
+                        text-transform: uppercase;
+                        letter-spacing: 0.8px;
+                    }
+
+                    .room-status {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        padding: 0.8rem 1rem;
+                        font-size: 1.5rem;
+                        font-weight: 800;
+                        letter-spacing: 1px;
+                    }
+                    .status-dot {
+                        width: 18px; height: 18px;
+                        border-radius: 50%;
+                        flex-shrink: 0;
+                        box-shadow: 0 0 8px currentColor;
+                    }
+                    .vrij .room-status   { color: #48bb78; }
+                    .bezet .room-status  { color: #fc8181; }
+                    .geblokkeerd .room-status { color: #a0aec0; }
+                    .vrij .status-dot    { background: #48bb78; color: #48bb78; }
+                    .bezet .status-dot   { background: #fc8181; color: #fc8181; }
+                    .geblokkeerd .status-dot { background: #718096; color: #718096; }
+
+                    .room-current {
+                        padding: 0 1rem 0.6rem;
+                        font-size: 0.9rem;
+                        color: #c8d4e8;
+                        flex: 1;
+                    }
+                    .room-current .who {
+                        font-size: 1.05rem;
+                        font-weight: 600;
+                        color: #e8eaf0;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .room-current .time-range {
+                        color: #8a9bb8;
+                        font-size: 0.85rem;
+                    }
+
+                    .room-next {
+                        background: #141b2a;
+                        padding: 0.6rem 1rem;
+                        font-size: 0.82rem;
+                        color: #8a9bb8;
+                        border-top: 1px solid #2a3650;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .room-next strong { color: #a0b4d0; }
+                    .room-next.empty { color: #4a5568; font-style: italic; }
+
+                    /* ── Agenda onderaan ──────────────────────────────── */
+                    .sig-agenda {
+                        background: #141b2a;
+                        border-top: 2px solid #2a3650;
+                        padding: 0.5rem 1.5rem;
+                        flex-shrink: 0;
+                    }
+                    .agenda-title {
+                        font-size: 0.7rem;
+                        text-transform: uppercase;
+                        letter-spacing: 1.2px;
+                        color: #F5B800;
+                        font-weight: 700;
+                        margin-bottom: 0.3rem;
+                    }
+                    .agenda-items {
+                        display: flex;
+                        gap: 1.5rem;
+                        overflow: hidden;
+                    }
+                    .agenda-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        font-size: 0.88rem;
+                        white-space: nowrap;
+                    }
+                    .agenda-item .ag-time {
+                        color: #F5B800;
+                        font-weight: 700;
+                        font-variant-numeric: tabular-nums;
+                        min-width: 5rem;
+                    }
+                    .agenda-item .ag-room {
+                        color: #a0b4d0;
+                    }
+                    .agenda-item .ag-who {
+                        color: #e8eaf0;
+                        font-weight: 600;
+                    }
+                    .agenda-empty {
+                        font-size: 0.88rem;
+                        color: #4a5568;
+                        font-style: italic;
+                    }
+
+                    /* ── Footer ───────────────────────────────────────── */
+                    .sig-footer {
+                        background: #1A2E5A;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0.25rem 2rem;
+                        flex-shrink: 0;
+                        font-size: 0.7rem;
+                        color: #6b7fa8;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="signage-wrap">
+
+                    <!-- ── Header ─────────────────────────────────────── -->
+                    <div class="sig-header">
+                        <div class="brand">Werkplaats <span>Walter</span></div>
+                        <div class="datetime">
+                            <div id="date-display" style="margin-bottom:2px;"><!-- JS --></div>
+                            <div class="clock" id="time-display">--:--</div>
+                        </div>
+                    </div>
+
+                    <!-- ── Room cards ──────────────────────────────────── -->
+                    <div class="sig-rooms">
+                        <t t-foreach="workspaces" t-as="ws">
+                            <t t-set="status_class"
+                               t-value="'bezet' if ws['is_occupied'] else 'geblokkeerd' if ws['blocked'] else 'vrij'"/>
+                            <div t-attf-class="room-card #{status_class}">
+                                <div class="room-card-header">
+                                    <div class="room-name" t-esc="ws['name']"/>
+                                    <div class="room-type" t-esc="ws['type_label']"/>
+                                </div>
+                                <div class="room-status">
+                                    <div class="status-dot"/>
+                                    <t t-if="ws['is_occupied']">BEZET</t>
+                                    <t t-elif="ws['blocked']">GEBLOKKEERD</t>
+                                    <t t-else="">VRIJ</t>
+                                </div>
+                                <div class="room-current">
+                                    <t t-if="ws['current']">
+                                        <div class="who" t-esc="ws['current']['partner']"/>
+                                        <div class="time-range">
+                                            <t t-esc="ws['current']['start']"/>
+                                            –
+                                            <t t-esc="ws['current']['end']"/>
+                                        </div>
+                                        <t t-if="ws['current']['slot_label']">
+                                            <div class="time-range" t-esc="ws['current']['slot_label']"/>
+                                        </t>
+                                    </t>
+                                </div>
+                                <div t-attf-class="room-next #{ 'empty' if not ws['next'] else '' }">
+                                    <t t-if="ws['next']">
+                                        Volgende:
+                                        <strong t-esc="ws['next']['start']"/>
+                                        <t t-esc="ws['next']['partner']"/>
+                                    </t>
+                                    <t t-else="">Geen verdere reservaties vandaag</t>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="not workspaces">
+                            <div style="flex:1; display:flex; align-items:center; justify-content:center; color:#4a5568; font-size:1.2rem;">
+                                Geen ruimten geconfigureerd voor signage.
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- ── Agenda vandaag ──────────────────────────────── -->
+                    <div class="sig-agenda">
+                        <div class="agenda-title">Agenda vandaag</div>
+                        <div class="agenda-items">
+                            <t t-if="upcoming">
+                                <t t-foreach="upcoming" t-as="item">
+                                    <div class="agenda-item">
+                                        <span class="ag-time" t-esc="item['start']"/>
+                                        <span class="ag-room" t-esc="item['room']"/>
+                                        <span>—</span>
+                                        <span class="ag-who" t-esc="item['partner']"/>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <div class="agenda-empty">Geen verdere reservaties vandaag</div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <!-- ── Footer ─────────────────────────────────────── -->
+                    <div class="sig-footer">
+                        <span>werkplaatswalter.be</span>
+                        <span id="refresh-countdown">Vernieuwen over 60s</span>
+                    </div>
+
+                </div>
+
+                <!-- ── Live clock + auto-refresh ─────────────────────── -->
+                <script>
+                    (function() {
+                        var DAYS_NL = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+                        var MONTHS_NL = ['januari','februari','maart','april','mei','juni',
+                                         'juli','augustus','september','oktober','november','december'];
+
+                        function pad(n) { return n &lt; 10 ? '0'+n : ''+n; }
+
+                        function updateClock() {
+                            var now = new Date();
+                            document.getElementById('time-display').textContent =
+                                pad(now.getHours()) + ':' + pad(now.getMinutes());
+                            document.getElementById('date-display').textContent =
+                                DAYS_NL[now.getDay()] + ' ' + now.getDate() + ' ' +
+                                MONTHS_NL[now.getMonth()] + ' ' + now.getFullYear();
+                        }
+                        updateClock();
+                        setInterval(updateClock, 1000);
+
+                        // Auto-reload na 60 seconden
+                        var countdown = 60;
+                        var el = document.getElementById('refresh-countdown');
+                        var timer = setInterval(function() {
+                            countdown--;
+                            if (el) el.textContent = 'Vernieuwen over ' + countdown + 's';
+                            if (countdown &lt;= 0) {
+                                clearInterval(timer);
+                                location.reload();
+                            }
+                        }, 1000);
+                    })();
+                </script>
+            </body>
+        </html>
+    </template>
+
+</odoo>

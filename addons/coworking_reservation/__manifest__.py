@@ -24,6 +24,7 @@
         'views/membership_views.xml',
         'views/website_templates.xml',
         'views/availability_templates.xml',
+        'views/signage_templates.xml',
         'views/portal_templates.xml',
         'views/menu.xml',
     ],
