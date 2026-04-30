@@ -18,4 +18,4 @@ for project_id, url in UNIFI_URLS.items():
     odoo.write('project.project', [project_id], {'unifi_design_url': url})
     projects = odoo.search_read('project.project', [('id', '=', project_id)], ['name'])
     name = projects[0]['name'] if projects else f'id={project_id}'
-    print(f"  ✓ {name}: UniFi Design Center URL ingesteld")
+    print(f"  OK {name}: UniFi Design Center URL ingesteld")

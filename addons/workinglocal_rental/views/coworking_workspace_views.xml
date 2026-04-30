@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Voeg "Actieve huurcontracten" smart button toe aan de werkplekfiche -->
+    <record id="view_coworking_workspace_rental_button" model="ir.ui.view">
+        <field name="name">coworking.workspace.form.rental</field>
+        <field name="model">coworking.workspace</field>
+        <field name="inherit_id" ref="coworking_reservation.view_coworking_workspace_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_rental_contracts" type="object"
+                        class="oe_stat_button" icon="fa-home"
+                        invisible="active_rental_count == 0">
+                    <field name="active_rental_count" widget="statinfo" string="Huurcontracten"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

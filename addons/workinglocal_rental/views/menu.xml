@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_rental_contracts"
+              name="Huurcontracten"
+              parent="coworking_reservation.menu_coworking_root"
+              action="action_rental_contract"
+              sequence="40"/>
+</odoo>

@@ -1,0 +1,20 @@
+{
+    'name': 'Working Local — Verhuur',
+    'version': '19.0.1.0.0',
+    'category': 'Services/Rental',
+    'summary': 'Langetermijn huurcontracten voor ateliers, appartementen en materialen met maandelijkse facturatie',
+    'author': 'Working Local',
+    'website': 'https://www.workinglocal.be',
+    'license': 'LGPL-3',
+    'depends': ['coworking_reservation', 'account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/rental_sequence.xml',
+        'views/rental_contract_views.xml',
+        'views/coworking_workspace_views.xml',
+        'views/menu.xml',
+    ],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+}
