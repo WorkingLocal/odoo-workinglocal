@@ -10,8 +10,8 @@ class CoworkingWorkspace(models.Model):
             ('appartement', 'Appartement'),
         ],
         ondelete={
-            'atelier': 'set default',
-            'appartement': 'set default',
+            'atelier': 'cascade',
+            'appartement': 'cascade',
         },
     )
 
