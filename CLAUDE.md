@@ -759,6 +759,97 @@ Klanten volgen op via: **https://odoo.workinglocal.be/my**
 
 ---
 
+## 11. Custom addons
+
+### Overzicht geïnstalleerde addons
+
+| Addon | Versie | Beschrijving |
+|---|---|---|
+| `coworking_reservation` | 19.0.2.0.0 | Werkplekbeheer, reservaties, pakketten, dagdelen, signage |
+| `workinglocal_rental` | 19.0.1.0.0 | Huurcontracten ateliers/appartementen, maandelijkse facturatie |
+| `workinglocal_interventions` | 19.0.1.0.0 | Interventieregistratie, checklists, PDF-rapport |
+
+### coworking_reservation — sleutelfunctionaliteit
+
+**Werkplektypes:** hot_desk, fixed_desk, meeting_room, focus_zone, event, hybrid_meeting, muziekzaal, productiestudio, foyer, muziekstudio
+
+**Boekingseenheid per werkplek:** dag (volledige dag) of slot (VM/NM/AV met configureerbare tijdsloten)
+
+**Pakketten (`coworking.package`):** groepeert meerdere ruimten — één reservatie blokkeert alle gekoppelde ruimten. Overlap-check detecteert conflicten via directe én pakket-reservaties.
+
+**Boekingstype op reservaties:** extern / intern / geblokkeerd
+
+**Website routes:**
+- `/werkplekken` — werkplekken overzicht + boekingsformulier
+- `/beschikbaarheid` — weekoverzicht beschikbaarheid per ruimte (publiek)
+- `/signage/reservaties` — fullscreen TV-display voor Xibo CMS (publiek, auto-refresh 60s)
+- `/mijn/reservaties` — klantenportaal (auth required)
+
+**JSON endpoint voor Xibo DataSets:**
+```
+GET /api/workspaces/availability
+→ {updated_at, workspaces[], today_schedule[], upcoming[]}
+```
+
+**Xibo setup:** Webpage widget → URL `/signage/reservaties` → Duration 60s → Scale Best Fit 1920×1080
+
+### workinglocal_rental — sleutelfunctionaliteit
+
+**Model:** `rental.contract` met referentie HUV/YYYY/NNN
+
+**Cron:** dagelijks 07:00 → draft-facturen voor actieve contracten waar `invoice_day == vandaag` (idempotent)
+
+**Werkplek-koppeling:** `rental.contract.line` kan optioneel linken aan `coworking.workspace` (vult prijs automatisch)
+
+### Addon deployen (VPS)
+
+```bash
+# 1. SCP naar volume
+scp -r addons/<addon> root@23.94.220.181:/var/lib/docker/volumes/wmsa9jotez65ynj0xsb748rq_odoo-addons/_data/
+
+# 2. Config in container schrijven (& in wachtwoord → nooit via CLI doorgeven)
+ssh root@23.94.220.181 'cat > /tmp/odoo_upgrade.conf << "EOF"
+[options]
+db_host = odoo-db-wmsa9jotez65ynj0xsb748rq
+db_user = odoo
+db_password = FidonH4fyjfH&9
+db_name = workinglocal
+addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
+EOF
+docker cp /tmp/odoo_upgrade.conf odoo-wmsa9jotez65ynj0xsb748rq:/tmp/odoo_upgrade.conf'
+
+# 3. Installeren (-i) of upgraden (-u)
+ssh root@23.94.220.181 'docker exec odoo-wmsa9jotez65ynj0xsb748rq odoo \
+  -c /tmp/odoo_upgrade.conf -u coworking_reservation -d workinglocal --stop-after-init 2>&1 | tail -5'
+
+# 4. Herstarten
+ssh root@23.94.220.181 'docker restart odoo-wmsa9jotez65ynj0xsb748rq'
+```
+
+### Addon deployen (on-premise klantserver)
+
+```bash
+# Via update script (auto-detecteert containers en volumes)
+ssh wp-walter 'bash /opt/workinglocal/scripts/update-addons.sh'
+
+# Specifieke modules
+ssh wp-walter 'bash /opt/workinglocal/scripts/update-addons.sh --modules "coworking_reservation"'
+```
+
+### Odoo 19 CE valkuilen
+
+- `<list>` niet `<tree>` in views
+- `invisible="condition"` niet `states=`
+- Geen `expand` attribuut op `<group>` in search views
+- `ir.cron` heeft geen `numbercall` of `doall` velden meer
+- `selection_add` met `ondelete={'value': 'cascade'}` — NIET `'set default'` bij required fields zonder default
+- `create()` geeft lijst terug → altijd `result[0]` gebruiken
+- `write()` op `account.move` via XML-RPC faalt → gebruik directe SQL
+- `seller_ids` partner_id moet integer zijn (niet lijst)
+- DB wachtwoord bevat `&` → altijd via config file doorgeven, nooit via CLI args
+
+---
+
 ## 12. Veiligheidsgrenzen
 
 ### Nooit zonder bevestiging:
