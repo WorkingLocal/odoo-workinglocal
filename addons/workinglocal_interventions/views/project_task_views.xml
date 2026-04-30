@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form_interventie" model="ir.ui.view">
+        <field name="name">project.task.form.interventie</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <!-- Interventie-tab toevoegen aan het bestaande notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Interventie" name="interventie">
+                    <group>
+                        <group string="Gegevens">
+                            <field name="intervention_type"/>
+                            <field name="location_description"
+                                   placeholder="Bv. serverruimte verdieping 1, bureau links"/>
+                        </group>
+                    </group>
+                    <separator string="Checklist"/>
+                    <field name="checklist_ids" nolabel="1">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="done"/>
+                            <field name="name" placeholder="Stap omschrijven..."/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

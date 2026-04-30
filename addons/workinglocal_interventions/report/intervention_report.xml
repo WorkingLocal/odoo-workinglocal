@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Report action ─────────────────────────────────────────────────── -->
+    <record id="action_report_intervention" model="ir.actions.report">
+        <field name="name">Interventierapport</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">workinglocal_interventions.report_intervention</field>
+        <field name="report_file">workinglocal_interventions.report_intervention</field>
+        <field name="binding_model_id" ref="project.model_project_task"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <!-- ── Document template ─────────────────────────────────────────────── -->
+    <template id="report_intervention_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 style="color:#1A2E5A; border-bottom:2px solid #F5B800; padding-bottom:6px;">
+                            Interventierapport
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Project / klantinfo -->
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <table class="table table-sm table-borderless" style="font-size:13px;">
+                            <tr>
+                                <td style="width:110px;"><strong>Klant</strong></td>
+                                <td>
+                                    <t t-if="o.project_id.partner_id">
+                                        <t t-esc="o.project_id.partner_id.name"/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Project</strong></td>
+                                <td><t t-esc="o.project_id.name or ''"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Taak</strong></td>
+                                <td><t t-esc="o.name"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm table-borderless" style="font-size:13px;">
+                            <tr>
+                                <td style="width:110px;"><strong>Datum</strong></td>
+                                <td>
+                                    <span t-field="o.create_date" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Technicus</strong></td>
+                                <td>
+                                    <t t-foreach="o.user_ids" t-as="u">
+                                        <t t-esc="u.name"/><t t-if="not u_last">, </t>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deadline</strong></td>
+                                <td>
+                                    <t t-if="o.date_deadline">
+                                        <span t-field="o.date_deadline" t-options='{"widget": "date"}'/>
+                                    </t>
+                                    <t t-else="">—</t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interventiegegevens -->
+                <t t-if="o.intervention_type or o.location_description">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h5 style="color:#1A2E5A; margin-bottom:6px;">Interventiegegevens</h5>
+                            <table class="table table-sm table-borderless" style="font-size:13px;">
+                                <t t-if="o.intervention_type">
+                                    <tr>
+                                        <td style="width:130px;"><strong>Type</strong></td>
+                                        <td>
+                                            <t t-if="o.intervention_type == 'wifi_install'">Wifi-installatie</t>
+                                            <t t-elif="o.intervention_type == 'wifi_audit'">Wifi-audit</t>
+                                            <t t-elif="o.intervention_type == 'network'">Netwerk</t>
+                                            <t t-elif="o.intervention_type == 'hardware'">Hardware</t>
+                                            <t t-else="">Andere</t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.location_description">
+                                    <tr>
+                                        <td><strong>Locatie</strong></td>
+                                        <td><t t-esc="o.location_description"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Checklist -->
+                <t t-if="o.checklist_ids">
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h5 style="color:#1A2E5A; margin-bottom:8px;">Checklist</h5>
+                            <table class="table table-sm" style="font-size:13px;">
+                                <thead style="background:#F5B800; color:#1A2E5A;">
+                                    <tr>
+                                        <th style="width:40px; text-align:center;">✓</th>
+                                        <th>Stap</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.checklist_ids" t-as="item">
+                                        <tr>
+                                            <td style="text-align:center; font-size:16px;">
+                                                <t t-if="item.done">&#x2611;</t>
+                                                <t t-else="">&#x2610;</t>
+                                            </td>
+                                            <td><t t-esc="item.name"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Opmerkingen + handtekening -->
+                <div class="row mt-4">
+                    <div class="col-8">
+                        <h5 style="color:#1A2E5A; margin-bottom:6px;">Opmerkingen</h5>
+                        <div style="border:1px solid #dee2e6; min-height:80px; border-radius:4px; padding:8px;"/>
+                    </div>
+                    <div class="col-4">
+                        <h5 style="color:#1A2E5A; margin-bottom:6px;">Handtekening klant</h5>
+                        <div style="border:1px solid #dee2e6; min-height:80px; border-radius:4px;"/>
+                        <p style="font-size:11px; color:#888; margin-top:4px;">Naam + datum</p>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- ── Outer loop (multi-record print) ───────────────────────────────── -->
+    <template id="report_intervention">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="workinglocal_interventions.report_intervention_document"
+               t-lang="o.project_id.partner_id.lang"/>
+        </t>
+    </template>
+
+</odoo>
