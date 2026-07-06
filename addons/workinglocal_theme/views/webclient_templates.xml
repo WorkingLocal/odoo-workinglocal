@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Browser tab-titel: 'Working Local' i.p.v. 'Odoo' -->
-    <template id="webclient_bootstrap_wl" inherit_id="web.webclient_bootstrap" name="Working Local - Paginatitel">
-        <xpath expr="//title" position="replace">
-            <title>Working Local</title>
-        </xpath>
-    </template>
+    <!--
+        Browser tab-titel wordt in Odoo 19 via JavaScript ingesteld (= company.name).
+        Geen template-override nodig — bedrijfsnaam 'Working Local' in company_data.xml volstaat.
+    -->
 </odoo>

@@ -2,36 +2,14 @@
 <odoo>
     <!--
         E-mail notificatie layout — Working Local branding
-        Overschrijft de paarse Odoo-kleur met navy + gele knop
+        Knopkleur wordt gestuurd via company.email_secondary_color (geel) + email_primary_color (navy).
+        Hier overschrijven we enkel de "Powered by Odoo" voettekst.
     -->
     <template id="mail_notification_layout_wl" inherit_id="mail.mail_notification_layout" name="Working Local - E-mail Layout">
 
-        <!-- Header achtergrond: navy i.p.v. Odoo-paars -->
-        <xpath expr="//table[hasclass('o_mail_notification_header')]" position="attributes">
-            <attribute name="style">background-color: #1A2E5A; width: 100%;</attribute>
-        </xpath>
-
-        <!-- Logo in header: forceer max-hoogte -->
-        <xpath expr="//table[hasclass('o_mail_notification_header')]//img" position="attributes">
-            <attribute name="style">max-height: 48px; object-fit: contain;</attribute>
-        </xpath>
-
-        <!-- CTA-knop: geel met navy tekst -->
-        <xpath expr="//a[hasclass('o_mail_button_primary')]" position="attributes">
-            <attribute name="style">
-                background-color: #F5B800;
-                color: #1A2E5A;
-                font-weight: 700;
-                border-radius: 4px;
-                padding: 10px 24px;
-                text-decoration: none;
-                display: inline-block;
-            </attribute>
-        </xpath>
-
-        <!-- Footer accent-lijn -->
-        <xpath expr="//table[hasclass('o_mail_notification_footer')]" position="attributes">
-            <attribute name="style">border-top: 3px solid #F5B800; width: 100%; padding-top: 12px;</attribute>
+        <!-- Vervang "Powered by Odoo" door "Working Local" -->
+        <xpath expr="//a[@href='https://www.odoo.com?utm_source=db&amp;utm_medium=email']" position="replace">
+            <a href="https://workinglocal.be" style="color: #F5B800; text-decoration: none; font-weight: 600;">Working Local</a>
         </xpath>
 
     </template>

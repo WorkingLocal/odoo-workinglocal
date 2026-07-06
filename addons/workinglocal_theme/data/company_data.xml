@@ -5,5 +5,8 @@
         <field name="name">Working Local</field>
         <field name="logo" type="base64" file="workinglocal_theme/static/src/img/logo.png"/>
         <field name="favicon" type="base64" file="workinglocal_theme/static/src/img/logo.png"/>
+        <!-- E-mail notificatie kleuren: gele knop met navy tekst -->
+        <field name="email_secondary_color">#F5B800</field>
+        <field name="email_primary_color">#1A2E5A</field>
     </record>
 </odoo>
