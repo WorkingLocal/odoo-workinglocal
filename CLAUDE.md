@@ -765,6 +765,7 @@ Klanten volgen op via: **https://odoo.workinglocal.be/my**
 
 | Addon | Versie | Beschrijving |
 |---|---|---|
+| `workinglocal_theme` | 19.0.2.0.0 | Volledige huisstijl: backend SCSS, login, website, rapport, mail, company logo/kleuren, website-pagina's |
 | `coworking_reservation` | 19.0.2.0.0 | Werkplekbeheer, reservaties, pakketten, dagdelen, signage |
 | `workinglocal_rental` | 19.0.1.0.0 | Huurcontracten ateliers/appartementen, maandelijkse facturatie |
 | `workinglocal_interventions` | 19.0.1.0.0 | Interventieregistratie, checklists, PDF-rapport — **enkel VPS/intern, NIET op klantservers** |
@@ -801,30 +802,48 @@ GET /api/workspaces/availability
 
 **Werkplek-koppeling:** `rental.contract.line` kan optioneel linken aan `coworking.workspace` (vult prijs automatisch)
 
-### Addon deployen (VPS)
+### workinglocal_theme — sleutelfunctionaliteit
+
+**SCSS-lagen:**
+- `variables.scss` — prepend in `web.assets_backend` + `web.assets_frontend`: overschrijft `$o-brand-primary` (#1A2E5A) vóór Odoo-framework
+- `workinglocal_theme.scss` — backend UI: navbar, knoppen, kanban, statusbar, broodkruimels
+- `login.scss` — inlogpagina: navy achtergrond, witte kaart
+- `website.scss` — publieke website: header, footer, webshop
+- `report.scss` — PDF-rapporten: navy koptekst, afwisselende rijen
+
+**Bedrijfsbranding (`data/company_data.xml`):**
+- Logo + favicon ingesteld via base64 file-referentie
+- `email_secondary_color = #F5B800` → gele e-mailknop (Odoo 19 native field)
+- `email_primary_color = #1A2E5A` → navy knoptekst
+
+**Website-pagina's (`views/website_pages.xml` + `data/website_data.xml`):**
+11 gepubliceerde pagina's, `noupdate="1"` zodat website-builder-bewerkingen worden behouden bij upgrades:
+`/` (homepage), `/co-working-locaties`, `/virtual-office`, `/neurodivers-werken`, `/werkplekinrichting`, `/wifi-installaties`, `/cloudplatform`, `/hybride-meeting-sets`, `/focustraject`, `/webinar-livestream`, `/contact`
+
+### Addon deployen (VPS) — correcte workflow
+
+> **Tailscale IP:** `100.107.226.24` (SSH-alias: `vps-workinglocal`). Gebruik nooit het publiek IP.
+> **DB-wachtwoord bevat `&`** → nooit via CLI args, altijd via XML-RPC of config-file.
 
 ```bash
-# 1. SCP naar volume
-scp -r addons/<addon> root@23.94.220.181:/var/lib/docker/volumes/wmsa9jotez65ynj0xsb748rq_odoo-addons/_data/
+# 1. Tar + SCP (vanop LOCAL-LAPTOP)
+cd C:/Users/Lenovo/Github/odoo-workinglocal/addons
+tar czf /tmp/wl_theme.tar.gz workinglocal_theme/
+scp /tmp/wl_theme.tar.gz root@100.107.226.24:/tmp/
 
-# 2. Config in container schrijven (& in wachtwoord → nooit via CLI doorgeven)
-ssh root@23.94.220.181 'cat > /tmp/odoo_upgrade.conf << "EOF"
-[options]
-db_host = odoo-db-wmsa9jotez65ynj0xsb748rq
-db_user = odoo
-db_password = FidonH4fyjfH&9
-db_name = workinglocal
-addons_path = /mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
-EOF
-docker cp /tmp/odoo_upgrade.conf odoo-wmsa9jotez65ynj0xsb748rq:/tmp/odoo_upgrade.conf'
+# 2. Uitpakken in Docker volume
+ADDONS=/var/lib/docker/volumes/wmsa9jotez65ynj0xsb748rq_odoo-addons/_data
+ssh vps-workinglocal "cd /tmp && tar xzf wl_theme.tar.gz && rm -rf $ADDONS/workinglocal_theme && cp -r workinglocal_theme $ADDONS/"
 
-# 3. Installeren (-i) of upgraden (-u)
-ssh root@23.94.220.181 'docker exec odoo-wmsa9jotez65ynj0xsb748rq odoo \
-  -c /tmp/odoo_upgrade.conf -u coworking_reservation -d workinglocal --stop-after-init 2>&1 | tail -5'
+# 3. Upgraden via XML-RPC (omzeilt & in wachtwoord, werkt asynchroon via Odoo worker)
+python3 scripts/upgrade_module.py workinglocal_theme
 
-# 4. Herstarten
-ssh root@23.94.220.181 'docker restart odoo-wmsa9jotez65ynj0xsb748rq'
+# 4. Versie verifiëren
+ssh vps-workinglocal "docker exec odoo-db-wmsa9jotez65ynj0xsb748rq psql -U odoo -d workinglocal \
+  -c \"SELECT name, state, latest_version FROM ir_module_module WHERE name = 'workinglocal_theme';\""
 ```
+
+Zie `scripts/upgrade_module.py` voor het XML-RPC upgrade-script.
 
 ### Addon deployen (on-premise klantserver)
 
@@ -838,6 +857,7 @@ ssh wp-walter@100.125.16.34 'sudo bash /opt/workinglocal/scripts/update-addons.s
 
 ### Odoo 19 CE valkuilen
 
+**Views / modellen:**
 - `<list>` niet `<tree>` in views
 - `invisible="condition"` niet `states=`
 - Geen `expand` attribuut op `<group>` in search views
@@ -847,6 +867,15 @@ ssh wp-walter@100.125.16.34 'sudo bash /opt/workinglocal/scripts/update-addons.s
 - `write()` op `account.move` via XML-RPC faalt → gebruik directe SQL
 - `seller_ids` partner_id moet integer zijn (niet lijst)
 - DB wachtwoord bevat `&` → altijd via config file doorgeven, nooit via CLI args
+
+**Theming / SCSS (dart-sass):**
+- `darken()` en `lighten()` zijn deprecated in dart-sass (Odoo 19 gebruikt dart-sass) → gebruik hardcoded hex: `darken(#F5B800, 5%)` → `#c99700`, `darken(#F5B800, 15%)` → `#a07a00`
+- SCSS altijd via `('prepend', 'path/to/file.scss')` laden als je vóór framework-variabelen wil uitvoeren
+
+**QWeb template overrides (Odoo 19-specifiek):**
+- `web.webclient_bootstrap` heeft geen `<title>` element — browsertitel wordt via JavaScript gezet vanuit `company.name`. Geen template-override nodig.
+- `mail.mail_notification_layout` heeft geen `o_mail_notification_header` of `o_mail_button_primary` classes meer. E-mailknopkleur zit in `company.email_secondary_color` (knop bg) en `email_primary_color` (knop tekst) — stel deze in via `res.company` record in XML data.
+- Voor het verifiëren van een template-structuur vóór override: gebruik XML-RPC `ir.ui.view` read met `arch` field.
 
 ---
 
