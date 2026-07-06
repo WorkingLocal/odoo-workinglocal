@@ -1,0 +1,94 @@
+// Working Local — Login pagina stijl
+// Marineblauw: #1A2E5A | Geel: #F5B800
+
+// ── Login wrapper ──────────────────────────────────────────────────────────────
+.o_login_wrap,
+.o_database_list_wrap {
+    background-color: #1A2E5A !important;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// ── Login card ─────────────────────────────────────────────────────────────────
+.o_login_form,
+.o_database_list,
+.o_database_selection {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(26, 46, 90, 0.18);
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    margin: 1.5rem auto;
+}
+
+// ── Logo boven het formulier ───────────────────────────────────────────────────
+.o_login_logo,
+.o_main_logo {
+    display: block;
+    max-height: 52px;
+    max-width: 220px;
+    margin: 0 auto 1.75rem;
+    object-fit: contain;
+}
+
+// Als Odoo de company-logo in een img toont boven het form
+.o_login_header img,
+.o_login_wrap img.o_main_logo {
+    max-height: 52px;
+    max-width: 220px;
+    object-fit: contain;
+}
+
+// ── Formulier-titel ────────────────────────────────────────────────────────────
+.o_login_form h2,
+.o_login_form .o_login_title {
+    color: #1A2E5A;
+    font-weight: 700;
+    font-size: 1.35rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+// ── Inputs ─────────────────────────────────────────────────────────────────────
+.o_login_form .form-control {
+    border-color: #d1d5db;
+    border-radius: 6px;
+    padding: 0.6rem 0.875rem;
+
+    &:focus {
+        border-color: #1A2E5A;
+        box-shadow: 0 0 0 3px rgba(26, 46, 90, 0.12);
+    }
+}
+
+// ── Login knop — geel CTA ──────────────────────────────────────────────────────
+.o_login_form .btn-primary,
+.o_database_list .btn-primary {
+    background-color: #F5B800 !important;
+    border-color: #F5B800 !important;
+    color: #1A2E5A !important;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: 6px;
+    padding: 0.65rem 1.5rem;
+    width: 100%;
+
+    &:hover, &:focus {
+        background-color: #c99700 !important;
+        border-color: #c99700 !important;
+    }
+}
+
+// ── Footer onder form ──────────────────────────────────────────────────────────
+.o_login_wrap .o_login_footer,
+.o_login_wrap footer {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 1.5rem;
+
+    a { color: rgba(255, 255, 255, 0.65); }
+}

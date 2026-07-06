@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     WORKING LOCAL — Website pagina's (QWeb templates)
+     Gebaseerd op: design-allthingslocal/brands/working-local/content.md
+     Huisstijl: #1A2E5A (navy) · #F5B800 (geel) · #16A34A (groen) · #2563EB (blauw)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     HOME
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_home" name="Working Local - Home">
+    <t t-call="website.layout">
+        <div id="wrap">
+
+            <!-- Hero -->
+            <section style="background-color:#1A2E5A; min-height:92vh; display:flex; align-items:center; position:relative; overflow:hidden;">
+                <div style="position:absolute;top:0;right:0;width:45%;height:100%;background:linear-gradient(135deg,transparent 40%,rgba(245,184,0,0.08));pointer-events:none;"></div>
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <span style="display:inline-block;background:#F5B800;color:#1A2E5A;font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:1.25rem;">
+                                Getting things done, together
+                            </span>
+                            <h1 style="color:#fff;font-size:clamp(2.2rem,5vw,3.75rem);font-weight:800;line-height:1.08;margin-bottom:1.5rem;">
+                                Coworking met<br/>een sociale missie
+                            </h1>
+                            <p style="color:rgba(255,255,255,.82);font-size:1.15rem;line-height:1.7;max-width:540px;margin-bottom:2.25rem;">
+                                Working Local helpt laagdrempelige coworkingplaatsen groeien, professionaliseren en nieuwe doelgroepen bereiken — met betaalbare, duurzame en overdraagbare oplossingen.
+                            </p>
+                            <div style="display:flex;flex-wrap:wrap;gap:.75rem;">
+                                <a href="/co-working-locaties" class="btn" style="background:#F5B800;color:#1A2E5A;font-weight:700;padding:.75rem 1.75rem;border-radius:6px;text-decoration:none;">
+                                    Ontdek de locaties
+                                </a>
+                                <a href="/contact" class="btn" style="border:2px solid rgba(255,255,255,.5);color:#fff;font-weight:600;padding:.75rem 1.75rem;border-radius:6px;text-decoration:none;">
+                                    Neem contact op
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 d-none d-lg-flex justify-content-center">
+                            <img src="/workinglocal_theme/static/src/img/logo.png"
+                                 alt="Working Local"
+                                 style="max-width:300px;filter:brightness(0) invert(1);opacity:.9;"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistieken / social proof -->
+            <section style="background:#F5B800;padding:1.5rem 0;">
+                <div class="container">
+                    <div class="row text-center g-3">
+                        <div class="col-6 col-md-3">
+                            <div style="font-size:2rem;font-weight:800;color:#1A2E5A;">100+</div>
+                            <div style="font-size:.85rem;font-weight:600;color:#1A2E5A;opacity:.8;">wifi-installaties</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div style="font-size:2rem;font-weight:800;color:#1A2E5A;">€250</div>
+                            <div style="font-size:.85rem;font-weight:600;color:#1A2E5A;opacity:.8;">werkplek vanaf</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div style="font-size:2rem;font-weight:800;color:#1A2E5A;">17%</div>
+                            <div style="font-size:.85rem;font-weight:600;color:#1A2E5A;opacity:.8;">neurodiverse medewerkers</div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div style="font-size:2rem;font-weight:800;color:#1A2E5A;">5+</div>
+                            <div style="font-size:.85rem;font-weight:600;color:#1A2E5A;opacity:.8;">jaar ervaring</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diensten grid -->
+            <section style="background:#fff;padding:5rem 0;">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <span style="display:inline-block;background:#F9FAFB;color:#1A2E5A;font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:.75rem;">
+                            Wat we doen
+                        </span>
+                        <h2 style="color:#1A2E5A;font-size:2.25rem;font-weight:800;">Concrete ondersteuning voor coworkings</h2>
+                        <p style="color:#4B5563;max-width:560px;margin:0 auto;">
+                            Van werkplekinrichting tot cloudplatform — alles blijft eenvoudig, overdraagbaar en onderhoudsarm.
+                        </p>
+                    </div>
+                    <div class="row g-4">
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/werkplekinrichting" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">🪑</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Werkplekinrichting</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Ergonomische werkplekken vanaf €250 per plek. Bureau, stoel, monitorarm en professionele monitoren voor elke coworking.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/wifi-installaties" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">📡</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Wifi-installaties</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Gecertificeerde Ubiquiti-netwerktechnieker met meer dan 100 professionele installaties in 5 jaar.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/cloudplatform" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">☁️</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Cloudplatform</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Werkplekreservaties en administratie via Odoo CE. Ideaal voor coworkings en kleine organisaties.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/hybride-meeting-sets" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">🎥</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Hybride meeting-sets</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Plug-and-play vergaderoplossingen. Professioneel audio en video, compatibel met elke laptop.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/focustraject" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">🎯</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Focustraject</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Concreet traject tegen uitstelgedrag: GTD + Todoist + groeps-Pomodoro's. Ritme, community en vooruitgang.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <a href="/webinar-livestream" style="text-decoration:none;display:block;height:100%;">
+                                <div style="background:#F9FAFB;border-radius:12px;padding:2rem;height:100%;border:1px solid #e5e7eb;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 4px 20px rgba(26,46,90,.12)';this.style.borderColor='#F5B800'" onmouseout="this.style.boxShadow='none';this.style.borderColor='#e5e7eb'">
+                                    <div style="width:48px;height:48px;background:#1A2E5A;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                        <span style="color:#F5B800;font-size:1.5rem;">🎬</span>
+                                    </div>
+                                    <h3 style="color:#1A2E5A;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;">Webinar &amp; Livestream</h3>
+                                    <p style="color:#4B5563;font-size:.9rem;line-height:1.6;margin:0;">
+                                        Compacte setups voor online workshops, hybride events en webinars. OBS-technologie en Microsoft Teams.
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sociale missie -->
+            <section style="background:#1A2E5A;padding:5rem 0;">
+                <div class="container">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6">
+                            <span style="display:inline-block;background:rgba(245,184,0,.15);color:#F5B800;font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:1rem;">
+                                Sociale missie
+                            </span>
+                            <h2 style="color:#fff;font-size:2rem;font-weight:800;margin-bottom:1rem;">
+                                Ken je een plek met een sociale missie die wil groeien?
+                            </h2>
+                            <p style="color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:2rem;">
+                                Working Local ondersteunt laagdrempelige locaties die een maatschappelijke of sociale insteek hebben — buurtplekken, vrijwilligerswerkingen en kleine organisaties die professioneel willen starten zonder hoge kosten.
+                            </p>
+                            <a href="/contact" style="display:inline-block;background:#F5B800;color:#1A2E5A;font-weight:700;padding:.75rem 1.75rem;border-radius:6px;text-decoration:none;">
+                                Stuur een tip ↗
+                            </a>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:1.5rem;">
+                                    <div style="color:#F5B800;font-weight:800;font-size:1rem;margin-bottom:.5rem;">🏢 Buurtplekken</div>
+                                    <div style="color:rgba(255,255,255,.75);font-size:.875rem;">Lokale coworkings in wijk of gemeente</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:1.5rem;">
+                                    <div style="color:#F5B800;font-weight:800;font-size:1rem;margin-bottom:.5rem;">🤝 Vrijwilligers</div>
+                                    <div style="color:rgba(255,255,255,.75);font-size:.875rem;">Werkingen die professioneel willen starten</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:1.5rem;">
+                                    <div style="color:#F5B800;font-weight:800;font-size:1rem;margin-bottom:.5rem;">🎯 Focus</div>
+                                    <div style="color:rgba(255,255,255,.75);font-size:.875rem;">Professionals met nood aan rust en structuur</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:1.5rem;">
+                                    <div style="color:#F5B800;font-weight:800;font-size:1rem;margin-bottom:.5rem;">♻️ Duurzaam</div>
+                                    <div style="color:rgba(255,255,255,.75);font-size:.875rem;">Betaalbare, circulaire infrastructuur</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     CO-WORKING LOCATIES
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_locaties" name="Working Local - Co-working locaties">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Coworking</t>
+                <t t-set="hero_title">Co-working locaties</t>
+                <t t-set="hero_sub">Laagdrempelige werkplekken voor iedereen die in rust wil werken, samenwerken of zich wil focussen.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;">
+                                <div style="background:#1A2E5A;color:#F5B800;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:3px 12px;border-radius:4px;margin-bottom:1rem;">Hot Desk</div>
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Flexibele werkplek</h3>
+                                <p style="color:#4B5563;line-height:1.7;">Kies elke dag een vrije werkplek. Ideaal voor zelfstandigen en freelancers die flexibiliteit nodig hebben.</p>
+                                <a href="/werkplekken" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk beschikbaarheid →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;">
+                                <div style="background:#1A2E5A;color:#F5B800;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:3px 12px;border-radius:4px;margin-bottom:1rem;">Vaste Werkplek</div>
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Dedicated desk</h3>
+                                <p style="color:#4B5563;line-height:1.7;">Jouw eigen vaste plek, elke dag klaar. Laat je spullen staan en kom terug in een vertrouwde omgeving.</p>
+                                <a href="/werkplekken" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk beschikbaarheid →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;">
+                                <div style="background:#1A2E5A;color:#F5B800;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:3px 12px;border-radius:4px;margin-bottom:1rem;">Vergaderruimte</div>
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Meeting room</h3>
+                                <p style="color:#4B5563;line-height:1.7;">Professionele vergaderruimtes voor kleine en grotere teams, uitgerust met hybride meeting-technologie.</p>
+                                <a href="/werkplekken" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk beschikbaarheid →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;">
+                                <div style="background:#1A2E5A;color:#F5B800;font-weight:800;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:3px 12px;border-radius:4px;margin-bottom:1rem;">Focuszone</div>
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Stille werkruimte</h3>
+                                <p style="color:#4B5563;line-height:1.7;">Maximale concentratie in een rustige, prikkeldempende omgeving. Ideaal voor deep work en focus.</p>
+                                <a href="/werkplekken" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk beschikbaarheid →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-5">
+                        <a href="/werkplekken" style="display:inline-block;background:#F5B800;color:#1A2E5A;font-weight:700;padding:.875rem 2rem;border-radius:6px;text-decoration:none;font-size:1rem;">
+                            Reserveer een werkplek
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     VIRTUAL OFFICE
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_virtual_office" name="Working Local - Virtual Office">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Virtual Office</t>
+                <t t-set="hero_sub">Een professioneel bedrijfsadres zonder vaste werkplek. Perfect voor zelfstandigen, freelancers en kleine ondernemingen.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row align-items-center g-5">
+                        <div class="col-lg-6">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1rem;">Een zakelijk adres, zonder de vaste kosten</h2>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">
+                                Met een Virtual Office bij Working Local heb je een professioneel domicilieringsadres voor je onderneming. Je kunt er je post ontvangen, en je bedrijf registreren — zonder dat je elke dag aanwezig moet zijn.
+                            </p>
+                            <ul style="list-style:none;padding:0;margin:0 0 2rem;">
+                                <li style="color:#4B5563;padding:.5rem 0;border-bottom:1px solid #f3f4f6;display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#16A34A;font-weight:700;flex-shrink:0;">✓</span>
+                                    Professioneel domicilieringsadres
+                                </li>
+                                <li style="color:#4B5563;padding:.5rem 0;border-bottom:1px solid #f3f4f6;display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#16A34A;font-weight:700;flex-shrink:0;">✓</span>
+                                    Postbeheer en doorstuur
+                                </li>
+                                <li style="color:#4B5563;padding:.5rem 0;border-bottom:1px solid #f3f4f6;display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#16A34A;font-weight:700;flex-shrink:0;">✓</span>
+                                    Toegang tot vergaderruimtes op afroep
+                                </li>
+                                <li style="color:#4B5563;padding:.5rem 0;display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#16A34A;font-weight:700;flex-shrink:0;">✓</span>
+                                    Netwerk van Working Local-locaties
+                                </li>
+                            </ul>
+                            <a href="/contact" style="display:inline-block;background:#F5B800;color:#1A2E5A;font-weight:700;padding:.75rem 1.75rem;border-radius:6px;text-decoration:none;">
+                                Meer info aanvragen
+                            </a>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="background:#F9FAFB;border-radius:16px;padding:2.5rem;">
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:1.5rem;">Geschikt voor</h3>
+                                <div style="display:flex;flex-direction:column;gap:1rem;">
+                                    <div style="background:#fff;border-radius:8px;padding:1rem 1.25rem;border-left:4px solid #F5B800;">
+                                        <strong style="color:#1A2E5A;">Zelfstandigen</strong>
+                                        <p style="color:#4B5563;margin:0;font-size:.9rem;">Eenmanszaken die een apart professioneel adres willen</p>
+                                    </div>
+                                    <div style="background:#fff;border-radius:8px;padding:1rem 1.25rem;border-left:4px solid #F5B800;">
+                                        <strong style="color:#1A2E5A;">Starters &amp; KMO's</strong>
+                                        <p style="color:#4B5563;margin:0;font-size:.9rem;">Kleine ondernemingen zonder eigen kantoor</p>
+                                    </div>
+                                    <div style="background:#fff;border-radius:8px;padding:1rem 1.25rem;border-left:4px solid #F5B800;">
+                                        <strong style="color:#1A2E5A;">Remote workers</strong>
+                                        <p style="color:#4B5563;margin:0;font-size:.9rem;">Professionals die vanop afstand werken</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Interesse in een Virtual Office?</t>
+                <t t-set="cta_sub">Neem contact op voor tarieven en beschikbaarheid bij jou in de buurt.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     17% NEURODIVERS
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_neurodiversiteit" name="Working Local - 17% Neurodivers">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Inclusie</t>
+                <t t-set="hero_title">17% neurodivers</t>
+                <t t-set="hero_sub">Ongeveer 17% van de bevolking is neurodivers. Working Local bouwt coworkingplekken die voor iedereen werken.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-7">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1rem;">Een werkplek die werkt voor jou</h2>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">
+                                Neurodiversiteit omvat ADHD, autisme, dyslexie, dyscalculie en andere cognitieve variaties. Elke coworking-gebruiker verdient een omgeving die aansluit bij zijn manier van werken.
+                            </p>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:2rem;">
+                                Working Local helpt coworkingplekken inclusief te worden: rustige focuszones, duidelijke routing, aanpasbare werkplekken en een community die neurodiversiteit als troef ziet.
+                            </p>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <div style="background:#F9FAFB;border-radius:10px;padding:1.25rem;">
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.25rem;">Focuszones</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Stille ruimtes voor diepe concentratie</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="background:#F9FAFB;border-radius:10px;padding:1.25rem;">
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.25rem;">Duidelijke routing</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Overzichtelijke indeling en bewegwijzering</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="background:#F9FAFB;border-radius:10px;padding:1.25rem;">
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.25rem;">Pomodoro-community</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Ritme en structuur via groepssessies</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="background:#F9FAFB;border-radius:10px;padding:1.25rem;">
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.25rem;">Flexibele opstelling</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Werkplekken aanpasbaar aan persoonlijke noden</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <div style="background:#1A2E5A;border-radius:16px;padding:2.5rem;color:#fff;">
+                                <div style="font-size:3rem;font-weight:900;color:#F5B800;line-height:1;">17%</div>
+                                <div style="font-size:1.1rem;font-weight:600;margin:.5rem 0 1rem;">van de beroepsbevolking</div>
+                                <p style="color:rgba(255,255,255,.8);line-height:1.7;font-size:.95rem;">
+                                    is neurodivers. Dat zijn collega's, klanten en medewerkers in elke organisatie. Een inclusieve coworking is geen luxe — het is een zakelijke opportuniteit.
+                                </p>
+                                <hr style="border-color:rgba(255,255,255,.2);margin:1.5rem 0;"/>
+                                <a href="/focustraject" style="color:#F5B800;font-weight:700;text-decoration:none;">
+                                    Bekijk het focustraject →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Maak jouw coworking inclusiever</t>
+                <t t-set="cta_sub">We begeleiden je bij het inrichten van een neurodiversiteitsvriendelijke werkplek.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     WERKPLEKINRICHTING
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_werkplekinrichting" name="Working Local - Werkplekinrichting">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Werkplekinrichting</t>
+                <t t-set="hero_sub">Complete, ergonomische werkplekken vanaf €250 per plek — voor elke coworking, buurtplek of vrijwilligerswerking.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row align-items-center g-5 mb-5">
+                        <div class="col-lg-6">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1rem;">Professioneel starten zonder hoge kosten</h2>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">
+                                Een professionele werkplek hoeft niet duur te zijn. Working Local levert complete werkpleksets op basis van circulaire hardware — refurbished, gecertificeerd en klaar voor gebruik.
+                            </p>
+                            <p style="color:#4B5563;line-height:1.7;">
+                                Elke set bestaat uit: bureau, ergonomische stoel, monitorarm en professionele single of dual monitoren. Schaalbaar van 1 tot 50+ werkplekken.
+                            </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="background:#F5B800;border-radius:16px;padding:2.5rem;">
+                                <div style="font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1A2E5A;opacity:.7;margin-bottom:.5rem;">Startprijs per werkplek</div>
+                                <div style="font-size:3.5rem;font-weight:900;color:#1A2E5A;line-height:1;">€250</div>
+                                <div style="color:#1A2E5A;font-weight:600;margin:.5rem 0 1.5rem;">inclusief bureau · stoel · monitorarm · monitor</div>
+                                <a href="/shop" style="display:inline-block;background:#1A2E5A;color:#fff;font-weight:700;padding:.75rem 1.75rem;border-radius:6px;text-decoration:none;">
+                                    Bekijk de webshop
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">♻️</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Circulair</h4>
+                                <p style="color:#4B5563;font-size:.9rem;">Gecertificeerde refurbished hardware — duurzaam en betrouwbaar</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">🔧</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Installatie inbegrepen</h4>
+                                <p style="color:#4B5563;font-size:.9rem;">Volledige installatie en configuratie ter plaatse</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">📈</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Schaalbaar</h4>
+                                <p style="color:#4B5563;font-size:.9rem;">Start klein, breid uit. Elke werkplek is identiek en uitwisselbaar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Klaar om je coworking in te richten?</t>
+                <t t-set="cta_sub">Vraag een vrijblijvende offerte aan voor jouw locatie.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     WIFI-INSTALLATIES
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_wifi" name="Working Local - Wifi-installaties">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Professionele wifi-installaties</t>
+                <t t-set="hero_sub">Gecertificeerde Ubiquiti-netwerktechnieker. Meer dan 100 professionele installaties in 5 jaar.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-5 align-items-center mb-5">
+                        <div class="col-lg-6">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1rem;">Wifi die gewoon werkt, overal</h2>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">
+                                Een coworking staat of valt met een betrouwbare internetverbinding. Working Local installeert professionele Ubiquiti-netwerken die ontworpen zijn voor zware, multigebruiker-omgevingen.
+                            </p>
+                            <p style="color:#4B5563;line-height:1.7;">
+                                Van kleine buurtcoworkings tot grotere locaties met 50+ gelijktijdige gebruikers — wij ontwerpen, installeren en documenteren het volledige netwerk.
+                            </p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="background:#F9FAFB;border-radius:16px;padding:2rem;">
+                                <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
+                                    <div style="background:#1A2E5A;color:#F5B800;font-weight:900;font-size:1.5rem;min-width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;">100+</div>
+                                    <div>
+                                        <div style="color:#1A2E5A;font-weight:700;">Installaties</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">in 5 jaar tijd, in België en Nederland</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:1rem;align-items:center;margin-bottom:1rem;">
+                                    <div style="background:#1A2E5A;color:#F5B800;font-weight:900;font-size:1.1rem;min-width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;">UI</div>
+                                    <div>
+                                        <div style="color:#1A2E5A;font-weight:700;">Ubiquiti gecertificeerd</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Enterprise-kwaliteit netwerkhardware</div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:1rem;align-items:center;">
+                                    <div style="background:#1A2E5A;color:#F5B800;font-weight:900;font-size:1.1rem;min-width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;">📄</div>
+                                    <div>
+                                        <div style="color:#1A2E5A;font-weight:700;">Volledig gedocumenteerd</div>
+                                        <div style="color:#4B5563;font-size:.875rem;">Netwerktekening, wachtwoorden en handleiding meegeleverd</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Wifi-audit of nieuwe installatie?</t>
+                <t t-set="cta_sub">Vraag een vrijblijvende site-survey aan voor jouw locatie.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     CLOUDPLATFORM
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_cloudplatform" name="Working Local - Cloudplatform">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Toegankelijk cloudplatform</t>
+                <t t-set="hero_sub">Werkplekreservaties, administratie en klantenbeheer via Odoo CE — betaalbaar, open-source en volledig in eigen beheer.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-6 col-lg-3">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">📅</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;font-size:1rem;">Werkplekreservaties</h4>
+                                <p style="color:#4B5563;font-size:.875rem;">Online boeken, beschikbaarheidskalender en bevestigingen</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">🧾</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;font-size:1rem;">Facturatie</h4>
+                                <p style="color:#4B5563;font-size:.875rem;">Automatische maandelijkse facturen voor vaste coworkers</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">👥</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;font-size:1rem;">Klantenbeheer</h4>
+                                <p style="color:#4B5563;font-size:.875rem;">CRM voor leden, leads en contacten op één plek</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div style="text-align:center;padding:1.5rem;">
+                                <div style="font-size:2rem;margin-bottom:.75rem;">🌐</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;font-size:1rem;">Webshop</h4>
+                                <p style="color:#4B5563;font-size:.875rem;">Productcatalogus en online webshop voor hardware en diensten</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background:#1A2E5A;border-radius:16px;padding:2.5rem;">
+                        <div class="row align-items-center g-4">
+                            <div class="col-lg-8">
+                                <h3 style="color:#F5B800;font-weight:800;margin-bottom:.75rem;">Open-source, in eigen beheer</h3>
+                                <p style="color:rgba(255,255,255,.85);line-height:1.7;margin:0;">
+                                    Working Local gebruikt Odoo Community Edition — 100% open-source, zonder licentiekosten, volledig aanpasbaar. Wij installeren, configureren en begeleiden jouw coworking bij de opstart.
+                                </p>
+                            </div>
+                            <div class="col-lg-4 text-lg-end">
+                                <a href="/contact" style="display:inline-block;background:#F5B800;color:#1A2E5A;font-weight:700;padding:.875rem 2rem;border-radius:6px;text-decoration:none;">
+                                    Demo aanvragen
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     HYBRIDE MEETING-SETS
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_meeting_sets" name="Working Local - Hybride meeting-sets">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Hybride meeting-sets</t>
+                <t t-set="hero_sub">Plug-and-play vergaderoplossingen voor coworkings. Professioneel audio en video, compatibel met elke laptop of smartphone.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;">
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Basis meeting set</h3>
+                                <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">Voor kleine vergaderruimtes van 2-6 personen. 360° audio, HD-webcam, draadloos scherm delen.</p>
+                                <a href="/shop" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk in webshop →</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div style="border:1px solid #e5e7eb;border-radius:12px;padding:2rem;height:100%;border-color:#F5B800;">
+                                <div style="background:#F5B800;color:#1A2E5A;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;display:inline-block;padding:2px 10px;border-radius:4px;margin-bottom:.75rem;">Populairste keuze</div>
+                                <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Multicam OBS set</h3>
+                                <p style="color:#4B5563;line-height:1.7;margin-bottom:1rem;">Professioneel streaming en opname. Meerdere camera's, OBS-Studio, ideaal voor hybride events en webinars.</p>
+                                <a href="/shop" style="color:#1A2E5A;font-weight:700;text-decoration:none;">Bekijk in webshop →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background:#F9FAFB;border-radius:12px;padding:2rem;margin-top:2rem;">
+                        <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:1rem;">Als dienst of als product</h3>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div style="display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#F5B800;font-weight:800;flex-shrink:0;">→</span>
+                                    <div><strong style="color:#1A2E5A;">Koop</strong> <span style="color:#4B5563;">— éénmalige investering, jij beheert de set</span></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="display:flex;gap:.75rem;align-items:flex-start;">
+                                    <span style="color:#F5B800;font-weight:800;flex-shrink:0;">→</span>
+                                    <div><strong style="color:#1A2E5A;">Huur</strong> <span style="color:#4B5563;">— per dag of event, inclusief opbouw en support</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Vergaderruimte uitrusten?</t>
+                <t t-set="cta_sub">We komen een demo geven op jouw locatie.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     FOCUSTRAJECT
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_focustraject" name="Working Local - Focustraject">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Traject</t>
+                <t t-set="hero_title">Focustraject</t>
+                <t t-set="hero_sub">Concreet traject tegen uitstelgedrag en concentratieproblemen. Ritme, community en vooruitgang — binnen jouw coworking.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-5 align-items-start">
+                        <div class="col-lg-6">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1rem;">Getting Things Done, samen</h2>
+                            <p style="color:#4B5563;line-height:1.7;margin-bottom:2rem;">
+                                Het focustraject combineert bewezen methodes met community-support. We brengen structuur aan voor mensen die moeite hebben met focus, prioriteiten stellen of uitstelgedrag.
+                            </p>
+                            <div style="display:flex;flex-direction:column;gap:1rem;">
+                                <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                    <div style="background:#F5B800;color:#1A2E5A;font-weight:800;min-width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.875rem;">1</div>
+                                    <div>
+                                        <strong style="color:#1A2E5A;">GTD + Todoist</strong>
+                                        <p style="color:#4B5563;margin:.25rem 0 0;font-size:.9rem;">Getting Things Done methodology, gecombineerd met Todoist als taakbeheer-tool</p>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                    <div style="background:#F5B800;color:#1A2E5A;font-weight:800;min-width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.875rem;">2</div>
+                                    <div>
+                                        <strong style="color:#1A2E5A;">Groeps-Pomodoro's</strong>
+                                        <p style="color:#4B5563;margin:.25rem 0 0;font-size:.9rem;">Hybride of online sessies — samen focussen creëert ritme en sociale druk</p>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                    <div style="background:#F5B800;color:#1A2E5A;font-weight:800;min-width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.875rem;">3</div>
+                                    <div>
+                                        <strong style="color:#1A2E5A;">RescueTime + Exist tracking</strong>
+                                        <p style="color:#4B5563;margin:.25rem 0 0;font-size:.9rem;">Objectieve meting van je aandacht en energiepatronen</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="background:#1A2E5A;border-radius:16px;padding:2.5rem;">
+                                <h3 style="color:#F5B800;font-weight:800;margin-bottom:1.5rem;">Wat je krijgt</h3>
+                                <ul style="list-style:none;padding:0;margin:0;color:rgba(255,255,255,.85);">
+                                    <li style="padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;gap:.75rem;">
+                                        <span style="color:#F5B800;">✓</span> Persoonlijk onboardinggesprek
+                                    </li>
+                                    <li style="padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;gap:.75rem;">
+                                        <span style="color:#F5B800;">✓</span> Wekelijkse groeps-Pomodoro-sessies
+                                    </li>
+                                    <li style="padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;gap:.75rem;">
+                                        <span style="color:#F5B800;">✓</span> Toegang tot GTD-templates en checklists
+                                    </li>
+                                    <li style="padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.12);display:flex;gap:.75rem;">
+                                        <span style="color:#F5B800;">✓</span> Persoonlijk energieprofiel (RescueTime)
+                                    </li>
+                                    <li style="padding:.6rem 0;display:flex;gap:.75rem;">
+                                        <span style="color:#F5B800;">✓</span> Community van gelijkgezinden
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Start jouw focustraject</t>
+                <t t-set="cta_sub">Beschikbaar als coworking-programma of individueel begeleidingstraject.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     WEBINAR & LIVESTREAM
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_webinar" name="Working Local - Webinar en Livestream">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Dienst</t>
+                <t t-set="hero_title">Webinar &amp; Livestream</t>
+                <t t-set="hero_sub">Compacte, hoogwaardige setups voor online workshops, hybride events en webinars. OBS-technologie en Microsoft Teams.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-4 mb-5">
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:2rem 1.5rem;background:#F9FAFB;border-radius:12px;height:100%;">
+                                <div style="font-size:2.5rem;margin-bottom:1rem;">🎙️</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Webinar setup</h4>
+                                <p style="color:#4B5563;font-size:.9rem;line-height:1.6;">Professioneel geluid en beeld voor online presentaties en workshops. Inclusief begeleiding.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:2rem 1.5rem;background:#F9FAFB;border-radius:12px;height:100%;">
+                                <div style="font-size:2.5rem;margin-bottom:1rem;">📺</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Hybride events</h4>
+                                <p style="color:#4B5563;font-size:.9rem;line-height:1.6;">Live aanwezigen én online deelnemers perfect verbonden. Met of zonder technieker ter plaatse.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div style="text-align:center;padding:2rem 1.5rem;background:#F9FAFB;border-radius:12px;height:100%;">
+                                <div style="font-size:2.5rem;margin-bottom:1rem;">📹</div>
+                                <h4 style="color:#1A2E5A;font-weight:700;">Video-opname</h4>
+                                <p style="color:#4B5563;font-size:.9rem;line-height:1.6;">Multicamera opname voor gebruik als cursusmateriaal, promo of documentatie.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background:#F9FAFB;border-radius:12px;padding:2rem;">
+                        <h3 style="color:#1A2E5A;font-weight:700;margin-bottom:.75rem;">Compatibel met alle platformen</h3>
+                        <p style="color:#4B5563;line-height:1.7;margin:0;">
+                            Microsoft Teams · Zoom · Google Meet · YouTube Live · Streamlabs · OBS Studio. Wij configureren en begeleiden tot alles vlekkeloos loopt.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <t t-call="workinglocal_theme.wl_page_cta">
+                <t t-set="cta_title">Event of webinar plannen?</t>
+                <t t-set="cta_sub">Neem contact op voor een offerte op maat.</t>
+            </t>
+        </div>
+    </t>
+</template>
+
+
+<!-- ───────────────────────────────────────────────────────────────────────────
+     CONTACT
+     ─────────────────────────────────────────────────────────────────────────── -->
+<template id="wl_page_contact" name="Working Local - Contact">
+    <t t-call="website.layout">
+        <div id="wrap">
+            <t t-call="workinglocal_theme.wl_page_hero">
+                <t t-set="hero_label">Contact</t>
+                <t t-set="hero_title">Neem contact op</t>
+                <t t-set="hero_sub">Vraag een offerte aan, stuur een tip over een coworkinglocatie, of stel gewoon een vraag.</t>
+            </t>
+            <section style="background:#fff;padding:4rem 0;">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-7">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1.5rem;">Stuur een bericht</h2>
+                            <t t-call="website_form.get_form_action_url" />
+                            <div class="s_website_form" data-model_name="mail.mail" data-success_page="/contact-bedankt" style="background:#F9FAFB;border-radius:12px;padding:2rem;">
+                                <div class="o_website_form_container">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label style="color:#1A2E5A;font-weight:600;font-size:.9rem;margin-bottom:.4rem;display:block;">Naam *</label>
+                                            <input type="text" name="partner_name" required="1" placeholder="Jouw naam" class="form-control" style="border-color:#d1d5db;border-radius:6px;"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style="color:#1A2E5A;font-weight:600;font-size:.9rem;margin-bottom:.4rem;display:block;">E-mail *</label>
+                                            <input type="email" name="email_from" required="1" placeholder="jouw@email.be" class="form-control" style="border-color:#d1d5db;border-radius:6px;"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label style="color:#1A2E5A;font-weight:600;font-size:.9rem;margin-bottom:.4rem;display:block;">Onderwerp</label>
+                                            <input type="text" name="subject" placeholder="Waarmee kunnen we je helpen?" class="form-control" style="border-color:#d1d5db;border-radius:6px;"/>
+                                        </div>
+                                        <div class="col-12">
+                                            <label style="color:#1A2E5A;font-weight:600;font-size:.9rem;margin-bottom:.4rem;display:block;">Bericht *</label>
+                                            <textarea name="body_html" required="1" rows="5" placeholder="Je bericht..." class="form-control" style="border-color:#d1d5db;border-radius:6px;"></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn" style="background:#F5B800;color:#1A2E5A;font-weight:700;padding:.75rem 2rem;border-radius:6px;border:none;font-size:1rem;cursor:pointer;">
+                                                Stuur bericht
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <h2 style="color:#1A2E5A;font-weight:800;margin-bottom:1.5rem;">Contactgegevens</h2>
+                            <div style="display:flex;flex-direction:column;gap:1.25rem;">
+                                <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                    <div style="background:#1A2E5A;color:#F5B800;min-width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">📧</div>
+                                    <div>
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.2rem;">E-mail</div>
+                                        <a href="mailto:info@workinglocal.be" style="color:#4B5563;text-decoration:none;">info@workinglocal.be</a>
+                                    </div>
+                                </div>
+                                <div style="display:flex;gap:1rem;align-items:flex-start;">
+                                    <div style="background:#1A2E5A;color:#F5B800;min-width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">🌐</div>
+                                    <div>
+                                        <div style="color:#1A2E5A;font-weight:700;margin-bottom:.2rem;">Website</div>
+                                        <span style="color:#4B5563;">workinglocal.be</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background:#1A2E5A;border-radius:12px;padding:1.5rem;margin-top:2rem;">
+                                <h4 style="color:#F5B800;font-weight:700;margin-bottom:.75rem;">Tip ons!</h4>
+                                <p style="color:rgba(255,255,255,.85);font-size:.9rem;line-height:1.6;margin:0;">
+                                    Ken je een coworkingplek met een sociale missie die wil groeien? Laat het ons weten — we nemen graag contact op.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</template>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     HERBRUIKBARE COMPONENTS (sub-templates)
+     ═══════════════════════════════════════════════════════════════════════════ -->
+
+<!-- Hero banner component -->
+<template id="wl_page_hero" name="Working Local - Hero Banner">
+    <section style="background:#1A2E5A;padding:4.5rem 0 3.5rem;">
+        <div class="container">
+            <span style="display:inline-block;background:rgba(245,184,0,.15);color:#F5B800;font-weight:700;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:1rem;">
+                <t t-esc="hero_label"/>
+            </span>
+            <h1 style="color:#fff;font-size:clamp(1.75rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:1rem;">
+                <t t-esc="hero_title"/>
+            </h1>
+            <p style="color:rgba(255,255,255,.8);font-size:1.1rem;line-height:1.7;max-width:600px;margin:0;">
+                <t t-esc="hero_sub"/>
+            </p>
+        </div>
+    </section>
+</template>
+
+<!-- CTA sectie component -->
+<template id="wl_page_cta" name="Working Local - CTA Sectie">
+    <section style="background:#F5B800;padding:4rem 0;">
+        <div class="container text-center">
+            <h2 style="color:#1A2E5A;font-weight:800;font-size:1.75rem;margin-bottom:.75rem;">
+                <t t-esc="cta_title"/>
+            </h2>
+            <p style="color:#1A2E5A;opacity:.8;margin-bottom:2rem;font-size:1rem;">
+                <t t-esc="cta_sub"/>
+            </p>
+            <a href="/contact" style="display:inline-block;background:#1A2E5A;color:#fff;font-weight:700;padding:.875rem 2rem;border-radius:6px;text-decoration:none;font-size:1rem;">
+                Neem contact op
+            </a>
+        </div>
+    </section>
+</template>
+
+</odoo>

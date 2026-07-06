@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        website.page records — Working Local
+        noupdate="1": aanpassingen via website builder worden NIET overschreven bij module-upgrade
+    -->
+    <data noupdate="1">
+
+        <record id="wl_website_page_home" model="website.page">
+            <field name="name">Home</field>
+            <field name="url">/</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_home"/>
+            <field name="website_published">True</field>
+            <field name="is_homepage">True</field>
+        </record>
+
+        <record id="wl_website_page_locaties" model="website.page">
+            <field name="name">Co-working locaties</field>
+            <field name="url">/co-working-locaties</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_locaties"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_virtual_office" model="website.page">
+            <field name="name">Virtual Office</field>
+            <field name="url">/virtual-office</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_virtual_office"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_neurodiversiteit" model="website.page">
+            <field name="name">17% neurodivers</field>
+            <field name="url">/neurodiversiteit</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_neurodiversiteit"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_werkplekinrichting" model="website.page">
+            <field name="name">Werkplekinrichting</field>
+            <field name="url">/werkplekinrichting</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_werkplekinrichting"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_wifi" model="website.page">
+            <field name="name">Wifi-installaties</field>
+            <field name="url">/wifi-installaties</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_wifi"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_cloudplatform" model="website.page">
+            <field name="name">Cloudplatform</field>
+            <field name="url">/cloudplatform</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_cloudplatform"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_meeting_sets" model="website.page">
+            <field name="name">Hybride meeting-sets</field>
+            <field name="url">/hybride-meeting-sets</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_meeting_sets"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_focustraject" model="website.page">
+            <field name="name">Focustraject</field>
+            <field name="url">/focustraject</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_focustraject"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_webinar" model="website.page">
+            <field name="name">Webinar en Livestream</field>
+            <field name="url">/webinar-livestream</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_webinar"/>
+            <field name="website_published">True</field>
+        </record>
+
+        <record id="wl_website_page_contact" model="website.page">
+            <field name="name">Contact</field>
+            <field name="url">/contact</field>
+            <field name="view_id" ref="workinglocal_theme.wl_page_contact"/>
+            <field name="website_published">True</field>
+        </record>
+
+    </data>
+</odoo>

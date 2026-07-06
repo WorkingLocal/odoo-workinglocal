@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Stel Working Local bedrijfslogo in (wordt getoond op login-pagina en documenten) -->
+    <record id="base.main_company" model="res.company">
+        <field name="name">Working Local</field>
+        <field name="logo" type="base64" file="workinglocal_theme/static/src/img/logo.png"/>
+        <field name="favicon" type="base64" file="workinglocal_theme/static/src/img/logo.png"/>
+    </record>
+</odoo>

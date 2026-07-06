@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Browser tab-titel: 'Working Local' i.p.v. 'Odoo' -->
+    <template id="webclient_bootstrap_wl" inherit_id="web.webclient_bootstrap" name="Working Local - Paginatitel">
+        <xpath expr="//title" position="replace">
+            <title>Working Local</title>
+        </xpath>
+    </template>
+</odoo>

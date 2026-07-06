@@ -1,0 +1,59 @@
+// Working Local — PDF-rapporten (facturen, offertes, leveringsbonnen)
+// Geladen via web.report_assets_common
+
+// ── Bovenbalk header ───────────────────────────────────────────────────────────
+.header {
+    border-top: 6px solid #1A2E5A !important;
+    padding-top: 8px;
+}
+
+// ── Scheidingslijn onder header ────────────────────────────────────────────────
+.header::after,
+.o_report_layout_standard .header {
+    border-bottom: 2px solid #F5B800 !important;
+}
+
+// ── Voettekst ──────────────────────────────────────────────────────────────────
+.footer {
+    border-top: 2px solid #1A2E5A !important;
+    color: #4B5563;
+    font-size: 8pt;
+}
+
+// ── Subtotaal / totaalrij ──────────────────────────────────────────────────────
+.o_subtotal,
+tr.o_subtotal td,
+.oe_subtotal_footer td {
+    border-top: 2px solid #1A2E5A !important;
+    font-weight: 700;
+    color: #1A2E5A;
+}
+
+// ── Titelrij tabel (koptekst kolommen) ────────────────────────────────────────
+thead tr th,
+.o_table_header th {
+    background-color: #1A2E5A !important;
+    color: #fff !important;
+    font-weight: 700;
+    border-color: #1A2E5A !important;
+}
+
+// ── Documenttitel (bv. "Factuur", "Offerte") ──────────────────────────────────
+h2.o_report_invoice_number,
+.o_report_title,
+h2 {
+    color: #1A2E5A;
+}
+
+// ── Status-badge (betaald, concept, ...) ──────────────────────────────────────
+.o_report_badge {
+    background-color: #1A2E5A !important;
+    color: #fff !important;
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+// ── Gearceerde achtergrond alternerende rijen ─────────────────────────────────
+tbody tr:nth-child(even) td {
+    background-color: #F9FAFB;
+}

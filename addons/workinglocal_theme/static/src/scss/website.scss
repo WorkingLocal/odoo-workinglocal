@@ -1,0 +1,119 @@
+// Working Local — Website & Webshop frontend
+// Marineblauw: #1A2E5A | Geel: #F5B800
+
+// ── Website navbar ─────────────────────────────────────────────────────────────
+#wrapwrap header,
+.o_header_standard,
+.o_main_nav {
+    background-color: #1A2E5A !important;
+
+    // Navigatielinks
+    .nav-link,
+    .o_nav_link {
+        color: rgba(255, 255, 255, 0.85) !important;
+
+        &:hover, &:focus, &.active {
+            color: #F5B800 !important;
+        }
+    }
+
+    // Brand/logo in header
+    .navbar-brand img {
+        max-height: 40px;
+        filter: brightness(0) invert(1); // wit logo op navy achtergrond
+    }
+}
+
+// ── Website footer ─────────────────────────────────────────────────────────────
+#wrapwrap footer,
+.o_footer {
+    background-color: #1A2E5A !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+    border-top: 3px solid #F5B800;
+
+    a, .o_footer_copyright_name {
+        color: rgba(255, 255, 255, 0.75) !important;
+        &:hover { color: #F5B800 !important; }
+    }
+
+    h4, h5, .o_footer_list_title {
+        color: #F5B800 !important;
+        font-weight: 700;
+    }
+}
+
+// ── Website knoppen ────────────────────────────────────────────────────────────
+.btn-primary,
+.o_btn_primary,
+a.btn-primary {
+    background-color: #F5B800 !important;
+    border-color: #F5B800 !important;
+    color: #1A2E5A !important;
+    font-weight: 700;
+
+    &:hover, &:focus {
+        background-color: #c99700 !important;
+        border-color: #c99700 !important;
+    }
+}
+
+.btn-secondary {
+    border-color: #1A2E5A !important;
+    color: #1A2E5A !important;
+    &:hover { background-color: #1A2E5A !important; color: #fff !important; }
+}
+
+// ── Webshop producten ──────────────────────────────────────────────────────────
+.oe_website_sale {
+    // Productkaart hover
+    .o_wsale_product_grid_wrapper:hover,
+    .oe_product:hover {
+        box-shadow: 0 4px 16px rgba(26, 46, 90, 0.14) !important;
+        border-color: #F5B800 !important;
+    }
+
+    // Ribbon / badge
+    .oe_ribbon,
+    .o_ribbon {
+        background-color: #F5B800 !important;
+        color: #1A2E5A !important;
+        font-weight: 700;
+    }
+
+    // Prijs
+    .oe_price,
+    .o_wsale_product_price .oe_currency_value {
+        color: #1A2E5A !important;
+        font-weight: 700;
+    }
+
+    // Toevoegen-aan-winkelwagen knop
+    .o_add_cart_btn,
+    #add_to_cart {
+        background-color: #F5B800 !important;
+        border-color: #F5B800 !important;
+        color: #1A2E5A !important;
+        font-weight: 700;
+
+        &:hover { background-color: #c99700 !important; }
+    }
+}
+
+// ── Winkelwagen icoon badge ────────────────────────────────────────────────────
+.o_cart_quantity {
+    background-color: #F5B800 !important;
+    color: #1A2E5A !important;
+}
+
+// ── Breadcrumbs ────────────────────────────────────────────────────────────────
+.breadcrumb-item.active,
+.breadcrumb-item a {
+    color: #1A2E5A;
+}
+.breadcrumb-item + .breadcrumb-item::before { color: #4B5563; }
+
+// ── Hero / banner sectie ───────────────────────────────────────────────────────
+.o_cover_container .o_record_cover_container,
+section.o_colored_level {
+    .btn-primary { background-color: #F5B800 !important; color: #1A2E5A !important; }
+}

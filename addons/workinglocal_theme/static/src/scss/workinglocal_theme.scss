@@ -19,7 +19,7 @@
     color: #fff !important;
 
     &:hover, &:focus {
-        background-color: darken(#F5B800, 5%) !important;
+        background-color: #c99700 !important;
         border-color: #F5B800 !important;
         color: #1A2E5A !important;
     }
@@ -28,7 +28,7 @@
 // ── Links ─────────────────────────────────────────────────────────────────────
 a:not(.btn) {
     color: #1A2E5A;
-    &:hover { color: darken(#F5B800, 15%); }
+    &:hover { color: #a07a00; }
 }
 
 // ── Actieve rij / selectie in lijstweergave ───────────────────────────────────
