@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        noupdate="1": website-builder-bewerkingen worden bewaard bij upgrade.
+        website_id wordt NA installatie ingesteld via scripts/set_hl_website.py
+        omdat website id=2 geen XML-ID heeft.
+    -->
+    <data noupdate="1">
+
+        <!-- Startpagina -->
+        <record id="hl_page_homepage_record" model="website.page">
+            <field name="name">Startpagina — Hosting Local</field>
+            <field name="url">/</field>
+            <field name="view_id" ref="hl_page_homepage"/>
+            <field name="is_published" eval="True"/>
+            <field name="website_indexed" eval="True"/>
+        </record>
+
+        <!-- Diensten pagina -->
+        <record id="hl_page_diensten_record" model="website.page">
+            <field name="name">Diensten</field>
+            <field name="url">/diensten</field>
+            <field name="view_id" ref="hl_page_diensten"/>
+            <field name="is_published" eval="True"/>
+            <field name="website_indexed" eval="True"/>
+        </record>
+
+        <!-- Contact pagina -->
+        <record id="hl_page_contact_record" model="website.page">
+            <field name="name">Contact</field>
+            <field name="url">/contact</field>
+            <field name="view_id" ref="hl_page_contact"/>
+            <field name="is_published" eval="True"/>
+            <field name="website_indexed" eval="True"/>
+        </record>
+
+        <!-- Bedankt pagina (niet geïndexeerd) -->
+        <record id="hl_page_bedankt_record" model="website.page">
+            <field name="name">Bedankt — Contact ontvangen</field>
+            <field name="url">/contact/bedankt</field>
+            <field name="view_id" ref="hl_page_bedankt"/>
+            <field name="is_published" eval="True"/>
+            <field name="website_indexed" eval="False"/>
+        </record>
+
+        <!-- CRM tag voor Hosting Local leads -->
+        <record id="crm_tag_hosting_local" model="crm.tag">
+            <field name="name">Hosting Local</field>
+            <field name="color">2</field>
+        </record>
+
+        <!-- UTM source voor website leads -->
+        <record id="utm_source_website_hl" model="utm.source">
+            <field name="name">Hosting Local Website</field>
+        </record>
+
+    </data>
+</odoo>

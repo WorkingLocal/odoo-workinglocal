@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--
+            Voeg 'hl-website' class toe aan <body> wanneer bezoekers op
+            website_id=2 (Hosting Local) zitten.
+            CSS in hostinglocal_website.css is gescooped op body.hl-website
+            zodat WL en HL stijlen niet botsen.
+        -->
+        <template id="hl_body_class" inherit_id="website.layout" priority="100">
+            <xpath expr="//body" position="attributes">
+                <attribute name="t-att-class">
+                    (classes or '') + (' hl-website' if website and website.id == 2 else '')
+                </attribute>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

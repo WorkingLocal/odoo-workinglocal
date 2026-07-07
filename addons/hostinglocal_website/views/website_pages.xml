@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════════════
+             HOMEPAGE
+             ════════════════════════════════════════════ -->
+        <template id="hl_page_homepage" name="Hosting Local — Startpagina">
+            <t t-call="website.layout">
+                <t t-set="head">
+                    <title>Hosting Local — Digitale onafhankelijkheid voor uw bedrijf</title>
+                    <meta name="description"
+                          content="Hosting Local levert energiezuinige servers, veilige cloudopslag en lokale AI-verwerking. Uw data blijft op uw eigen locatie."/>
+                </t>
+
+                <!-- ── HERO ── -->
+                <section class="hl-hero">
+                    <div class="container">
+                        <span class="hl-hero-badge">Circulaire hardware · Lokale AI · Data-eigenaarschap</span>
+                        <h1>Digitale onafhankelijkheid<br/><span>begint hier.</span></h1>
+                        <p>
+                            Uw server, uw data, uw regels. Hosting Local levert energiezuinige
+                            thuisservers en beheerdiensten waarmee u volledig onafhankelijk bent
+                            van grote cloudproviders — voor minder dan een Netflix-abonnement per maand.
+                        </p>
+                        <div class="hl-hero-btns">
+                            <a href="/diensten" class="hl-btn-primary">Bekijk ons aanbod</a>
+                            <a href="/contact" class="hl-btn-outline"
+                               style="color:#fff;border-color:rgba(255,255,255,.5);">
+                                Gratis adviesgesprek
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── USP strip ── -->
+                <div class="hl-usp-strip">
+                    <div class="container">
+                        <div class="hl-usp-grid">
+                            <div>
+                                <span class="hl-usp-icon">🔒</span>
+                                <h4>100% lokale data</h4>
+                                <p>Niets gaat naar externe servers. Uw bestanden en AI-verwerking blijven in uw gebouw.</p>
+                            </div>
+                            <div>
+                                <span class="hl-usp-icon">⚡</span>
+                                <h4>Energiezuinig</h4>
+                                <p>Onze refurbished servers verbruiken 35–65W — minder dan een gloeilamp, dag en nacht.</p>
+                            </div>
+                            <div>
+                                <span class="hl-usp-icon">♻️</span>
+                                <h4>Circulaire hardware</h4>
+                                <p>Refurbished Dell OptiPlex en Lenovo P-serie via PV-consulting. Duurzaam en betaalbaar.</p>
+                            </div>
+                            <div>
+                                <span class="hl-usp-icon">🤝</span>
+                                <h4>Persoonlijke service</h4>
+                                <p>Geen callcenter. Eén aanspreekpunt dat uw infrastructuur door en door kent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── DIENSTEN GRID ── -->
+                <section class="hl-section hl-section-alt">
+                    <div class="container">
+                        <span class="hl-label">Wat wij doen</span>
+                        <h2 class="hl-title">Alles wat uw digitale onafhankelijkheid nodig heeft</h2>
+                        <p class="hl-subtitle">
+                            Van uw eerste server tot een volledig beheerd IT-platform — wij begeleiden
+                            elk traject van a tot z.
+                        </p>
+                        <div class="hl-diensten-grid">
+                            <a href="/diensten#servers" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🖥️</span>
+                                <h3>Thuisserver &amp; Opslag</h3>
+                                <p>Eigen server voor bestanden, back-ups en applicaties. Zuinig, stil en betrouwbaar.</p>
+                            </a>
+                            <a href="/diensten#backup" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">💾</span>
+                                <h3>Back-up &amp; Herstel</h3>
+                                <p>Automatische nachtelijke back-ups met gegarandeerd herstel. Nooit meer data kwijt.</p>
+                            </a>
+                            <a href="/diensten#ai" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🤖</span>
+                                <h3>Lokale AI</h3>
+                                <p>ChatGPT-achtige assistent die draait op uw eigen server. Uw prompts verlaten uw netwerk nooit.</p>
+                            </a>
+                            <a href="/diensten#monitoring" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">📊</span>
+                                <h3>Monitoring &amp; Beheer</h3>
+                                <p>Wij houden uw infrastructuur in de gaten en grijpen in voordat u iets merkt.</p>
+                            </a>
+                            <a href="/diensten#beveiliging" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🛡️</span>
+                                <h3>Beveiliging</h3>
+                                <p>VPN, firewall en toegangsbeheer zodat alleen de juiste mensen bij uw data kunnen.</p>
+                            </a>
+                            <a href="/diensten#m365" class="hl-dienst-card">
+                                <span class="hl-dienst-icon">📧</span>
+                                <h3>Microsoft 365</h3>
+                                <p>Implementatie en beheer van Teams, e-mail en OneDrive voor uw hele organisatie.</p>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── VOOR WIE ── -->
+                <section class="hl-section">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <span class="hl-label">Voor wie</span>
+                                <h2 class="hl-title">Gemaakt voor kleine ondernemingen en<br/>ambitieuze particulieren</h2>
+                                <p style="font-size:16px;color:#4B5563;line-height:1.7;margin-bottom:24px;">
+                                    U bent advocaat, architect, coworkinguitbater of zelfstandige met gevoelige
+                                    klantgegevens. U wilt controle over uw data zonder het budget of de kennis
+                                    van een IT-afdeling.
+                                </p>
+                                <ul style="list-style:none;padding:0;margin:0 0 28px;">
+                                    <li style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#1A2E5A;">
+                                        ✅ <strong>Vrije beroepen</strong> met vertrouwelijke klantdossiers
+                                    </li>
+                                    <li style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#1A2E5A;">
+                                        ✅ <strong>Coworkingruimtes</strong> die een professioneel IT-pakket willen
+                                    </li>
+                                    <li style="padding:8px 0;border-bottom:1px solid #f0f0f0;color:#1A2E5A;">
+                                        ✅ <strong>KMO's</strong> die willen stoppen met Google/Dropbox
+                                    </li>
+                                    <li style="padding:8px 0;color:#1A2E5A;">
+                                        ✅ <strong>Particulieren</strong> met een home-lab of smart home
+                                    </li>
+                                </ul>
+                                <a href="/contact" class="hl-btn-primary">Bespreek uw situatie</a>
+                            </div>
+                            <div class="col-md-6 d-none d-md-block text-center" style="padding-left:48px;">
+                                <!-- Illustratie: server in kantoor -->
+                                <svg viewBox="0 0 280 220" xmlns="http://www.w3.org/2000/svg"
+                                     style="max-width:280px;width:100%;">
+                                    <rect x="40" y="30" width="200" height="160" rx="6"
+                                          fill="#F9FAFB" stroke="#e5e7eb" stroke-width="1.5"/>
+                                    <!-- server racks -->
+                                    <rect x="70" y="55" width="140" height="28" rx="4"
+                                          fill="#1A2E5A"/>
+                                    <rect x="78" y="61" width="12" height="16" rx="2"
+                                          fill="#F5B800"/>
+                                    <rect x="96" y="65" width="24" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <rect x="126" y="65" width="16" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <circle cx="192" cy="69" r="4" fill="#22c55e"/>
+                                    <rect x="70" y="91" width="140" height="28" rx="4"
+                                          fill="#1A2E5A"/>
+                                    <rect x="78" y="97" width="12" height="16" rx="2"
+                                          fill="#F5B800"/>
+                                    <rect x="96" y="101" width="24" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <rect x="126" y="101" width="16" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <circle cx="192" cy="105" r="4" fill="#22c55e"/>
+                                    <rect x="70" y="127" width="140" height="28" rx="4"
+                                          fill="#1A2E5A"/>
+                                    <rect x="78" y="133" width="12" height="16" rx="2"
+                                          fill="#F5B800"/>
+                                    <rect x="96" y="137" width="24" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <rect x="126" y="137" width="16" height="5" rx="2.5"
+                                          fill="rgba(255,255,255,.3)"/>
+                                    <circle cx="192" cy="141" r="4" fill="#22c55e"/>
+                                    <!-- label -->
+                                    <text x="140" y="185" text-anchor="middle"
+                                          font-family="'Inter',sans-serif" font-size="11"
+                                          fill="#9CA3AF">Uw server · uw locatie</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ── CTA BAND ── -->
+                <div class="hl-cta-band text-center">
+                    <div class="container">
+                        <h2>Klaar om uw data terug in eigen handen te nemen?</h2>
+                        <p>Geen technische kennis vereist. Wij installeren, configureren en beheren alles voor u.</p>
+                        <a href="/contact" class="hl-btn-dark">Gratis adviesgesprek aanvragen</a>
+                    </div>
+                </div>
+
+            </t>
+        </template>
+
+        <!-- ══════════════════════════════════════════════
+             DIENSTEN PAGINA
+             ════════════════════════════════════════════ -->
+        <template id="hl_page_diensten" name="Hosting Local — Diensten">
+            <t t-call="website.layout">
+                <t t-set="head">
+                    <title>Diensten — Hosting Local</title>
+                    <meta name="description"
+                          content="Volledig overzicht van Hosting Local diensten: servers, back-up, lokale AI, monitoring, beveiliging en Microsoft 365 beheer."/>
+                </t>
+
+                <!-- Mini-hero -->
+                <section class="hl-hero" style="padding:56px 0 48px;">
+                    <div class="container">
+                        <span class="hl-hero-badge">Aanbod</span>
+                        <h1 style="font-size:clamp(28px,4vw,44px);">Onze diensten</h1>
+                        <p style="max-width:480px;">
+                            Van hardware-installatie tot maandelijks beheer — kies wat bij uw situatie past.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="hl-section" id="servers">
+                    <div class="container">
+                        <span class="hl-label">Server &amp; Virtualisatie</span>
+                        <h2 class="hl-title">Uw eigen server, sleutelklaar</h2>
+                        <p class="hl-subtitle">
+                            Wij leveren en installeren refurbished servers van Dell OptiPlex en Lenovo P-serie.
+                            Betrouwbaar, energiezuinig (35–65W), en volledig geconfigureerd.
+                        </p>
+                        <div class="hl-diensten-grid" style="margin-top:32px;">
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🖥️</span>
+                                <h3>Thuisserver Starter</h3>
+                                <p>Dell OptiPlex SFF met Proxmox. Ideaal als eerste server voor thuis of klein kantoor. Verbruik: ~35W = €4/mnd.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">Vanaf €449</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🏢</span>
+                                <h3>Kantoorserver Pro</h3>
+                                <p>Dell OptiPlex MT met NAS-opslag en Proxmox. Geschikt voor 5–20 gebruikers. Verbruik: ~65W = €9/mnd.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">Vanaf €899</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">⚙️</span>
+                                <h3>Installatie &amp; Ingebruikname</h3>
+                                <p>Wij configureren en installeren de server op locatie, inclusief basisbeveiliging en monitoring.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€65/u</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hl-section hl-section-alt" id="backup">
+                    <div class="container">
+                        <span class="hl-label">Back-up &amp; Opslag</span>
+                        <h2 class="hl-title">Back-ups die echt werken</h2>
+                        <p class="hl-subtitle">
+                            Automatisch, getest en herstelbaar. Wij configureren uw NAS of back-up-server
+                            en monitoren elke nacht of alles correct verloopt.
+                        </p>
+                        <div class="hl-diensten-grid" style="margin-top:32px;">
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🔍</span>
+                                <h3>Back-up Audit</h3>
+                                <p>Wij analyseren uw huidige back-upsituatie en bezorgen een concreet actieplan.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€149</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🛠️</span>
+                                <h3>Back-up Configuratie</h3>
+                                <p>Installatie van Proxmox Backup Server op uw hardware, inclusief schema en alerts.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€65/u</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">📡</span>
+                                <h3>Back-up Monitoring</h3>
+                                <p>Maandelijks abonnement: wij controleren dagelijks of uw back-ups succesvol zijn.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€19/mnd</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🚨</span>
+                                <h3>Noodherstel</h3>
+                                <p>Bij dataverlies: snelle interventie om uw systemen en bestanden te herstellen.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€199</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hl-section" id="ai">
+                    <div class="container">
+                        <span class="hl-label">Lokale AI</span>
+                        <h2 class="hl-title">AI die uw data respecteert</h2>
+                        <p class="hl-subtitle">
+                            Grote taalmodellen draaien op uw eigen server. Uw prompts, documenten en
+                            bedrijfsgeheimen verlaten uw netwerk nooit.
+                        </p>
+                        <div class="hl-diensten-grid" style="margin-top:32px;">
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🤖</span>
+                                <h3>Lokale AI Starter</h3>
+                                <p>Lenovo ThinkStation met Ollama + Open WebUI. Privé chatassistent voor uw team. Verbruik: ~45W.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€649</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">🧠</span>
+                                <h3>Lokale AI Pro</h3>
+                                <p>Lenovo P520 met GPU. Snellere antwoorden, grotere modellen. Ideaal voor dagelijks gebruik.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€1.349</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">💡</span>
+                                <h3>AI Instapgesprek</h3>
+                                <p>Wij analyseren hoe AI uw workflow kan verbeteren en stellen een concreet plan op.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€149</div>
+                            </div>
+                            <div class="hl-dienst-card">
+                                <span class="hl-dienst-icon">📚</span>
+                                <h3>Kennisbank (RAG)</h3>
+                                <p>Voer uw documenten in: uw AI-assistent beantwoordt vragen op basis van uw eigen kennisbank.</p>
+                                <div style="margin-top:14px;font-weight:700;color:#1A2E5A;">€399</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <div class="hl-cta-band text-center">
+                    <div class="container">
+                        <h2>Niet zeker welk pakket bij u past?</h2>
+                        <p>Laat ons een vrijblijvend gesprek plannen. Wij geven eerlijk advies zonder verborgen agenda.</p>
+                        <a href="/contact" class="hl-btn-dark">Neem contact op</a>
+                    </div>
+                </div>
+
+            </t>
+        </template>
+
+        <!-- ══════════════════════════════════════════════
+             CONTACT PAGINA
+             ════════════════════════════════════════════ -->
+        <template id="hl_page_contact" name="Hosting Local — Contact">
+            <t t-call="website.layout">
+                <t t-set="head">
+                    <title>Contact — Hosting Local</title>
+                    <meta name="description"
+                          content="Neem contact op met Hosting Local voor een vrijblijvend adviesgesprek."/>
+                </t>
+
+                <section class="hl-hero" style="padding:56px 0 48px;">
+                    <div class="container">
+                        <span class="hl-hero-badge">Vrijblijvend advies</span>
+                        <h1 style="font-size:clamp(28px,4vw,44px);">Laten we praten</h1>
+                        <p>Stel uw vraag of vraag een gratis adviesgesprek aan. We antwoorden binnen 1 werkdag.</p>
+                    </div>
+                </section>
+
+                <section class="hl-section">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <t t-if="request.params.get('error')">
+                                    <div style="background:#fef2f2;border:1px solid #fca5a5;padding:14px 18px;margin-bottom:20px;color:#991b1b;font-size:14px;">
+                                        Gelieve uw naam en e-mailadres in te vullen.
+                                    </div>
+                                </t>
+                                <form action="/hostinglocal/contact/submit" method="post"
+                                      class="hl-contact-form">
+                                    <input type="hidden" name="csrf_token"
+                                           t-att-value="request.csrf_token()"/>
+                                    <div class="row">
+                                        <div class="col-md-6 hl-form-group">
+                                            <label for="naam">Naam *</label>
+                                            <input type="text" id="naam" name="naam"
+                                                   placeholder="Jan Janssen" required="required"/>
+                                        </div>
+                                        <div class="col-md-6 hl-form-group">
+                                            <label for="bedrijf">Bedrijf</label>
+                                            <input type="text" id="bedrijf" name="bedrijf"
+                                                   placeholder="Uw bedrijfsnaam (optioneel)"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 hl-form-group">
+                                            <label for="email">E-mailadres *</label>
+                                            <input type="email" id="email" name="email"
+                                                   placeholder="jan@bedrijf.be" required="required"/>
+                                        </div>
+                                        <div class="col-md-6 hl-form-group">
+                                            <label for="telefoon">Telefoonnummer</label>
+                                            <input type="tel" id="telefoon" name="telefoon"
+                                                   placeholder="+32 xxx xx xx xx"/>
+                                        </div>
+                                    </div>
+                                    <div class="hl-form-group">
+                                        <label for="interesse">Waarmee kan ik u helpen?</label>
+                                        <select id="interesse" name="interesse">
+                                            <option value="">-- Kies een onderwerp --</option>
+                                            <option value="server">Thuisserver of opslag</option>
+                                            <option value="backup">Back-up &amp; Herstel</option>
+                                            <option value="ai">Lokale AI-verwerking</option>
+                                            <option value="monitoring">Monitoring &amp; Beheer</option>
+                                            <option value="beveiliging">Beveiliging &amp; VPN</option>
+                                            <option value="m365">Microsoft 365</option>
+                                            <option value="anders">Iets anders</option>
+                                        </select>
+                                    </div>
+                                    <div class="hl-form-group">
+                                        <label for="bericht">Uw bericht</label>
+                                        <textarea id="bericht" name="bericht"
+                                                  placeholder="Vertel ons kort over uw situatie..."></textarea>
+                                    </div>
+                                    <button type="submit" class="hl-btn-primary"
+                                            style="border:none;cursor:pointer;width:100%;">
+                                        Verstuur aanvraag
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-md-5 d-none d-md-block" style="padding-left:48px;">
+                                <div style="position:sticky;top:100px;">
+                                    <h3 style="font-size:20px;font-weight:700;color:#1A2E5A;margin-bottom:20px;">
+                                        Wat kunt u verwachten?
+                                    </h3>
+                                    <div style="display:flex;flex-direction:column;gap:20px;">
+                                        <div style="display:flex;gap:14px;align-items:flex-start;">
+                                            <div style="width:36px;height:36px;background:#F5B800;border:2px solid #1A2E5A;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1A2E5A;flex-shrink:0;">1</div>
+                                            <div>
+                                                <div style="font-weight:700;color:#1A2E5A;margin-bottom:4px;">Reactie binnen 1 werkdag</div>
+                                                <div style="font-size:14px;color:#6B7280;">We lezen elke aanvraag persoonlijk en sturen een gerichte reactie.</div>
+                                            </div>
+                                        </div>
+                                        <div style="display:flex;gap:14px;align-items:flex-start;">
+                                            <div style="width:36px;height:36px;background:#F5B800;border:2px solid #1A2E5A;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1A2E5A;flex-shrink:0;">2</div>
+                                            <div>
+                                                <div style="font-weight:700;color:#1A2E5A;margin-bottom:4px;">Gratis adviesgesprek</div>
+                                                <div style="font-size:14px;color:#6B7280;">30 minuten video of telefoon om uw situatie te bespreken. Zonder verplichtingen.</div>
+                                            </div>
+                                        </div>
+                                        <div style="display:flex;gap:14px;align-items:flex-start;">
+                                            <div style="width:36px;height:36px;background:#F5B800;border:2px solid #1A2E5A;display:flex;align-items:center;justify-content:center;font-weight:800;color:#1A2E5A;flex-shrink:0;">3</div>
+                                            <div>
+                                                <div style="font-weight:700;color:#1A2E5A;margin-bottom:4px;">Concreet voorstel</div>
+                                                <div style="font-size:14px;color:#6B7280;">Op maat gemaakt aanbod met duidelijke prijs, tijdlijn en wat u kunt verwachten.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:32px;padding:20px;background:#F9FAFB;border:1px solid #e5e7eb;">
+                                        <div style="font-size:13px;font-weight:700;color:#1A2E5A;margin-bottom:6px;">
+                                            📧 Direct bereikbaar
+                                        </div>
+                                        <div style="font-size:14px;color:#6B7280;">
+                                            <a href="mailto:info@hostinglocal.be"
+                                               style="color:#1A2E5A;font-weight:600;">info@hostinglocal.be</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </t>
+        </template>
+
+        <!-- ══════════════════════════════════════════════
+             BEDANKT PAGINA
+             ════════════════════════════════════════════ -->
+        <template id="hl_page_bedankt" name="Hosting Local — Bedankt">
+            <t t-call="website.layout">
+                <t t-set="head">
+                    <title>Aanvraag ontvangen — Hosting Local</title>
+                </t>
+                <div class="hl-bedankt">
+                    <div class="hl-bedankt-check">✓</div>
+                    <h1 class="hl-title" style="margin-bottom:14px;">Bericht ontvangen!</h1>
+                    <p style="font-size:17px;color:#4B5563;max-width:420px;margin:0 auto 32px;">
+                        Bedankt voor uw aanvraag. We nemen binnen 1 werkdag contact met u op.
+                    </p>
+                    <a href="/" class="hl-btn-primary">Terug naar startpagina</a>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>
