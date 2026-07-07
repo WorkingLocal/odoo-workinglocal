@@ -14,10 +14,14 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'suppliers'))
 from odoo_client import OdooClient
 
 pw = sys.argv[1] if len(sys.argv) > 1 else None
+
+# Standaard: de dedicated on-premise instantie van Werkplaats Walter.
+# Tijdelijk overschrijfbaar (bv. als die server offline is) via env vars:
+#   ODOO_TARGET_URL, ODOO_TARGET_DB, ODOO_TARGET_USER
 odoo = OdooClient(
-    url='https://wpwalter-odoo.workinglocal.be',
-    db='wpwalter',
-    username='admin',
+    url=os.environ.get('ODOO_TARGET_URL', 'https://wpwalter-odoo.workinglocal.be'),
+    db=os.environ.get('ODOO_TARGET_DB', 'wpwalter'),
+    username=os.environ.get('ODOO_TARGET_USER', 'admin'),
     password=pw,
 )
 
