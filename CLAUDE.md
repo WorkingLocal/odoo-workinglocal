@@ -867,6 +867,8 @@ ssh wp-walter@100.125.16.34 'sudo bash /opt/workinglocal/scripts/update-addons.s
 - `write()` op `account.move` via XML-RPC faalt → gebruik directe SQL
 - `seller_ids` partner_id moet integer zijn (niet lijst)
 - DB wachtwoord bevat `&` → altijd via config file doorgeven, nooit via CLI args
+- `product.template.type` geldige waarden in Odoo 19: `consu` (goederen), `service`, `combo` — NIET `product` of `storable`
+- Custom field `x_status` (selection: beschikbaar/uitverkocht/nieuw) aangemaakt via `ir.model.fields` create (field_id=10393)
 
 **Theming / SCSS (dart-sass):**
 - `darken()` en `lighten()` zijn deprecated in dart-sass (Odoo 19 gebruikt dart-sass) → gebruik hardcoded hex: `darken(#F5B800, 5%)` → `#c99700`, `darken(#F5B800, 15%)` → `#a07a00`
