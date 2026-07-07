@@ -12,6 +12,9 @@ _WS_TYPE_LABELS = [
     ('event', 'Eventdeelname'), ('hybrid_meeting', 'Hybride Meetingroom'),
     ('muziekzaal', 'Muziekzaal'), ('productiestudio', 'Productiestudio'),
     ('foyer', 'Foyer'), ('muziekstudio', 'Muziekstudio'),
+    ('concertzaal', 'Concertzaal / Polyvalente zaal'),
+    ('mobiele_teamsstudio', 'Mobiele Teams-studio'),
+    ('presentatieset', 'Mobiele Presentatieset'),
 ]
 
 _SLOT_LABELS = {'vm': 'VM', 'nm': 'NM', 'av': 'AV'}

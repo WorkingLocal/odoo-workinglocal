@@ -11,6 +11,9 @@ WORKSPACE_TYPES = [
     ('productiestudio', 'Productiestudio'),
     ('foyer', 'Foyer'),
     ('muziekstudio', 'Muziekstudio'),
+    ('concertzaal', 'Concertzaal / Polyvalente zaal'),
+    ('mobiele_teamsstudio', 'Mobiele Teams-studio'),
+    ('presentatieset', 'Mobiele Presentatieset'),
 ]
 
 
