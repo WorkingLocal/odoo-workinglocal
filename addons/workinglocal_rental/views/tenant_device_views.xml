@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── LIST VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_rental_tenant_device_list" model="ir.ui.view">
+        <field name="name">rental.tenant.device.list</field>
+        <field name="model">rental.tenant.device</field>
+        <field name="arch" type="xml">
+            <list string="Toestellen">
+                <field name="contract_id"/>
+                <field name="partner_id"/>
+                <field name="device_label"/>
+                <field name="device_mac"/>
+                <field name="consent_given" widget="boolean_toggle"/>
+                <field name="consent_date" optional="show"/>
+                <field name="last_seen" optional="show"/>
+                <field name="is_present" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ── FORM VIEW ─────────────────────────────────────────────────── -->
+    <record id="view_rental_tenant_device_form" model="ir.ui.view">
+        <field name="name">rental.tenant.device.form</field>
+        <field name="model">rental.tenant.device</field>
+        <field name="arch" type="xml">
+            <form string="Toestel huurder">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="device_label" placeholder="Bv. iPhone Jan"/></h1>
+                    </div>
+                    <group>
+                        <group string="Huurder">
+                            <field name="contract_id"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="device_mac" placeholder="AA:BB:CC:DD:EE:FF"/>
+                        </group>
+                        <group string="Toestemming">
+                            <field name="consent_given"/>
+                            <field name="consent_date" invisible="not consent_given"/>
+                        </group>
+                    </group>
+                    <group string="Aanwezigheid (fase 3 — nog niet actief)">
+                        <field name="last_seen" readonly="1"/>
+                        <field name="is_present" readonly="1"/>
+                    </group>
+                    <separator string="Toestemmingstekst"/>
+                    <field name="consent_text" nolabel="1"
+                           placeholder="Kopie van de tekst die de huurder te zien kreeg bij het geven van toestemming..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── ACTION ────────────────────────────────────────────────────── -->
+    <record id="action_rental_tenant_device" model="ir.actions.act_window">
+        <field name="name">Toestellen (aanwezigheidsdetectie)</field>
+        <field name="res_model">rental.tenant.device</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

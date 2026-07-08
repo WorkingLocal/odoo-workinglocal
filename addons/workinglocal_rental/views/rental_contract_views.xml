@@ -51,6 +51,10 @@
                                 invisible="invoice_count == 0">
                             <field name="invoice_count" widget="statinfo" string="Facturen"/>
                         </button>
+                        <button name="action_view_devices" type="object"
+                                class="oe_stat_button" icon="fa-wifi">
+                            <field name="device_count" widget="statinfo" string="Toestellen"/>
+                        </button>
                     </div>
                     <div class="oe_title">
                         <h1><field name="name" readonly="1"/></h1>

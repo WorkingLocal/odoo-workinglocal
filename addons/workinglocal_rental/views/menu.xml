@@ -5,4 +5,9 @@
               parent="coworking_reservation.menu_coworking_root"
               action="action_rental_contract"
               sequence="40"/>
+    <menuitem id="menu_rental_tenant_devices"
+              name="Toestellen (aanwezigheid)"
+              parent="coworking_reservation.menu_coworking_root"
+              action="action_rental_tenant_device"
+              sequence="41"/>
 </odoo>

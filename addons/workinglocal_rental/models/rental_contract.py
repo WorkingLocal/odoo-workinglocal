@@ -60,6 +60,9 @@ class RentalContract(models.Model):
     invoice_ids = fields.One2many('account.move', 'rental_contract_id', string='Facturen')
     invoice_count = fields.Integer(compute='_compute_invoice_count', string='# Facturen')
 
+    device_ids = fields.One2many('rental.tenant.device', 'contract_id', string='Toestellen')
+    device_count = fields.Integer(compute='_compute_device_count', string='# Toestellen')
+
     note = fields.Text(string='Opmerkingen')
 
     # ── Computed ──────────────────────────────────────────────────────────────
@@ -73,6 +76,11 @@ class RentalContract(models.Model):
     def _compute_invoice_count(self):
         for rec in self:
             rec.invoice_count = len(rec.invoice_ids)
+
+    @api.depends('device_ids')
+    def _compute_device_count(self):
+        for rec in self:
+            rec.device_count = len(rec.device_ids)
 
     # ── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -161,4 +169,15 @@ class RentalContract(models.Model):
             'domain': [('rental_contract_id', '=', self.id)],
             'view_mode': 'list,form',
             'context': {'default_rental_contract_id': self.id},
+        }
+
+    def action_view_devices(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Toestellen (aanwezigheidsdetectie)'),
+            'res_model': 'rental.tenant.device',
+            'domain': [('contract_id', '=', self.id)],
+            'view_mode': 'list,form',
+            'context': {'default_contract_id': self.id},
         }
