@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ── VLOERPLAN (/vloerplan) — schematisch, per verdieping ────────── -->
-    <!-- Schematische weergave (grid van tegels), geen architecturaal-exacte
-         trace van de originele plannen (die staan als bijlage bij de
-         klantfiche in Odoo). Kleur = bezettingsstatus, klein bolletje =
-         aanwezigheid (enkel gevuld zodra fase 3 — UniFi-poller — live data
-         levert; tot dan altijd grijs/onbekend). -->
+    <!-- ── VLOERPLAN (/vloerplan) — interactief, per verdieping ────────── -->
+    <!-- Achtergrond = het echte grondplan (LHOAS &amp; LHOAS architecten,
+         schaal 1/50, gerasteriseerd uit de originele PDF's). Zones zijn
+         % -gepositioneerde klikbare overlays, handmatig geplaatst op basis
+         van visuele inspectie — GEEN pixel-exacte CAD-vectortrace (de
+         kamerlabels waren niet betrouwbaar te ontcijferen uit de PDF-tekst,
+         enkel via de gerasteriseerde afbeelding zelf). Posities zijn dus een
+         goede benadering, geen architecturale garantie. -->
     <template id="website_floorplan" name="Vloerplan">
         <t t-call="website.layout">
             <div class="container-fluid py-4">
-                <div class="row mb-4">
+                <div class="row mb-3">
                     <div class="col">
                         <h1 class="fw-bold">Vloerplan — bezetting</h1>
                         <p class="text-muted mb-2">
-                            Schematisch overzicht, niet architecturaal exact. Originele plannen staan
-                            als bijlage bij de klantfiche.
+                            Zone-posities zijn een benadering op basis van de originele plannen
+                            (LHOAS &amp; LHOAS architecten) — geen architecturaal-exacte trace.
+                            Klik op een zone voor details.
                         </p>
                         <div class="d-flex flex-wrap gap-3 small">
                             <span><span class="floorplan-dot bg-secondary"/> Vrij</span>
-                            <span><span class="floorplan-dot bg-info"/> Gereserveerd vandaag</span>
+                            <span><span class="floorplan-dot" style="background:#0dcaf0;"/> Gereserveerd vandaag</span>
                             <span><span class="floorplan-dot bg-warning"/> Bezet nu</span>
                             <span><span class="floorplan-dot bg-success"/> Verhuurd</span>
                         </div>
@@ -32,29 +35,52 @@
                             <h4 t-esc="section['name']"/>
                         </div>
                     </div>
-                    <div class="row g-3 mb-3">
-                        <t t-foreach="section['tiles']" t-as="tile">
-                            <div class="col-6 col-md-3 col-lg-2">
-                                <div t-attf-class="card h-100 shadow-sm border-0 floorplan-tile floorplan-tile-#{tile['status']}">
-                                    <div class="card-body p-2">
-                                        <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
-                                        <div class="small" t-esc="tile['status_label']"/>
-                                        <t t-if="tile['tenant']">
-                                            <div class="small text-muted" t-esc="tile['tenant']"/>
-                                        </t>
-                                        <t t-if="tile['presence'] is not None">
-                                            <div class="small">
-                                                <t t-if="tile['presence']">Aanwezig</t>
-                                                <t t-else="">Niet aanwezig</t>
-                                            </div>
-                                        </t>
-                                        <t t-else="">
-                                            <div class="small text-muted">Aanwezigheid onbekend</div>
-                                        </t>
-                                    </div>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <t t-if="section['image_id']">
+                                <div class="floorplan-canvas">
+                                    <img t-attf-src="/web/content/#{section['image_id']}"
+                                         class="floorplan-bg" alt="Grondplan"/>
+                                    <t t-foreach="section['tiles']" t-as="tile">
+                                        <div t-attf-class="floorplan-zone floorplan-zone-#{tile['status']}"
+                                             t-attf-style="left:#{tile['x']}%; top:#{tile['y']}%; width:#{tile['w']}%; height:#{tile['h']}%;"
+                                             t-att-title="tile['workspace'].name">
+                                            <span class="floorplan-zone-label" t-esc="tile['workspace'].name"/>
+                                        </div>
+                                    </t>
                                 </div>
-                            </div>
-                        </t>
+                                <!-- Detailkaartjes onder de plattegrond (zelfde info, toegankelijk zonder hover) -->
+                                <div class="row g-2 mt-2">
+                                    <t t-foreach="section['tiles']" t-as="tile">
+                                        <div class="col-6 col-md-3 col-lg-2">
+                                            <div t-attf-class="card h-100 border-0 floorplan-tile floorplan-tile-#{tile['status']}">
+                                                <div class="card-body p-2">
+                                                    <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
+                                                    <div class="small" t-esc="tile['status_label']"/>
+                                                    <t t-if="tile['tenant']">
+                                                        <div class="small text-muted" t-esc="tile['tenant']"/>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="row g-2">
+                                    <t t-foreach="section['tiles']" t-as="tile">
+                                        <div class="col-6 col-md-3 col-lg-2">
+                                            <div t-attf-class="card h-100 border-0 floorplan-tile floorplan-tile-#{tile['status']}">
+                                                <div class="card-body p-2">
+                                                    <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
+                                                    <div class="small" t-esc="tile['status_label']"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </t>
+                        </div>
                     </div>
                 </t>
 
@@ -64,10 +90,10 @@
                             <h4>Mobiel materiaal</h4>
                         </div>
                     </div>
-                    <div class="row g-3 mb-3">
+                    <div class="row g-2 mb-3">
                         <t t-foreach="mobile_tiles" t-as="tile">
                             <div class="col-6 col-md-3 col-lg-2">
-                                <div t-attf-class="card h-100 shadow-sm border-0 floorplan-tile floorplan-tile-#{tile['status']}">
+                                <div t-attf-class="card h-100 border-0 floorplan-tile floorplan-tile-#{tile['status']}">
                                     <div class="card-body p-2">
                                         <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
                                         <div class="small" t-esc="tile['status_label']"/>
@@ -88,6 +114,45 @@
                 .floorplan-tile-gereserveerd_vandaag { background: #cfe2ff; }
                 .floorplan-tile-bezet_nu { background: #fff3cd; }
                 .floorplan-tile-verhuurd { background: #d1e7dd; }
+
+                .floorplan-canvas {
+                    position: relative;
+                    width: 100%;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+                .floorplan-bg {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                }
+                .floorplan-zone {
+                    position: absolute;
+                    border: 2px solid rgba(0,0,0,0.35);
+                    border-radius: 3px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    opacity: 0.55;
+                    transition: opacity 0.15s ease;
+                }
+                .floorplan-zone:hover { opacity: 0.85; }
+                .floorplan-zone-label {
+                    font-size: 11px;
+                    font-weight: 600;
+                    color: #1a2e5a;
+                    background: rgba(255,255,255,0.75);
+                    padding: 1px 4px;
+                    border-radius: 2px;
+                    pointer-events: none;
+                }
+                .floorplan-zone-vrij { background: #adb5bd; }
+                .floorplan-zone-gereserveerd_vandaag { background: #0dcaf0; }
+                .floorplan-zone-bezet_nu { background: #ffc107; }
+                .floorplan-zone-verhuurd { background: #198754; }
             </style>
         </t>
     </template>

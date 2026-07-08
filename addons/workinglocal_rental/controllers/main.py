@@ -32,11 +32,18 @@ class WorkinglocalFloorplan(http.Controller):
                 'status_label': _STATUS_LABELS.get(info['status'], info['status']),
                 'tenant': info['tenant'],
                 'presence': info['presence'],
+                'x': ws.floorplan_x,
+                'y': ws.floorplan_y,
+                'w': ws.floorplan_w or 10.0,
+                'h': ws.floorplan_h or 10.0,
             }
             if ws.floor and ws.floor.startswith('Mobiel'):
                 mobile.append(tile)
             else:
-                floors.setdefault(ws.floor, []).append(tile)
+                floors.setdefault(ws.floor, {'tiles': [], 'image_id': None})
+                floors[ws.floor]['tiles'].append(tile)
+                if ws.floorplan_attachment_id:
+                    floors[ws.floor]['image_id'] = ws.floorplan_attachment_id.id
 
         def floor_sort_key(floor_name):
             try:
@@ -45,8 +52,8 @@ class WorkinglocalFloorplan(http.Controller):
                 return len(_FLOOR_ORDER)
 
         floor_sections = [
-            {'name': name, 'tiles': tiles}
-            for name, tiles in sorted(floors.items(), key=lambda kv: floor_sort_key(kv[0]))
+            {'name': name, 'tiles': data['tiles'], 'image_id': data['image_id']}
+            for name, data in sorted(floors.items(), key=lambda kv: floor_sort_key(kv[0]))
         ]
 
         return request.render('workinglocal_rental.website_floorplan', {

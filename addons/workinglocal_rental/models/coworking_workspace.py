@@ -22,6 +22,17 @@ class CoworkingWorkspace(models.Model):
         string='Actieve huurcontracten',
     )
 
+    # ── Vloerplan-positie (schematisch, % van het achtergrondbeeld) ─────────
+    floorplan_attachment_id = fields.Many2one(
+        'ir.attachment',
+        string='Vloerplan-achtergrond',
+        help='Publieke afbeelding van het grondplan van deze verdieping (zie /vloerplan).',
+    )
+    floorplan_x = fields.Float(string='Positie X (%)', help='Linkerkant van de zone, % van de breedte.')
+    floorplan_y = fields.Float(string='Positie Y (%)', help='Bovenkant van de zone, % van de hoogte.')
+    floorplan_w = fields.Float(string='Breedte (%)', default=10.0)
+    floorplan_h = fields.Float(string='Hoogte (%)', default=10.0)
+
     @api.depends()
     def _compute_active_rental_count(self):
         for rec in self:
