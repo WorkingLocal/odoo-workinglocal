@@ -12,6 +12,13 @@ _STATUS_LABELS = {
     'vrij': 'Vrij',
 }
 
+# De handmatig ingeschatte zone-posities bleken niet kloppen met de werkelijke
+# plattegrond. Terug naar de eenvoudige kaartjeslijst tot er een correcte
+# versie is (voorbereid in Claude Design) — de positiedata zelf blijft
+# gewoon staan op coworking.workspace, enkel het tonen van het achtergrond-
+# beeld + overlays wordt hier tijdelijk uitgeschakeld.
+SHOW_INTERACTIVE_MAP = False
+
 
 class WorkinglocalFloorplan(http.Controller):
 
@@ -42,7 +49,7 @@ class WorkinglocalFloorplan(http.Controller):
             else:
                 floors.setdefault(ws.floor, {'tiles': [], 'image_id': None})
                 floors[ws.floor]['tiles'].append(tile)
-                if ws.floorplan_attachment_id:
+                if SHOW_INTERACTIVE_MAP and ws.floorplan_attachment_id:
                     floors[ws.floor]['image_id'] = ws.floorplan_attachment_id.id
 
         def floor_sort_key(floor_name):
