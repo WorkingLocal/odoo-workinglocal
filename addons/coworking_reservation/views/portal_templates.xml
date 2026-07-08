@@ -21,6 +21,16 @@
             <t t-call="portal.portal_searchbar">
                 <t t-set="title">Mijn reservaties</t>
             </t>
+
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                <a href="/werkplekken" class="btn btn-primary">
+                    <i class="bi bi-plus-lg me-1"/>Nieuwe reservatie — losse ruimte
+                </a>
+                <a href="/pakketten" class="btn btn-outline-secondary">
+                    <i class="bi bi-box-seam me-1"/>Nieuwe reservatie — pakket
+                </a>
+            </div>
+
             <t t-if="not reservations">
                 <div class="alert alert-info mt-3">
                     Je hebt nog geen reservaties.

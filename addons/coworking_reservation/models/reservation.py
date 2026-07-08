@@ -226,6 +226,9 @@ class CoworkingReservation(models.Model):
 
     def action_confirm(self):
         self.state = 'confirmed'
+        for rec in self:
+            if not rec.invoice_id:
+                rec.action_create_invoice()
 
     def action_done(self):
         self.state = 'done'
