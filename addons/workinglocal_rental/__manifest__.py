@@ -1,6 +1,6 @@
 {
     'name': 'Working Local — Verhuur',
-    'version': '19.0.2.0.0',
+    'version': '19.0.3.0.0',
     'category': 'Services/Rental',
     'summary': 'Langetermijn huurcontracten voor ateliers, appartementen en materialen met maandelijkse facturatie',
     'author': 'Working Local',
@@ -14,6 +14,7 @@
         'views/rental_contract_views.xml',
         'views/coworking_workspace_views.xml',
         'views/tenant_device_views.xml',
+        'views/floorplan_templates.xml',
         'views/menu.xml',
     ],
     'installable': True,

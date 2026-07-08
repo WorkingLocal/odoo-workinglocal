@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── VLOERPLAN (/vloerplan) — schematisch, per verdieping ────────── -->
+    <!-- Schematische weergave (grid van tegels), geen architecturaal-exacte
+         trace van de originele plannen (die staan als bijlage bij de
+         klantfiche in Odoo). Kleur = bezettingsstatus, klein bolletje =
+         aanwezigheid (enkel gevuld zodra fase 3 — UniFi-poller — live data
+         levert; tot dan altijd grijs/onbekend). -->
+    <template id="website_floorplan" name="Vloerplan">
+        <t t-call="website.layout">
+            <div class="container-fluid py-4">
+                <div class="row mb-4">
+                    <div class="col">
+                        <h1 class="fw-bold">Vloerplan — bezetting</h1>
+                        <p class="text-muted mb-2">
+                            Schematisch overzicht, niet architecturaal exact. Originele plannen staan
+                            als bijlage bij de klantfiche.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 small">
+                            <span><span class="floorplan-dot bg-secondary"/> Vrij</span>
+                            <span><span class="floorplan-dot bg-info"/> Gereserveerd vandaag</span>
+                            <span><span class="floorplan-dot bg-warning"/> Bezet nu</span>
+                            <span><span class="floorplan-dot bg-success"/> Verhuurd</span>
+                        </div>
+                    </div>
+                </div>
+
+                <t t-foreach="floor_sections" t-as="section">
+                    <div class="row mb-2 mt-4">
+                        <div class="col">
+                            <h4 t-esc="section['name']"/>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <t t-foreach="section['tiles']" t-as="tile">
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div t-attf-class="card h-100 shadow-sm border-0 floorplan-tile floorplan-tile-#{tile['status']}">
+                                    <div class="card-body p-2">
+                                        <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
+                                        <div class="small" t-esc="tile['status_label']"/>
+                                        <t t-if="tile['tenant']">
+                                            <div class="small text-muted" t-esc="tile['tenant']"/>
+                                        </t>
+                                        <t t-if="tile['presence'] is not None">
+                                            <div class="small">
+                                                <t t-if="tile['presence']">Aanwezig</t>
+                                                <t t-else="">Niet aanwezig</t>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div class="small text-muted">Aanwezigheid onbekend</div>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+
+                <t t-if="mobile_tiles">
+                    <div class="row mb-2 mt-4">
+                        <div class="col">
+                            <h4>Mobiel materiaal</h4>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <t t-foreach="mobile_tiles" t-as="tile">
+                            <div class="col-6 col-md-3 col-lg-2">
+                                <div t-attf-class="card h-100 shadow-sm border-0 floorplan-tile floorplan-tile-#{tile['status']}">
+                                    <div class="card-body p-2">
+                                        <div class="small fw-semibold" t-esc="tile['workspace'].name"/>
+                                        <div class="small" t-esc="tile['status_label']"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+
+            <style>
+                .floorplan-dot {
+                    display: inline-block; width: 10px; height: 10px;
+                    border-radius: 50%; margin-right: 4px;
+                }
+                .floorplan-tile-vrij { background: #f1f3f5; }
+                .floorplan-tile-gereserveerd_vandaag { background: #cfe2ff; }
+                .floorplan-tile-bezet_nu { background: #fff3cd; }
+                .floorplan-tile-verhuurd { background: #d1e7dd; }
+            </style>
+        </t>
+    </template>
+
+</odoo>
