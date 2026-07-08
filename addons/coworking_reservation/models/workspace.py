@@ -105,6 +105,12 @@ class CoworkingWorkspace(models.Model):
     has_interactive_display = fields.Boolean(string='Interactief scherm aanwezig')
     display_brand = fields.Char(string='Scherm / Type')
 
+    equipment_ids = fields.One2many(
+        'coworking.workspace.equipment',
+        'workspace_id',
+        string='Uitrusting',
+    )
+
     reservation_ids = fields.One2many(
         'coworking.reservation',
         'workspace_id',

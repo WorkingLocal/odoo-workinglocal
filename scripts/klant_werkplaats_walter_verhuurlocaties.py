@@ -145,47 +145,55 @@ upsert_workspace('Mobiel Whiteboard', {
     'amenity_ids': [(4, amenity_whiteboard)],
 })
 
-print("\n== Appartementen (Verdiep +4, apart netwerk) ==")
+print("\n== Appartementen (bovenste verdiep, high-end, expats/bedrijven) ==")
+# Prijs: TODO reëel valideren — "high-end" positionering, maar buurt (Anderlecht,
+# minder gegeerde zone) drukt het haalbare tarief t.o.v. een premium Brusselse buurt.
+APPARTEMENT_DESC = (
+    '<p>High-end volledig ingericht appartement, gericht op expats en bedrijven '
+    '(corporate housing / relocatie). Volledig gescheiden netwerk van de coworking/ateliers.</p>'
+)
 upsert_workspace('Appartement 1', {
     'workspace_type': 'appartement',
     'floor': 'Verdiep +4',
     'capacity': 2,
-    'monthly_rate': 750,
+    'monthly_rate': 950,
     'booking_granularity': 'day',
     'show_on_signage': False,
-    'description': '<p>Volledig gescheiden netwerk van de coworking/ateliers.</p>',
+    'description': APPARTEMENT_DESC,
     'amenity_ids': [(4, amenity_wifi)],
 })
 upsert_workspace('Appartement 2', {
     'workspace_type': 'appartement',
     'floor': 'Verdiep +4',
     'capacity': 2,
-    'monthly_rate': 750,
+    'monthly_rate': 950,
     'booking_granularity': 'day',
     'show_on_signage': False,
-    'description': '<p>Volledig gescheiden netwerk van de coworking/ateliers.</p>',
+    'description': APPARTEMENT_DESC,
     'amenity_ids': [(4, amenity_wifi)],
 })
 
-print("\n== Coworking-zones (Verdiep +3) ==")
-upsert_workspace('Coworking Zone 120m2', {
+print("\n== Coworking-zones (Verdiep +3, losse verhuur — definitieve invulling volgt) ==")
+zone_120_id = upsert_workspace('Coworking Zone 120m2', {
     'workspace_type': 'hot_desk',
     'floor': 'Verdiep +3',
     'capacity': 20,
     'contribution_enabled': True,
     'contribution_suggestions': '5,10,15',
     'show_on_signage': True,
-    'description': '<p>Open coworking-zone, 120m², verdiep +3.</p>',
+    'description': '<p>Open coworking-zone, 120m², verdiep +3. Losse verhuur — '
+                   'definitieve invulling van deze verdieping volgt nog.</p>',
     'amenity_ids': [(4, amenity_wifi), (4, amenity_locker)],
 })
-upsert_workspace('Coworking Zone 90m2', {
+zone_90_id = upsert_workspace('Coworking Zone 90m2', {
     'workspace_type': 'hot_desk',
     'floor': 'Verdiep +3',
     'capacity': 14,
     'contribution_enabled': True,
     'contribution_suggestions': '5,10,15',
     'show_on_signage': True,
-    'description': '<p>Open coworking-zone, 90m², verdiep +3.</p>',
+    'description': '<p>Open coworking-zone, 90m², verdiep +3. Losse verhuur — '
+                   'definitieve invulling van deze verdieping volgt nog.</p>',
     'amenity_ids': [(4, amenity_wifi), (4, amenity_locker)],
 })
 
@@ -270,6 +278,14 @@ upsert_package('Business Jam', {
     'price': 650,
     'description': 'Muziekzaal + foyer voor bedrijfsevents. Vergaderruimte en catering '
                     'optioneel bij te boeken, apart te verrekenen op de factuur.',
+})
+upsert_package('Verdiep +3 volledig (Event)', {
+    'sequence': 60,
+    'workspace_ids': [(6, 0, [zone_120_id, zone_90_id])],
+    'price': 800,
+    'description': 'Volledige verdieping +3 (120m² + 90m² samen) voor een event — '
+                    'i.p.v. de twee zones apart per helft te huren. Losse verhuur, '
+                    'definitieve invulling van deze verdieping volgt nog.',
 })
 
 print("\nVerhuurlocaties + pakketten Werkplaats Walter volledig geconfigureerd (fictieve maar realistische prijzen).")

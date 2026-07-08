@@ -11,3 +11,5 @@ access_amenity_user,coworking.amenity user,model_coworking_amenity,base.group_us
 access_package_manager,coworking.package manager,model_coworking_package,base.group_system,1,1,1,1
 access_package_user,coworking.package user,model_coworking_package,base.group_user,1,0,0,0
 access_package_public,coworking.package public,model_coworking_package,,1,0,0,0
+access_workspace_equipment_manager,coworking.workspace.equipment manager,model_coworking_workspace_equipment,base.group_system,1,1,1,1
+access_workspace_equipment_user,coworking.workspace.equipment user,model_coworking_workspace_equipment,base.group_user,1,1,1,0
