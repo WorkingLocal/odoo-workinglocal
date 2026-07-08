@@ -70,6 +70,46 @@ class CoworkingWebsite(http.Controller):
 
         return request.redirect(f'/mijn/reservaties/{reservation.id}')
 
+    # ── Pakketten (bv. "TBS Opnamedag") ─────────────────────────────────────
+
+    @http.route('/pakketten', type='http', auth='public', website=True)
+    def package_overview(self, **kwargs):
+        packages = request.env['coworking.package'].sudo().search([
+            ('active', '=', True),
+        ], order='sequence, name')
+        return request.render('coworking_reservation.website_packages', {
+            'packages': packages,
+        })
+
+    @http.route('/pakketten/<int:package_id>/reserveer', type='http', auth='user', website=True)
+    def package_booking(self, package_id, **kwargs):
+        package = request.env['coworking.package'].sudo().browse(package_id)
+        if not package.exists() or not package.active:
+            return request.not_found()
+        return request.render('coworking_reservation.website_package_booking_form', {
+            'package': package,
+        })
+
+    @http.route('/pakketten/reserveer/bevestig', type='http', auth='user', website=True, methods=['POST'], csrf=True)
+    def package_booking_confirm(self, **post):
+        package = request.env['coworking.package'].sudo().browse(int(post.get('package_id')))
+        partner = request.env.user.partner_id
+
+        reservation = request.env['coworking.reservation'].sudo().create({
+            'partner_id': partner.id,
+            'package_id': package.id,
+            'workspace_id': package.workspace_ids[0].id if package.workspace_ids else False,
+            'start_datetime': post.get('start_datetime'),
+            'end_datetime': post.get('end_datetime'),
+            'attendees': int(post.get('attendees', 1)),
+            'billing_type': 'package',
+            'contribution_amount': package.price,
+            'booking_type': 'extern',
+        })
+        # Externe aanvragen blijven als 'draft' voor admin-bevestiging
+
+        return request.redirect(f'/mijn/reservaties/{reservation.id}')
+
     # ── Beschikbaarheidskalender ──────────────────────────────────────────
 
     @http.route('/beschikbaarheid', type='http', auth='public', website=True)

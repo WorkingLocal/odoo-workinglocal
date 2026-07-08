@@ -189,4 +189,87 @@ upsert_workspace('Coworking Zone 90m2', {
     'amenity_ids': [(4, amenity_wifi), (4, amenity_locker)],
 })
 
-print("\nVerhuurlocaties Werkplaats Walter volledig geconfigureerd (fictieve maar realistische prijzen).")
+print("\n== Muziekzaal, Vergaderruimte, Foyer (briefing Lien, april 2026) ==")
+muziekzaal_id = upsert_workspace('Muziekzaal', {
+    'workspace_type': 'muziekzaal',
+    'floor': 'Verdiep +1',
+    'capacity': 15,
+    'daily_rate': 180,
+    'booking_granularity': 'day',
+    'show_on_signage': True,
+    'description': '<p>Repetitie- en opnameruimte, enkel per volledige dag verhuurbaar.</p>',
+    'amenity_ids': [(4, amenity_pa)],
+})
+vergaderruimte_id = upsert_workspace('Vergaderruimte', {
+    'workspace_type': 'meeting_room',
+    'floor': 'Verdiep +1',
+    'capacity': 10,
+    'hourly_rate': 25,
+    'booking_granularity': 'slot',
+    'show_on_signage': True,
+    'description': '<p>Vergaderruimte, per dagdeel (VM/NM/evt. avond) verhuurbaar.</p>',
+    'amenity_ids': [(4, amenity_whiteboard), (4, amenity_video_conf)],
+})
+opnamestudio_id = odoo.search_read('coworking.workspace', [('name', '=', 'Opnamestudio (box-in-box)')], ['id'])[0]['id']
+foyer_id = upsert_workspace('Foyer', {
+    'workspace_type': 'foyer',
+    'floor': 'Verdiep +1',
+    'capacity': 40,
+    'daily_rate': 120,
+    'booking_granularity': 'day',
+    'show_on_signage': True,
+    'description': '<p>Foyer naast de bar, receptieruimte voor events — enkel als onderdeel van pakketten of apart te huren.</p>',
+})
+
+print("\n== Pakketten (coworking.package) ==")
+
+def upsert_package(name, vals):
+    existing = odoo.search_read('coworking.package', [('name', '=', name)], ['id'])
+    vals = dict(vals, name=name)
+    if existing:
+        odoo.write('coworking.package', [existing[0]['id']], vals)
+        print(f"  ~ Bijgewerkt: {name}")
+        return existing[0]['id']
+    pid = odoo.create('coworking.package', vals)
+    print(f"  + Aangemaakt: {name}")
+    return pid
+
+upsert_package('TBS Opnamedag', {
+    'sequence': 10,
+    'workspace_ids': [(6, 0, [muziekzaal_id, opnamestudio_id])],
+    'price': 450,
+    'avail_sat': False,
+    'avail_sun': False,
+    'description': 'Muziekzaal + productiestudio + sound engineer voor de dag. '
+                    'Enkel ma-vr. Eventuele extra\'s (instrumenten, catering) in overleg, '
+                    'apart te verrekenen op de factuur.',
+})
+upsert_package('TBS Productiestudio', {
+    'sequence': 20,
+    'workspace_ids': [(6, 0, [opnamestudio_id])],
+    'price': 220,
+    'description': 'Productiestudio per dagdeel — klantvriendelijke naam voor een directe '
+                    'dagdeel-boeking van de opnamestudio.',
+})
+upsert_package('Repetitie / Residentie', {
+    'sequence': 30,
+    'workspace_ids': [(6, 0, [muziekzaal_id])],
+    'price': 150,
+    'description': 'Muziekzaal per dag voor repetities of een residentie.',
+})
+upsert_package('Meeting Room', {
+    'sequence': 40,
+    'workspace_ids': [(6, 0, [vergaderruimte_id])],
+    'price': 90,
+    'description': 'Vergaderruimte per dagdeel — klantvriendelijke naam voor een directe '
+                    'dagdeel-boeking van de vergaderruimte.',
+})
+upsert_package('Business Jam', {
+    'sequence': 50,
+    'workspace_ids': [(6, 0, [muziekzaal_id, foyer_id])],
+    'price': 650,
+    'description': 'Muziekzaal + foyer voor bedrijfsevents. Vergaderruimte en catering '
+                    'optioneel bij te boeken, apart te verrekenen op de factuur.',
+})
+
+print("\nVerhuurlocaties + pakketten Werkplaats Walter volledig geconfigureerd (fictieve maar realistische prijzen).")

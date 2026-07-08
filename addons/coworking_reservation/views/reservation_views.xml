@@ -140,6 +140,8 @@
                         context="{'group_by': 'workspace_id'}"/>
                 <filter string="Groepeer per dag" name="group_day"
                         context="{'group_by': 'start_datetime:day'}"/>
+                <filter string="Groepeer per type (intern/extern/geblokkeerd)" name="group_booking_type"
+                        context="{'group_by': 'booking_type'}"/>
             </search>
         </field>
     </record>
@@ -148,9 +150,18 @@
     <record id="action_coworking_reservation" model="ir.actions.act_window">
         <field name="name">Reservaties</field>
         <field name="res_model">coworking.reservation</field>
-        <field name="view_mode">calendar,list,form</field>
+        <field name="view_mode">calendar,list,pivot,form</field>
         <field name="search_view_id" ref="view_coworking_reservation_search"/>
         <field name="context">{'search_default_confirmed': 1}</field>
+    </record>
+
+    <!-- ── RAPPORTAGE EIGEN GEBRUIK (booking_type = intern) ─────────────── -->
+    <record id="action_coworking_reservation_own_use" model="ir.actions.act_window">
+        <field name="name">Rapportage eigen gebruik</field>
+        <field name="res_model">coworking.reservation</field>
+        <field name="view_mode">pivot,list,calendar</field>
+        <field name="domain">[('booking_type', '=', 'intern')]</field>
+        <field name="context">{'search_default_group_workspace': 1, 'pivot_measures': ['duration_hours']}</field>
     </record>
 
 

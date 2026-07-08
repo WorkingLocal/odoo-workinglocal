@@ -30,6 +30,12 @@
               action="action_coworking_membership"
               sequence="30"/>
 
+    <menuitem id="menu_coworking_reservation_own_use"
+              name="Rapportage eigen gebruik"
+              parent="menu_coworking_root"
+              action="action_coworking_reservation_own_use"
+              sequence="35"/>
+
     <menuitem id="menu_coworking_config"
               name="Configuratie"
               parent="menu_coworking_root"
