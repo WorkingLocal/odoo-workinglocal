@@ -21,10 +21,10 @@
                             Klik op een zone voor details.
                         </p>
                         <div class="d-flex flex-wrap gap-3 small">
-                            <span><span class="floorplan-dot bg-secondary"/> Vrij</span>
-                            <span><span class="floorplan-dot" style="background:#0dcaf0;"/> Gereserveerd vandaag</span>
-                            <span><span class="floorplan-dot bg-warning"/> Bezet nu</span>
-                            <span><span class="floorplan-dot bg-success"/> Verhuurd</span>
+                            <span><span class="floorplan-dot" style="background:#9CA8C4;"/> Vrij</span>
+                            <span><span class="floorplan-dot" style="background:#2563EB;"/> Gereserveerd vandaag</span>
+                            <span><span class="floorplan-dot" style="background:#F5B800;"/> Bezet nu</span>
+                            <span><span class="floorplan-dot" style="background:#16A34A;"/> Verhuurd</span>
                         </div>
                     </div>
                 </div>
@@ -110,10 +110,10 @@
                     display: inline-block; width: 10px; height: 10px;
                     border-radius: 50%; margin-right: 4px;
                 }
-                .floorplan-tile-vrij { background: #f1f3f5; }
-                .floorplan-tile-gereserveerd_vandaag { background: #cfe2ff; }
-                .floorplan-tile-bezet_nu { background: #fff3cd; }
-                .floorplan-tile-verhuurd { background: #d1e7dd; }
+                .floorplan-tile-vrij { background: #F9FAFB; }
+                .floorplan-tile-gereserveerd_vandaag { background: #DBEAFE; }
+                .floorplan-tile-bezet_nu { background: #FFF3CC; }
+                .floorplan-tile-verhuurd { background: #DCFCE7; }
 
                 .floorplan-canvas {
                     position: relative;
@@ -149,10 +149,10 @@
                     border-radius: 2px;
                     pointer-events: none;
                 }
-                .floorplan-zone-vrij { background: #adb5bd; }
-                .floorplan-zone-gereserveerd_vandaag { background: #0dcaf0; }
-                .floorplan-zone-bezet_nu { background: #ffc107; }
-                .floorplan-zone-verhuurd { background: #198754; }
+                .floorplan-zone-vrij { background: #9CA8C4; }
+                .floorplan-zone-gereserveerd_vandaag { background: #2563EB; }
+                .floorplan-zone-bezet_nu { background: #F5B800; }
+                .floorplan-zone-verhuurd { background: #16A34A; }
             </style>
         </t>
     </template>

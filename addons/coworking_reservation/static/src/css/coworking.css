@@ -1,4 +1,5 @@
 /* Working Local — Coworking frontend stijlen */
+/* Huisstijl-tokens: zie design-allthingslocal/brands/working-local/tokens.css */
 
 .workspace-card {
     border-radius: 12px;
@@ -6,13 +7,27 @@
 }
 
 .workspace-card:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(26, 46, 90, 0.14);
+    border-color: #F5B800;
 }
 
 .workspace-type-badge {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    background-color: #1A2E5A !important;
+    color: #FFFFFF !important;
+    font-weight: 600;
+}
+
+.package-card {
+    border-radius: 12px;
+    transition: box-shadow 0.2s ease;
+}
+
+.package-card:hover {
+    box-shadow: 0 4px 20px rgba(26, 46, 90, 0.14);
+    border-color: #F5B800;
 }
 
 .contribution-option {
@@ -36,6 +51,6 @@
     display: inline-block;
 }
 
-.availability-indicator.available { background-color: #28a745; }
-.availability-indicator.occupied  { background-color: #dc3545; }
-.availability-indicator.partial   { background-color: #ffc107; }
+.availability-indicator.available { background-color: #16A34A; } /* WL groen — positief */
+.availability-indicator.occupied  { background-color: #1A2E5A; } /* WL navy — bezet */
+.availability-indicator.partial   { background-color: #F5B800; } /* WL geel — accent/aandacht */
