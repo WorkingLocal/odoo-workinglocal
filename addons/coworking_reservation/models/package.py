@@ -6,10 +6,10 @@ class CoworkingPackage(models.Model):
     _description = 'Reservatiepakket'
     _order = 'sequence, name'
 
-    name = fields.Char(string='Naam', required=True)
+    name = fields.Char(string='Naam', required=True, translate=True)
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
-    description = fields.Text(string='Omschrijving')
+    description = fields.Text(string='Omschrijving', translate=True)
 
     workspace_ids = fields.Many2many(
         'coworking.workspace',

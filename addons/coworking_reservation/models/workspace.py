@@ -23,7 +23,7 @@ class CoworkingWorkspace(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = 'sequence, name'
 
-    name = fields.Char(string='Naam', required=True, tracking=True)
+    name = fields.Char(string='Naam', required=True, tracking=True, translate=True)
     sequence = fields.Integer(default=10)
     workspace_type = fields.Selection(
         WORKSPACE_TYPES,
@@ -31,7 +31,7 @@ class CoworkingWorkspace(models.Model):
         required=True,
         tracking=True,
     )
-    description = fields.Html(string='Omschrijving')
+    description = fields.Html(string='Omschrijving', translate=True)
     capacity = fields.Integer(string='Capaciteit (personen)', default=1)
     is_active = fields.Boolean(string='Actief', default=True)
     image = fields.Image(string='Foto')

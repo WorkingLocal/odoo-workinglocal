@@ -8,6 +8,7 @@
         <field name="subject">Je aanvraag {{ object.name }} is ontvangen</field>
         <field name="email_from">{{ object.env.company.email or user.email_formatted }}</field>
         <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
             <div style="margin: 0; padding: 0;">
@@ -39,6 +40,7 @@
         <field name="subject">Bevestigd: {{ object.name }}</field>
         <field name="email_from">{{ object.env.company.email or user.email_formatted }}</field>
         <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="True"/>
         <field name="body_html" type="html">
             <div style="margin: 0; padding: 0;">

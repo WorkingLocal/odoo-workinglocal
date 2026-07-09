@@ -1,6 +1,6 @@
 {
     'name': 'Working Local — Verhuur',
-    'version': '19.0.6.0.0',
+    'version': '19.0.7.0.0',
     'category': 'Services/Rental',
     'summary': 'Langetermijn huurcontracten voor ateliers, appartementen en materialen met maandelijkse facturatie',
     'author': 'Working Local',

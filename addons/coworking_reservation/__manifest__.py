@@ -1,6 +1,6 @@
 {
     'name': 'Working Local — Coworking Reservaties',
-    'version': '19.0.7.0.0',
+    'version': '19.0.8.0.0',
     'category': 'Services/Coworking',
     'summary': 'Werkplekbeheer, dagdelen, pakketten, online reservaties en vrije bijdrage facturatie',
     'author': 'Working Local',
