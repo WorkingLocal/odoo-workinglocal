@@ -12,6 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. module: workinglocal_rental
 #: model:mail.template,body_html:workinglocal_rental.mail_template_rental_contract_activated
 msgid ""
 "<div style=\"margin: 0; padding: 0;\">\n"
@@ -48,6 +49,7 @@ msgstr ""
 "            </div>\n"
 "        "
 
+#. module: workinglocal_rental
 #: model_terms:ir.ui.view,arch_db:workinglocal_rental.website_floorplan
 msgid ""
 "<span><span class=\"floorplan-dot\" style=\"background:#9CA8C4;\"/> Vrij</span>\n"
@@ -60,22 +62,27 @@ msgstr ""
 "                            <span><span class=\"floorplan-dot\" style=\"background:#F5B800;\"/> Occupied now</span>\n"
 "                            <span><span class=\"floorplan-dot\" style=\"background:#16A34A;\"/> Rented</span>"
 
+#. module: workinglocal_rental
 #: model_terms:ir.ui.view,arch_db:workinglocal_rental.website_floorplan
 msgid "Grondplan"
 msgstr "Floor plan"
 
+#. module: workinglocal_rental
 #: model_terms:ir.ui.view,arch_db:workinglocal_rental.website_floorplan
 msgid "Mobiel materiaal"
 msgstr "Mobile equipment"
 
+#. module: workinglocal_rental
 #: model_terms:ir.ui.view,arch_db:workinglocal_rental.website_floorplan
 msgid "Vloerplan — bezetting"
 msgstr "Floor plan — occupancy"
 
+#. module: workinglocal_rental
 #: model:mail.template,subject:workinglocal_rental.mail_template_rental_contract_activated
 msgid "Welkom — je huurcontract {{ object.name }} is actief"
 msgstr "Welcome — your rental contract {{ object.name }} is active"
 
+#. module: workinglocal_rental
 #: model_terms:ir.ui.view,arch_db:workinglocal_rental.website_floorplan
 msgid ""
 "Zone-posities zijn een benadering op basis van de originele plannen\n"

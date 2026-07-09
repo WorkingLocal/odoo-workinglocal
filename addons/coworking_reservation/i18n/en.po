@@ -12,18 +12,22 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "/maand"
 msgstr "/month"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "/u)"
 msgstr "/h)"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "/uur"
 msgstr "/hour"
 
+#. module: coworking_reservation
 #: model:mail.template,body_html:coworking_reservation.mail_template_reservation_confirmed
 msgid ""
 "<div style=\"margin: 0; padding: 0;\">\n"
@@ -70,6 +74,7 @@ msgstr ""
 "            </div>\n"
 "        "
 
+#. module: coworking_reservation
 #: model:mail.template,body_html:coworking_reservation.mail_template_reservation_received
 msgid ""
 "<div style=\"margin: 0; padding: 0;\">\n"
@@ -114,6 +119,7 @@ msgstr ""
 "            </div>\n"
 "        "
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_packages
 msgid ""
 "<i class=\"bi bi-box-seam fs-1 d-block mb-3\"/>\n"
@@ -122,10 +128,12 @@ msgstr ""
 "<i class=\"bi bi-box-seam fs-1 d-block mb-3\"/>\n"
 "                            No packages available at the moment."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "<i class=\"bi bi-box-seam me-1\"/>Nieuwe reservatie — pakket"
 msgstr "<i class=\"bi bi-box-seam me-1\"/>New reservation — package"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid ""
 "<i class=\"bi bi-building fs-1 d-block mb-3\"/>\n"
@@ -134,10 +142,12 @@ msgstr ""
 "<i class=\"bi bi-building fs-1 d-block mb-3\"/>\n"
 "                            No workspaces available at the moment."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "<i class=\"bi bi-chevron-left\"/> Vorige"
 msgstr "<i class=\"bi bi-chevron-left\"/> Previous"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid ""
 "<i class=\"bi bi-people me-1\"/>\n"
@@ -146,10 +156,12 @@ msgstr ""
 "<i class=\"bi bi-people me-1\"/>\n"
 "                                            Capacity:"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "<i class=\"bi bi-plus-lg me-1\"/>Nieuwe reservatie — losse ruimte"
 msgstr "<i class=\"bi bi-plus-lg me-1\"/>New reservation — single space"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid ""
 "<span class=\"text-success fw-semibold\">\n"
@@ -160,6 +172,7 @@ msgstr ""
 "                                                <i class=\"bi bi-heart me-1\"/>Free contribution\n"
 "                                            </span>"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid ""
 "<span><span class=\"badge bg-success me-1\"> </span> Beschikbaar</span>\n"
@@ -170,68 +183,84 @@ msgstr ""
 "                    <span><span class=\"badge bg-danger me-1\"> </span> Reserved</span>\n"
 "                    <span><span class=\"badge bg-secondary me-1\"> </span> Not available</span>"
 
+#. module: coworking_reservation
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__attendees
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_package_booking_form
 msgid "Aantal personen"
 msgstr "Number of people"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "Bekijk"
 msgstr "View"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "Bekijk onze werkplekken"
 msgstr "View our workspaces"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Beschikbaarheid"
 msgstr "Availability"
 
+#. module: coworking_reservation
 #: model:mail.template,subject:coworking_reservation.mail_template_reservation_confirmed
 msgid "Bevestigd: {{ object.name }}"
 msgstr "Confirmed: {{ object.name }}"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Dagtarief (€"
 msgstr "Daily rate (€"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 msgid "Duur"
 msgstr "Duration"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Eigen bedrag"
 msgstr "Custom amount"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.view_coworking_reservation_form
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Facturatie"
 msgstr "Billing"
 
+#. modules: coworking_reservation, workinglocal_rental
+#. odoo-python
 #: code:addons/workinglocal_rental/models/rental_contract.py:0
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__invoice_id
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 msgid "Factuur"
 msgstr "Invoice"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Geen ruimten geconfigureerd."
 msgstr "No spaces configured."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "Je hebt nog geen reservaties."
 msgstr "You do not have any reservations yet."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "Kies de werkplek die bij jou past en reserveer direct online."
 msgstr "Choose the workspace that suits you and book directly online."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Kies een bijdrage of geef een eigen bedrag in:"
 msgstr "Choose a contribution or enter your own amount:"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_packages
 msgid ""
 "Kies het pakket dat bij je past — wij regelen intern welke ruimtes dat "
@@ -240,27 +269,33 @@ msgstr ""
 "Choose the package that suits you — we sort out internally which spaces that"
 " requires."
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Maandtarief (€"
 msgstr "Monthly rate (€"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_my_home_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "Mijn reservaties"
 msgstr "My reservations"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_packages
 msgid "Onze pakketten"
 msgstr "Our packages"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "Onze werkplekken"
 msgstr "Our workspaces"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_package_booking_form
 msgid "Pakketprijs:"
 msgstr "Package price:"
 
+#. module: coworking_reservation
 #: model:ir.actions.act_window,name:coworking_reservation.action_coworking_package
 #: model:ir.ui.menu,name:coworking_reservation.menu_coworking_packages
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.view_coworking_package_list
@@ -269,38 +304,46 @@ msgstr "Package price:"
 msgid "Pakketten"
 msgstr "Packages"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 msgid "Personen"
 msgstr "People"
 
+#. modules: coworking_reservation, workinglocal_rental
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__name
 #: model:ir.model.fields,field_description:workinglocal_rental.field_rental_contract__name
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
 msgid "Referentie"
 msgstr "Reference"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.view_coworking_reservation_form
 msgid "Reservatie"
 msgstr "Reservation"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_package_booking_form
 msgid "Reservatie aanvragen"
 msgstr "Request reservation"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Reservatie bevestigen"
 msgstr "Confirm reservation"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_packages
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "Reserveer"
 msgstr "Book"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Ruimte"
 msgstr "Space"
 
+#. module: coworking_reservation
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__end_datetime
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
@@ -309,10 +352,12 @@ msgstr "Space"
 msgid "Tot"
 msgstr "To"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 msgid "Uurtarief (€"
 msgstr "Hourly rate (€"
 
+#. module: coworking_reservation
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__start_datetime
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservations
@@ -321,24 +366,29 @@ msgstr "Hourly rate (€"
 msgid "Van"
 msgstr "From"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_packages
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "Vanaf"
 msgstr "From"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.view_coworking_reservation_search
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Vandaag"
 msgstr "Today"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Volgende <i class=\"bi bi-chevron-right\"/>"
 msgstr "Next <i class=\"bi bi-chevron-right\"/>"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "Week van"
 msgstr "Week of"
 
+#. modules: coworking_reservation, workinglocal_rental
 #: model:ir.model,name:workinglocal_rental.model_coworking_workspace
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_reservation__workspace_id
 #: model:ir.model.fields,field_description:coworking_reservation.field_coworking_workspace_equipment__workspace_id
@@ -348,6 +398,7 @@ msgstr "Week of"
 msgid "Werkplek"
 msgstr "Workspace"
 
+#. module: coworking_reservation
 #: model:ir.actions.act_window,name:coworking_reservation.action_coworking_workspace
 #: model:ir.ui.menu,name:coworking_reservation.menu_coworking_workspaces
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.view_coworking_workspace_list
@@ -355,19 +406,23 @@ msgstr "Workspace"
 msgid "Werkplekken"
 msgstr "Workspaces"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_booking_form
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_workspaces
 msgid "personen"
 msgstr "people"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.website_availability
 msgid "t/m"
 msgstr "to"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 msgid "uur"
 msgstr "hours"
 
+#. module: coworking_reservation
 #: model_terms:ir.ui.view,arch_db:coworking_reservation.portal_reservation_detail
 msgid "← Terug naar overzicht"
 msgstr "← Back to overview"
