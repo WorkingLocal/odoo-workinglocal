@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Huurcontract geactiveerd ─────────────────────────────────────── -->
+    <record id="mail_template_rental_contract_activated" model="mail.template">
+        <field name="name">Huurcontract — geactiveerd</field>
+        <field name="model_id" ref="model_rental_contract"/>
+        <field name="subject">Welkom — je huurcontract {{ object.name }} is actief</field>
+        <field name="email_from">{{ object.env.company.email or user.email_formatted }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0; padding: 0;">
+                <p>Beste {{ object.partner_id.name }},</p>
+                <p>
+                    Je huurcontract <strong>{{ object.name }}</strong> is nu actief, met start op
+                    <t t-out="format_date(object.date_start)"/>.
+                </p>
+                <p>
+                    Facturatie gebeurt automatisch, elke maand rond de <t t-out="object.invoice_day"/>e.
+                </p>
+                <p>
+                    Wil je zelf extra ruimtes reserveren (bv. de concertzaal of vergaderruimte)?
+                    Dat kan via het klantenportaal, zodra je daar toegang toe hebt gekregen.
+                </p>
+                <p>Met vriendelijke groeten,<br/>Working Local</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

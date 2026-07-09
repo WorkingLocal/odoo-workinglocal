@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Aanvraag ontvangen (extern, bij create) ─────────────────────── -->
+    <record id="mail_template_reservation_received" model="mail.template">
+        <field name="name">Reservatie — aanvraag ontvangen</field>
+        <field name="model_id" ref="model_coworking_reservation"/>
+        <field name="subject">Je aanvraag {{ object.name }} is ontvangen</field>
+        <field name="email_from">{{ object.env.company.email or user.email_formatted }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0; padding: 0;">
+                <p>Beste {{ object.partner_id.name }},</p>
+                <p>
+                    We hebben je aanvraag <strong>{{ object.name }}</strong> voor
+                    <strong t-out="object.package_id.name or object.workspace_id.name"/>
+                    ontvangen, van
+                    <t t-out="format_datetime(object.start_datetime, tz=object.partner_id.tz, dt_format='short')"/>
+                    tot
+                    <t t-out="format_datetime(object.end_datetime, tz=object.partner_id.tz, dt_format='short')"/>.
+                </p>
+                <p>
+                    Dit is nog geen bevestiging — we nemen je aanvraag zo snel mogelijk door
+                    en laten je weten zodra de plek definitief voor jou gereserveerd is.
+                </p>
+                <p>Je kan de status van je aanvraag altijd opvolgen via je
+                    <a t-attf-href="/mijn/reservaties/{{ object.id }}">klantenportaal</a>.
+                </p>
+                <p>Met vriendelijke groeten,<br/>Working Local</p>
+            </div>
+        </field>
+    </record>
+
+    <!-- ── Reservatie bevestigd ─────────────────────────────────────────── -->
+    <record id="mail_template_reservation_confirmed" model="mail.template">
+        <field name="name">Reservatie — bevestigd</field>
+        <field name="model_id" ref="model_coworking_reservation"/>
+        <field name="subject">Bevestigd: {{ object.name }}</field>
+        <field name="email_from">{{ object.env.company.email or user.email_formatted }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin: 0; padding: 0;">
+                <p>Beste {{ object.partner_id.name }},</p>
+                <p>
+                    Goed nieuws — je reservatie <strong>{{ object.name }}</strong> voor
+                    <strong t-out="object.package_id.name or object.workspace_id.name"/>
+                    is bevestigd.
+                </p>
+                <p>
+                    <t t-out="format_datetime(object.start_datetime, tz=object.partner_id.tz, dt_format='short')"/>
+                    tot
+                    <t t-out="format_datetime(object.end_datetime, tz=object.partner_id.tz, dt_format='short')"/>
+                </p>
+                <t t-if="object.invoice_id">
+                    <p>De factuur volgt binnenkort per e-mail.</p>
+                </t>
+                <p>Alle details vind je terug via je
+                    <a t-attf-href="/mijn/reservaties/{{ object.id }}">klantenportaal</a>.
+                </p>
+                <p>Met vriendelijke groeten,<br/>Working Local</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

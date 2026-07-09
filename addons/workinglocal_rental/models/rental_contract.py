@@ -93,6 +93,12 @@ class RentalContract(models.Model):
 
     def action_activate(self):
         self.write({'state': 'active'})
+        template = self.env.ref('workinglocal_rental.mail_template_rental_contract_activated', raise_if_not_found=False)
+        if template:
+            for rec in self:
+                if rec.partner_id.email:
+                    template.send_mail(rec.id, force_send=False)
+        return True
 
     def action_end(self):
         self.write({'state': 'ended'})

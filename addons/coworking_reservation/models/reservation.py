@@ -163,7 +163,13 @@ class CoworkingReservation(models.Model):
         for vals in vals_list:
             if vals.get('name', 'Nieuw') == 'Nieuw':
                 vals['name'] = self.env['ir.sequence'].next_by_code('coworking.reservation') or 'Nieuw'
-        return super().create(vals_list)
+        records = super().create(vals_list)
+        template = self.env.ref('coworking_reservation.mail_template_reservation_received', raise_if_not_found=False)
+        if template:
+            for rec in records:
+                if rec.booking_type == 'extern' and rec.partner_id.email:
+                    template.send_mail(rec.id, force_send=False)
+        return records
 
     # ── Constraints ───────────────────────────────────────────────────────────
 
@@ -226,9 +232,12 @@ class CoworkingReservation(models.Model):
 
     def action_confirm(self):
         self.state = 'confirmed'
+        template = self.env.ref('coworking_reservation.mail_template_reservation_confirmed', raise_if_not_found=False)
         for rec in self:
             if not rec.invoice_id:
                 rec.action_create_invoice()
+            if template and rec.booking_type == 'extern' and rec.partner_id.email:
+                template.send_mail(rec.id, force_send=False)
         return True
 
     def action_done(self):

@@ -1,6 +1,6 @@
 {
     'name': 'Working Local — Coworking Reservaties',
-    'version': '19.0.6.0.0',
+    'version': '19.0.7.0.0',
     'category': 'Services/Coworking',
     'summary': 'Werkplekbeheer, dagdelen, pakketten, online reservaties en vrije bijdrage facturatie',
     'author': 'Working Local',
@@ -18,6 +18,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/workspace_data.xml',
+        'data/mail_templates.xml',
         'views/reservation_views.xml',
         'views/workspace_views.xml',
         'views/package_views.xml',
