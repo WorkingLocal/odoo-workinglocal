@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════════════
+             HOMEPAGE
+             ════════════════════════════════════════════ -->
+        <template id="qom_page_homepage" name="Qompanio — Startpagina">
+            <t t-call="website.layout">
+                <!-- title + meta description komen uit website.page.website_meta_title/
+                     website_meta_description (data/website_data.xml + set via script),
+                     Odoo's SEO-mixin injecteert die zelf in <head> — een eigen <title>
+                     hier zou een dubbele, tegensprekende title-tag opleveren. -->
+
+                <div style="font-family:'Archivo',sans-serif;color:#0B0B0B;background:#FAF7F0;min-height:100vh">
+
+                    <!-- Header -->
+                    <header style="position:sticky;top:0;z-index:50;background:rgba(250,247,240,.92);border-bottom:1px solid #C9C4B5">
+                        <div style="max-width:1240px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;height:72px">
+                            <a href="/" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit">
+                                <span style="display:inline-flex;width:36px;height:36px;background:#0B2545;border:2px solid #0B0B0B;border-radius:8px;box-shadow:2.5px 2.5px 0 0 #0B0B0B;align-items:center;justify-content:center">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11.5" cy="11" r="7" stroke="#FFD400" stroke-width="2.6"/><line x1="15.5" y1="15.5" x2="20.5" y2="20.5" stroke="#FFD400" stroke-width="2.6" stroke-linecap="round"/><circle cx="11.5" cy="11" r="2" fill="#2FD9C8"/></svg>
+                                </span>
+                                <span style="display:flex;flex-direction:column;gap:2px">
+                                    <span style="font:900 17px/1 'Archivo',sans-serif;letter-spacing:-.02em">Qompanio</span>
+                                    <span style="font:600 8px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:#5A5854">VERHUUR. GEREGELD.</span>
+                                </span>
+                            </a>
+                            <nav style="display:flex;gap:8px;margin-left:8px">
+                                <a href="#platform" style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;text-decoration:none;border-radius:4px;background:#0B0B0B;color:#FFD400">Platform</a>
+                                <a href="#voorwie" style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;color:#3A3835;text-decoration:none;border-radius:4px">Voor wie</a>
+                                <a href="#demo" style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;color:#3A3835;text-decoration:none;border-radius:4px">Demo</a>
+                            </nav>
+                            <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+                                <a href="#" class="q-btn q-btn--ghost" style="font:800 13px 'Archivo',sans-serif;letter-spacing:-.01em;padding:8px 12px;border:2px solid #0B0B0B;background:#FAF7F0;color:#0B0B0B;box-shadow:2px 2px 0 0 #0B0B0B;border-radius:4px;text-decoration:none">Aanmelden</a>
+                                <a href="#demo" class="q-btn" style="font:800 13px 'Archivo',sans-serif;letter-spacing:-.01em;padding:8px 12px;border:2px solid #0B0B0B;background:#FFD400;color:#0B0B0B;box-shadow:2px 2px 0 0 #0B0B0B;border-radius:4px;text-decoration:none">Plan een demo</a>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Hero -->
+                    <section style="padding:80px 24px 88px;background:#0B2545;color:#FAF7F0;border-bottom:2px solid #0B0B0B">
+                        <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:start">
+                            <div>
+                                <span style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2FD9C8">Beheerplatform voor organisaties en vzw's — coworking · ateliers · koten · zalen</span>
+                                <h1 style="font:900 clamp(52px,6.4vw,96px)/0.9 'Archivo',sans-serif;letter-spacing:-.03em;margin:14px 0 22px">Alles wat je verhuurt, <span style="background:#FFD400;color:#0B0B0B;padding:0 14px;border:2px solid #0B0B0B;white-space:nowrap;display:inline-block">geregeld.</span></h1>
+                                <p style="font-size:18px;line-height:1.55;color:#D7E5F2;max-width:46ch;margin:0 0 28px">Qompanio is het platform waarmee organisaties, vzw's en eigenaars hun ruimte beheren: flexdesks per uur, zalen per dagdeel, ateliers per maand, koten per academiejaar. Reserveringen, contracten, betalingen en meldingen in één systeem, geen losse spreadsheets. Geen makelaarssoftware, geen publieke zoekmotor: jouw werkplek als beheerder.</p>
+                                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                                    <a href="#demo" class="q-btn q-btn--cyan" style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.01em;padding:16px 22px;border:2px solid #0B0B0B;background:#FFD400;color:#0B0B0B;box-shadow:4px 4px 0 0 #2FD9C8;border-radius:4px;text-decoration:none">Plan een demo</a>
+                                    <a href="#platform" class="q-ghostdark" style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.01em;padding:16px 22px;border:2px solid #FAF7F0;background:transparent;color:#FAF7F0;border-radius:4px;text-decoration:none">Bekijk het platform</a>
+                                </div>
+                                <div style="display:flex;gap:32px;margin-top:36px;color:#D7E5F2;font-size:14px">
+                                    <span><strong style="display:block;font:900 28px 'Archivo',sans-serif;color:#FFD400;letter-spacing:-.01em">1</strong>systeem voor je hele portefeuille</span>
+                                    <span><strong style="display:block;font:900 28px 'Archivo',sans-serif;color:#FFD400;letter-spacing:-.01em">4</strong>soorten ruimte, zelfde werkwijze</span>
+                                    <span><strong style="display:block;font:900 28px 'Archivo',sans-serif;color:#FFD400;letter-spacing:-.01em">0</strong>spreadsheets nodig</span>
+                                </div>
+                            </div>
+                            <div style="justify-self:center;align-self:start;margin-top:18px">
+                                <div class="q-tile q-anim" style="background:#0B2545;border:3px solid #0B0B0B;box-shadow:8px 8px 0 0 #2FD9C8;border-radius:28px;padding:28px;width:280px;display:flex;flex-direction:column;align-items:center;gap:14px">
+                                    <span style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.1em;color:#D7E5F2">EST. 2026 — GENT</span>
+                                    <svg width="120" height="120" viewBox="0 0 48 48" fill="none">
+                                        <circle class="q-draw1" cx="23" cy="22" r="14" stroke="#FFD400" stroke-width="5" stroke-dasharray="320" stroke-dashoffset="0"/>
+                                        <line class="q-draw2" x1="31" y1="31" x2="41" y2="41" stroke="#FFD400" stroke-width="5" stroke-linecap="round" stroke-dasharray="320" stroke-dashoffset="0"/>
+                                        <circle class="q-dot" cx="23" cy="22" r="4" fill="#2FD9C8" style="transform-origin:23px 22px"/>
+                                    </svg>
+                                    <span style="height:3px;width:100%;background:#FFD400"></span>
+                                    <span style="display:flex;justify-content:space-between;width:100%;font:900 22px 'Archivo',sans-serif;letter-spacing:-.02em;color:#FAF7F0"><span>QOMPANIO</span><span>®</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Voor wie -->
+                    <section id="voorwie" style="max-width:1240px;margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px">
+
+                        <div class="q-card" style="background:#FFFFFF;border:1.5px solid #0B0B0B;border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#5A5854;letter-spacing:.1em">01 / 04</span>
+                            <h3 style="font:900 19px/1.05 'Archivo',sans-serif;letter-spacing:-.02em;margin:2px 0 6px;hyphens:auto" lang="nl">Organisaties &amp; vzw's</h3>
+                            <p style="color:#3A3835;font-size:14px;line-height:1.5;margin:0">Gemeenschapscentra, repetitieruimtes, sportzalen en jeugdlokalen: verhuur per uur of dagdeel, beheerd zonder Excel en papieren agenda.</p>
+                        </div>
+
+                        <div class="q-card" style="background:#FFFFFF;border:1.5px solid #0B0B0B;border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#5A5854;letter-spacing:.1em">02 / 04</span>
+                            <h3 style="font:900 19px/1.05 'Archivo',sans-serif;letter-spacing:-.02em;margin:2px 0 6px;hyphens:auto" lang="nl">Coworking &amp; gedeelde werkplekken</h3>
+                            <p style="color:#3A3835;font-size:14px;line-height:1.5;margin:0">Flexdesks, vaste plekken en vergaderzalen: reserveringen, leden en facturatie in één systeem.</p>
+                        </div>
+
+                        <div class="q-card" style="background:#FFFFFF;border:1.5px solid #0B0B0B;border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#5A5854;letter-spacing:.1em">03 / 04</span>
+                            <h3 style="font:900 19px/1.05 'Archivo',sans-serif;letter-spacing:-.02em;margin:2px 0 6px;hyphens:auto" lang="nl">Ateliers &amp; makersruimtes</h3>
+                            <p style="color:#3A3835;font-size:14px;line-height:1.5;margin:0">Werkplaatsen en creatieve hubs: contracten, sleutels, energie en gedeelde kosten netjes verdeeld.</p>
+                        </div>
+
+                        <div class="q-card" style="background:#FFFFFF;border:1.5px solid #0B0B0B;border-radius:6px;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#5A5854;letter-spacing:.1em">04 / 04</span>
+                            <h3 style="font:900 19px/1.05 'Archivo',sans-serif;letter-spacing:-.02em;margin:2px 0 6px;hyphens:auto" lang="nl">Koten &amp; wonen</h3>
+                            <p style="color:#3A3835;font-size:14px;line-height:1.5;margin:0">Studentenkoten: huurcontracten per academiejaar, waarborgen, plaatsbeschrijvingen en herverhuur.</p>
+                        </div>
+
+                    </section>
+
+                    <!-- Platform: modules + productmockup -->
+                    <section id="platform" style="max-width:1240px;margin:0 auto;padding:8px 24px 96px;display:grid;grid-template-columns:1fr 1.25fr;gap:40px;align-items:start">
+                        <div>
+                            <span style="font:700 12px 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#3A3835">Het platform</span>
+                            <h2 style="font:900 36px/1.02 'Archivo',sans-serif;letter-spacing:-.02em;margin:10px 0 18px">Zeven modules, één overzicht.</h2>
+                            <div style="display:flex;flex-direction:column">
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">01</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Eenheden &amp; panden</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Elke ruimte als eenheid in het systeem: van flexdesk tot volledig pand, met eigen kalender en tarief.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">02</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Contracten</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Huurcontracten en plaatsbeschrijvingen, digitaal ondertekend, met automatische verlengings- en opzegtermijnen.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">03</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Betalingen</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Automatische inning, waarborgen en herinneringen. Achterstallen zie je vóór ze een probleem worden.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">04</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Meldingen &amp; onderhoud</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Huurders melden via hun eigen portaal; jij plant op, volgt op en houdt de historiek per eenheid.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">05</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Bezetting &amp; rendement</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Leegstand, verloop en opbrengst per eenheid en per pand, altijd actueel.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">06</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Documenten</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Attesten, keuringen, EPC en verzekeringen op één plek, met vervaldag-bewaking.</span>
+                                    </span>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-top:2px solid #0B0B0B;align-items:baseline">
+                                    <span style="font:700 18px 'JetBrains Mono',monospace;color:#0F766E">07</span>
+                                    <span style="display:flex;flex-direction:column;gap:3px">
+                                        <span style="font:800 17px 'Archivo',sans-serif;letter-spacing:-.01em">Toegang — Ubiquiti UniFi</span>
+                                        <span style="font-size:13.5px;line-height:1.5;color:#3A3835">Deuren, badges en wifi gekoppeld aan je reserveringen: wie boekt, kan binnen; wie vertrekt, kan niet meer. Geen sleuteloverdracht nodig.</span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- productmockup: beheerdashboard -->
+                        <div style="background:#FFFFFF;border:2px solid #0B0B0B;border-radius:6px;box-shadow:6px 6px 0 0 #0B0B0B;overflow:hidden">
+                            <div style="height:52px;background:#0B2545;display:flex;align-items:center;justify-content:space-between;padding:0 18px">
+                                <span style="display:flex;align-items:center;gap:9px">
+                                    <span style="display:inline-flex;width:26px;height:26px;background:#FFD400;border-radius:5px;align-items:center;justify-content:center">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11.5" cy="11" r="7" stroke="#0B0B0B" stroke-width="2.6"/><line x1="15.5" y1="15.5" x2="20.5" y2="20.5" stroke="#0B0B0B" stroke-width="2.6" stroke-linecap="round"/><circle cx="11.5" cy="11" r="2" fill="#0B0B0B"/></svg>
+                                    </span>
+                                    <span style="font:800 13px 'Archivo',sans-serif;color:#FAF7F0">Qompanio · Portefeuille De Wilde</span>
+                                </span>
+                                <span style="font:500 10px 'JetBrains Mono',monospace;color:#2FD9C8">app.qompanio.be</span>
+                            </div>
+                            <div style="padding:18px;display:flex;flex-direction:column;gap:14px">
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+
+                                    <div style="border:1.5px solid #0B0B0B;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+                                        <span style="font:600 9px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A5854">Bezetting</span>
+                                        <span style="font:900 24px/1 'Archivo',sans-serif;letter-spacing:-.01em;color:#0B0B0B">92%</span>
+                                        <span style="font:500 10px 'JetBrains Mono',monospace;color:#5A5854">46 van 50 eenheden</span>
+                                    </div>
+
+                                    <div style="border:1.5px solid #0B0B0B;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+                                        <span style="font:600 9px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A5854">Te innen deze maand</span>
+                                        <span style="font:900 24px/1 'Archivo',sans-serif;letter-spacing:-.01em;color:#0B0B0B">€ 24.180</span>
+                                        <span style="font:500 10px 'JetBrains Mono',monospace;color:#C7402F">€ 1.240 achterstallig</span>
+                                    </div>
+
+                                    <div style="border:1.5px solid #0B0B0B;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+                                        <span style="font:600 9px 'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#5A5854">Open meldingen</span>
+                                        <span style="font:900 24px/1 'Archivo',sans-serif;letter-spacing:-.01em;color:#0B0B0B">3</span>
+                                        <span style="font:500 10px 'JetBrains Mono',monospace;color:#E08A1A">1 wacht op hersteller</span>
+                                    </div>
+
+                                </div>
+                                <div style="border:1.5px solid #0B0B0B">
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;font:600 9px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#5A5854;border-bottom:1.5px solid #0B0B0B;padding:8px 12px;background:#F2EFE6">
+                                        <span>Eenheid</span><span>Huurder</span><span>Volgende actie</span><span style="text-align:right">Status</span>
+                                    </div>
+
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;align-items:baseline;font:400 13px 'Archivo',sans-serif;border-bottom:1px solid #E6E2D6;padding:8px 12px">
+                                        <span style="font-weight:700">Atelier 1.2 — Muide</span>
+                                        <span style="color:#3A3835">Studio Vermast</span>
+                                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#3A3835">keuring elektriciteit · sep</span>
+                                        <span style="text-align:right"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 8px;border:1.5px solid #0B0B0B;background:#F2EFE6;color:#0B0B0B">VERHUURD</span></span>
+                                    </div>
+
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;align-items:baseline;font:400 13px 'Archivo',sans-serif;border-bottom:1px solid #E6E2D6;padding:8px 12px">
+                                        <span style="font-weight:700">Kot 14 — Overpoort</span>
+                                        <span style="color:#3A3835">L. Peeters</span>
+                                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#3A3835">contract verlengen · 60 d</span>
+                                        <span style="text-align:right"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 8px;border:1.5px solid #0B0B0B;background:#FFD400;color:#0B0B0B">VERLOOPT</span></span>
+                                    </div>
+
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;align-items:baseline;font:400 13px 'Archivo',sans-serif;border-bottom:1px solid #E6E2D6;padding:8px 12px">
+                                        <span style="font-weight:700">Flexzone B — Dok Noord</span>
+                                        <span style="color:#3A3835">12 leden</span>
+                                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#3A3835">facturatie · maandelijks</span>
+                                        <span style="text-align:right"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 8px;border:1.5px solid #0B0B0B;background:#F2EFE6;color:#0B0B0B">VERHUURD</span></span>
+                                    </div>
+
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;align-items:baseline;font:400 13px 'Archivo',sans-serif;border-bottom:1px solid #E6E2D6;padding:8px 12px">
+                                        <span style="font-weight:700">Kot 15 — Overpoort</span>
+                                        <span style="color:#3A3835">—</span>
+                                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#3A3835">herverhuur gestart</span>
+                                        <span style="text-align:right"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 8px;border:1.5px solid #0B0B0B;background:#C7402F;color:#FAF7F0">LEEG</span></span>
+                                    </div>
+
+                                    <div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 110px;align-items:baseline;font:400 13px 'Archivo',sans-serif;border-bottom:1px solid #E6E2D6;padding:8px 12px">
+                                        <span style="font-weight:700">Zaal De Serre</span>
+                                        <span style="color:#3A3835">per reservering</span>
+                                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#3A3835">melding: verwarming</span>
+                                        <span style="text-align:right"><span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;padding:3px 8px;border:1.5px solid #0B0B0B;background:#E08A1A;color:#0B0B0B">ACTIE</span></span>
+                                    </div>
+
+                                </div>
+                                <div style="background:#FFD400;border:1.5px solid #0B0B0B;padding:10px 14px;display:flex;gap:10px;align-items:baseline">
+                                    <span style="font:700 9px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase">Vandaag</span>
+                                    <span style="font:700 12.5px/1.4 'Archivo',sans-serif">2 contracten verlopen binnen 60 dagen. Verlengingsvoorstellen staan klaar om te versturen.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Demo-strip -->
+                    <section id="demo" style="background:#0B2545;color:#FAF7F0;padding:72px 24px;border-top:2px solid #0B0B0B">
+                        <div style="max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center">
+                            <span style="font:600 12px 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#2FD9C8">Demo</span>
+                            <h2 style="font:900 44px/0.95 'Archivo',sans-serif;letter-spacing:-.02em;margin:0">Zien hoe jouw portefeuille erin past?</h2>
+                            <p style="font-size:16px;line-height:1.55;color:#D7E5F2;max-width:52ch;margin:0">Een demo van een half uur, met jouw soort ruimtes als voorbeeld. Geen verkooppraatje, gewoon het platform aan het werk.</p>
+                            <a href="mailto:hallo@qompanio.be" class="q-btn q-btn--cyan" style="font:800 16px 'Archivo',sans-serif;letter-spacing:-.01em;padding:16px 22px;border:2px solid #0B0B0B;background:#FFD400;color:#0B0B0B;box-shadow:4px 4px 0 0 #2FD9C8;border-radius:4px;text-decoration:none">Plan een demo</a>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <footer style="padding:48px 24px 32px;border-top:1px solid #C9C4B5">
+                        <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px">
+                            <div>
+                                <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px">
+                                    <span style="display:inline-flex;width:28px;height:28px;background:#0B2545;border:2px solid #0B0B0B;border-radius:6px;align-items:center;justify-content:center">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="11.5" cy="11" r="7" stroke="#FFD400" stroke-width="2.6"/><line x1="15.5" y1="15.5" x2="20.5" y2="20.5" stroke="#FFD400" stroke-width="2.6" stroke-linecap="round"/><circle cx="11.5" cy="11" r="2" fill="#2FD9C8"/></svg>
+                                    </span>
+                                    <strong style="font:900 18px 'Archivo',sans-serif;letter-spacing:-.02em">Qompanio</strong>
+                                </div>
+                                <p style="font-size:13px;color:#3A3835;line-height:1.5;max-width:30ch;margin:0">Het beheerplatform voor verhuurde ruimte. Gent, België.</p>
+                            </div>
+                            <div>
+                                <h4 style="font:700 11px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:#5A5854;margin:0 0 10px">Platform</h4>
+                                <div style="display:flex;flex-direction:column;gap:6px"><a href="#platform" style="font-size:14px;text-decoration:none">Modules</a><a href="#" style="font-size:14px;text-decoration:none">Tarieven</a><a href="#" style="font-size:14px;text-decoration:none">Beveiliging</a></div>
+                            </div>
+                            <div>
+                                <h4 style="font:700 11px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:#5A5854;margin:0 0 10px">Voor wie</h4>
+                                <div style="display:flex;flex-direction:column;gap:6px"><a href="#voorwie" style="font-size:14px;text-decoration:none">Coworking-uitbaters</a><a href="#voorwie" style="font-size:14px;text-decoration:none">Atelierbeheerders</a><a href="#voorwie" style="font-size:14px;text-decoration:none">Koteigenaars</a><a href="#voorwie" style="font-size:14px;text-decoration:none">Portefeuillebeheerders</a></div>
+                            </div>
+                            <div>
+                                <h4 style="font:700 11px 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:#5A5854;margin:0 0 10px">Over</h4>
+                                <div style="display:flex;flex-direction:column;gap:6px"><a href="#" style="font-size:14px;text-decoration:none">Over Qompanio</a><a href="mailto:hallo@qompanio.be" style="font-size:14px;text-decoration:none">Contact</a><a href="#" style="font-size:14px;text-decoration:none">Privacy</a></div>
+                            </div>
+                        </div>
+                        <div style="max-width:1240px;margin:32px auto 0;padding-top:18px;border-top:1px solid #E6E2D6;font:500 11px 'JetBrains Mono',monospace;color:#5A5854;display:flex;justify-content:space-between">
+                            <span>© 2026 Qompanio · Gent, BE</span>
+                            <span>VERHUUR. GEREGELD.</span>
+                        </div>
+                    </footer>
+
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

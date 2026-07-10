@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--
+            Voeg 'qompanio-website' class toe aan <body> wanneer bezoekers op
+            het Qompanio website-record zitten.
+            CSS in qompanio_website.css is gescoped op body.qompanio-website
+            zodat WL/HL/TL en Qompanio stijlen niet botsen.
+
+            website.id == 3 verwijst naar het Qompanio website-record
+            (aangemaakt via XML-RPC, name="Qompanio", domain="https://qompanio.be").
+
+            LET OP — Odoo's view-inheritance VERVANGT een t-att-class-attribuut
+            volledig i.p.v. te mergen wanneer meerdere addons dezelfde xpath op
+            website.layout overschrijven. hostinglocal_website (views/website_layout.xml)
+            doet exact dezelfde xpath-override voor website.id == 2 (hl-website).
+            Omdat deze addon later geïnstalleerd/geüpgraded wordt, moet die conditie
+            HIER expliciet mee opgenomen worden, anders verdwijnt de hl-website-class
+            op hostinglocal.be. Bij een nieuwe website-addon op deze Odoo-instantie:
+            hier ook toevoegen (of de aanpak herzien naar iets dat wél samenvoegt).
+        -->
+        <template id="qom_body_class" inherit_id="website.layout" priority="100">
+            <xpath expr="//body" position="attributes">
+                <attribute name="t-att-class">
+                    (classes or '') + (' hl-website' if website and website.id == 2 else '') + (' qompanio-website' if website and website.id == 3 else '')
+                </attribute>
+            </xpath>
+        </template>
+
+        <!-- Google Fonts: Archivo + JetBrains Mono, enkel geladen op de Qompanio-website -->
+        <template id="qom_fonts" inherit_id="website.layout" priority="101">
+            <xpath expr="//head" position="inside">
+                <t t-if="website and website.id == 3">
+                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+                </t>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        noupdate="1": website-builder-bewerkingen worden bewaard bij upgrade.
+        website_id wordt NA installatie ingesteld via scripts/set_qompanio_website.py
+        omdat het Qompanio website-record geen XML-ID heeft (manueel aangemaakt in de backend).
+    -->
+    <data noupdate="1">
+
+        <!-- Startpagina -->
+        <record id="qom_page_homepage_record" model="website.page">
+            <field name="name">Startpagina — Qompanio</field>
+            <field name="url">/</field>
+            <field name="view_id" ref="qom_page_homepage"/>
+            <field name="is_published" eval="True"/>
+            <field name="website_indexed" eval="True"/>
+            <field name="website_meta_title">Qompanio — Verhuur. Geregeld.</field>
+            <field name="website_meta_description">Qompanio is het beheerplatform voor organisaties en vzw's die ruimte verhuren zoals ze gebruikt wordt: per uur, per dag, per academiejaar of per contract. Geen makelaarssoftware, geen marktplaats.</field>
+        </record>
+
+    </data>
+</odoo>
